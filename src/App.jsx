@@ -1,10 +1,11 @@
-import GlobalStyle from './App.CreateGlobalStyle';
 import AppRoutes from './routers';
+// import { useGetAdsQuery } from './redux/RequestsWithAds/RequestsWithAds';
 
 function App() {
+    // const { data } = useGetAdsQuery();
+    // console.log(data);
     return (
         <>
-            <GlobalStyle />
             <AppRoutes />
         </>
     );

@@ -1,3 +1,5 @@
+import FormNewArtBarImg from '../FormNewArtBarImg/FormNewArtBarImg';
+import ModalBtnClose from '../ModalBtnClose/ModalBtnClose';
 import * as S from './Atclsettings.styled';
 
 function Atclsettings() {
@@ -9,9 +11,7 @@ function Atclsettings() {
                         <S.ModalTitle className="modal__title">
                             Редактировать объявление
                         </S.ModalTitle>
-                        <S.ModalBtnClose className="modal__btn-close">
-                            <S.ModalBtnCloseLine className="modal__btn-close-line" />
-                        </S.ModalBtnClose>
+                        <ModalBtnClose />
                         <S.ModalFormNewArt
                             className="modal__form-newArt form-newArt"
                             id="formNewArt"
@@ -62,28 +62,7 @@ function Atclsettings() {
                                         не более 5 фотографий
                                     </S.FormNewArtPSpan>
                                 </S.FormNewArtP>
-                                <S.FormNewArtBarImg className="form-newArt__bar-img">
-                                    <S.FormNewArtImg className="form-newArt__img">
-                                        <S.FormNewArtImgImg src="" alt="" />
-                                        <S.FormNewArtImgCover className="form-newArt__img-cover" />
-                                    </S.FormNewArtImg>
-                                    <S.FormNewArtImg className="form-newArt__img">
-                                        <S.FormNewArtImgImg src="" alt="" />
-                                        <S.FormNewArtImgCover className="form-newArt__img-cover" />
-                                    </S.FormNewArtImg>
-                                    <S.FormNewArtImg className="form-newArt__img">
-                                        <S.FormNewArtImgCover className="form-newArt__img-cover" />
-                                        <S.FormNewArtImgImg src="" alt="" />
-                                    </S.FormNewArtImg>
-                                    <S.FormNewArtImg className="form-newArt__img">
-                                        <S.FormNewArtImgCover className="form-newArt__img-cover" />
-                                        <S.FormNewArtImgImg src="" alt="" />
-                                    </S.FormNewArtImg>
-                                    <S.FormNewArtImg className="form-newArt__img">
-                                        <S.FormNewArtImgCover className="form-newArt__img-cover" />
-                                        <S.FormNewArtImgImg src="" alt="" />
-                                    </S.FormNewArtImg>
-                                </S.FormNewArtBarImg>
+                                <FormNewArtBarImg />
                             </S.FormNewArtBlock>
                             <S.FormNewArtBlock className="form-newArt__block block-price">
                                 <S.FormNewArtBlockLabel htmlFor="price">

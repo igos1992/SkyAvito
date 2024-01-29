@@ -1,3 +1,5 @@
+import FormNewArtBarImg from '../FormNewArtBarImg/FormNewArtBarImg';
+import ModalBtnClose from '../ModalBtnClose/ModalBtnClose';
 import * as S from './Addnewat.styled';
 
 function Addnewat() {
@@ -9,16 +11,16 @@ function Addnewat() {
                         <S.ModalTitle className="modal__title">
                             Новое объявление
                         </S.ModalTitle>
-                        <S.ModalBtnClose className="modal__btn-close">
-                            <S.ModalBtnCloseLine className="modal__btn-close-line" />
-                        </S.ModalBtnClose>
+                        <ModalBtnClose />
                         <S.ModalFormNewArt
                             className="modal__form-newArt form-newArt"
                             id="formNewArt"
                             action="#"
                         >
                             <S.FormNewArtBlock className="form-newArt__block">
-                                <S.FormNewArtBlockLabel htmlFor="formName">Название</S.FormNewArtBlockLabel>
+                                <S.FormNewArtBlockLabel htmlFor="formName">
+                                    Название
+                                </S.FormNewArtBlockLabel>
                                 <S.FormNewArtInput
                                     className="form-newArt__input"
                                     type="text"
@@ -29,7 +31,9 @@ function Addnewat() {
                                 />
                             </S.FormNewArtBlock>
                             <S.FormNewArtBlock className="form-newArt__block">
-                                <S.FormNewArtBlockLabel htmlFor="formArea">Описание</S.FormNewArtBlockLabel>
+                                <S.FormNewArtBlockLabel htmlFor="formArea">
+                                    Описание
+                                </S.FormNewArtBlockLabel>
                                 <S.FormNewArtArea
                                     className="form-newArt__area"
                                     name="text"
@@ -42,33 +46,17 @@ function Addnewat() {
                             <S.FormNewArtBlock className="form-newArt__block">
                                 <S.FormNewArtP className="form-newArt__p">
                                     Фотографии товара
-                                    <S.FormNewArtPSpan>не более 5 фотографий</S.FormNewArtPSpan>
+                                    <S.FormNewArtPSpan>
+                                        не более 5 фотографий
+                                    </S.FormNewArtPSpan>
                                 </S.FormNewArtP>
-                                <S.FormNewArtBarImg className="form-newArt__bar-img">
-                                    <S.FormNewArtImg className="form-newArt__img">
-                                        <S.FormNewArtImgImg src="" alt="" />
-                                        <S.FormNewArtImgCover className="form-newArt__img-cover" />
-                                    </S.FormNewArtImg>
-                                    <S.FormNewArtImg className="form-newArt__img">
-                                        <S.FormNewArtImgImg src="" alt="" />
-                                        <S.FormNewArtImgCover className="form-newArt__img-cover" />
-                                    </S.FormNewArtImg>
-                                    <S.FormNewArtImg className="form-newArt__img">
-                                        <S.FormNewArtImgCover className="form-newArt__img-cover" />
-                                        <S.FormNewArtImgImg src="" alt="" />
-                                    </S.FormNewArtImg>
-                                    <S.FormNewArtImg className="form-newArt__img">
-                                        <S.FormNewArtImgCover className="form-newArt__img-cover" />
-                                        <S.FormNewArtImgImg src="" alt="" />
-                                    </S.FormNewArtImg>
-                                    <S.FormNewArtImg className="form-newArt__img">
-                                        <S.FormNewArtImgCover className="form-newArt__img-cover" />
-                                        <S.FormNewArtImgImg src="" alt="" />
-                                    </S.FormNewArtImg>
-                                </S.FormNewArtBarImg>
+                                {/* Перебрать массив фотографий */}
+                                <FormNewArtBarImg />
                             </S.FormNewArtBlock>
                             <S.FormNewArtBlock className="form-newArt__block block-price">
-                                <S.FormNewArtBlockLabel htmlFor="formNameOne">Цена</S.FormNewArtBlockLabel>
+                                <S.FormNewArtBlockLabel htmlFor="formNameOne">
+                                    Цена
+                                </S.FormNewArtBlockLabel>
                                 <S.FormNewArtInputPrice
                                     className="form-newArt__input-price"
                                     type="text"
