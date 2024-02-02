@@ -4,8 +4,9 @@ import { useGetAdsQuery } from '../../../redux/RequestsWithAds/serviceQuery';
 
 function CardsItemAdvertising() {
     const { data = [] } = useGetAdsQuery();
-    console.log(data);
-    console.log(data[0]);
+    // console.log(data);
+    // console.log(data[0]);
+    // console.log(localStorage.getItem('user'));
     return (
         <>
             {data.map((cards) => (
@@ -26,7 +27,7 @@ function CardsItemAdvertising() {
                                 </S.CardTitle>
                             </a>
                             <S.CardPrice className="card__price">
-                                {cards.price} P
+                                {cards.price} ₽
                             </S.CardPrice>
                             <S.CardPlace className="card__place">
                                 {cards.user.city}

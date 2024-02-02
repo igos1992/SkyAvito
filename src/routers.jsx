@@ -9,25 +9,28 @@ import Signup from './pages/Signup/Signup';
 import Addnewat from './components/PoPups/Addnewat/Addnewat';
 import Atclsettings from './components/PoPups/Atclsettings/Atclsettings';
 import Reviews from './components/PoPups/Reviews/Reviews';
+import { ProtectedRoute } from './components/protected-route/ProtectedRoute';
 
 import Layout from './components/Layout/Layout';
 
 const AppRoutes = () => {
     return (
         <Routes>
+            <Route path="login" element={<Login />} />
+            <Route path="signup" element={<Signup />} />
             <Route path="/" element={<Layout />}>
-                <Route path="login" element={<Login />} />
-                <Route path="signup" element={<Signup />} />
                 <Route index element={<Main />}></Route>
-                <Route path="article" element={<Article />} />
-                <Route path="myArticle" element={<MyArticle />} />
-                <Route path="profile" element={<Profile />} />
-                <Route path="sellerProfile" element={<SellerProfile />} />
+                <Route element={<ProtectedRoute />}>
+                    <Route path="article" element={<Article />} />
+                    <Route path="myArticle" element={<MyArticle />} />
+                    <Route path="profile" element={<Profile />} />
+                    <Route path="sellerProfile" element={<SellerProfile />} />
 
-                {/* Модалки */}
-                <Route path="addnewat" element={<Addnewat />} />
-                <Route path="atclsettings" element={<Atclsettings />} />
-                <Route path="reviews" element={<Reviews />} />
+                    {/* Модалки */}
+                    <Route path="addnewat" element={<Addnewat />} />
+                    <Route path="atclsettings" element={<Atclsettings />} />
+                    <Route path="reviews" element={<Reviews />} />
+                </Route>
             </Route>
         </Routes>
     );

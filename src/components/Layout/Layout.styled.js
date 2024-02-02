@@ -125,9 +125,16 @@ export const HeaderBtnLk = styled.button`
     }
 `;
 
+export const HeaderBtnLkLink = styled(NavLink)`
+    @media ${device.mobile} {
+        display: none;
+    }
+`;
+
 export const HeaderBtnMainCenter = styled.button`
     width: 224px;
     height: 40px;
+    margin-left: 10px;
     border: 1px solid #ffffff;
     border-radius: 6px;
     background-color: transparent;

@@ -1,4 +1,3 @@
-import { NavLink } from 'react-router-dom';
 import { styled } from 'styled-components';
 
 const size = {
@@ -37,7 +36,6 @@ export const ModalBlock = styled.div`
 
 export const ModalFormLogin = styled.form`
     width: 366px;
-    height: 647px;
     background-color: #ffffff;
     border-radius: 12px;
     display: -webkit-box;
@@ -150,6 +148,12 @@ export const ModalInput = styled.input`
     }
 `;
 
+export const FillInTheField = styled.div`
+    color: red;
+    margin-top: -25px;
+    margin-bottom: 20px;
+`;
+
 export const ModalBtnSignupEnt = styled.button`
     width: 278px;
     height: 62px;
@@ -166,6 +170,12 @@ export const ModalBtnSignupEnt = styled.button`
     -webkit-box-pack: center;
     -ms-flex-pack: center;
     justify-content: center;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 24px;
+    letter-spacing: -0.05px;
+    color: #ffffff;
     &:hover {
         background-color: #0080c1;
     }
@@ -176,29 +186,16 @@ export const ModalBtnSignupEnt = styled.button`
         height: 46px;
         border: none;
         margin-top: 26px;
-    }
-`;
-
-export const ModalBtnSignupEntLink = styled(NavLink)`
-    width: 100%;
-    height: 100%;
-    font-style: normal;
-    font-weight: 400;
-    font-size: 18px;
-    line-height: 24px;
-    letter-spacing: -0.05px;
-    color: #ffffff;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
-    -webkit-box-pack: center;
-    -ms-flex-pack: center;
-    justify-content: center;
-    @media ${device.mobile} {
         font-size: 16px;
         line-height: 24px;
     }
+`;
+
+export const Error = styled.div`
+  color: coral;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 24px;
+  margin-top: 20px;
+  text-align: left;
 `;

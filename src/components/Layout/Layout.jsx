@@ -1,8 +1,28 @@
 import { Outlet } from 'react-router-dom';
 import GlobalStyle from '../../App.CreateGlobalStyle';
 import * as S from './Layout.styled';
+import { useEffect, useState } from 'react';
+import Addnewat from '../PoPups/Addnewat/Addnewat';
 
 function Layout() {
+
+    const [isActivePopUpLogin, setActivePopUpLogin] = useState(false);
+
+    
+
+    const changingUserInformation = () => {
+        localStorage.removeItem('user');
+        console.log(localStorage.getItem('user'));
+        window.location.pathname = '/login';
+    };
+
+    const [loginButton, setLoginButton] = useState(false);
+
+    useEffect(() => {
+        setLoginButton(localStorage.getItem('user'));
+        setActivePopUpLogin(Addnewat)
+    }, []);
+
     return (
         <>
             <GlobalStyle />
@@ -23,24 +43,45 @@ function Layout() {
                                     />
                                 </S.LogoMobLink>
                             </S.HeaderLogo>
-                            <S.HeaderBtnPutAd
-                                className="header__btn-putAd btn-hov01"
-                                id="btputAd"
-                            >
-                                Разместить объявление
-                            </S.HeaderBtnPutAd>
-                            <S.HeaderBtnLk
-                                className="header__btn-lk btn-hov01"
-                                id="btnlk"
-                            >
-                                Личный кабинет
-                            </S.HeaderBtnLk>
-                            <S.HeaderBtnMainCenter
+                            {loginButton ? (
+                                <>
+                                    <S.HeaderBtnPutAd
+                                        className="header__btn-putAd btn-hov01"
+                                        id="btputAd"
+                                        onClick={() => isActivePopUpLogin}
+                                    >
+                                        Разместить объявление
+                                    </S.HeaderBtnPutAd>
+                                    <S.HeaderBtnLkLink
+                                    to={'/profile'}>
+                                    <S.HeaderBtnLk
+                                        className="header__btn-lk btn-hov01"
+                                        id="btnlk"
+                                    >
+                                        Личный кабинет
+                                    </S.HeaderBtnLk>
+                                    </S.HeaderBtnLkLink>
+                                    
+                                    <S.HeaderBtnMainCenter
+                                        className="header__btn-main-enter btn-hov01"
+                                        id="btnMainEnter"
+                                        onClick={() =>
+                                            changingUserInformation()
+                                        }
+                                    >
+                                        Выйти из личного кабинета
+                                    </S.HeaderBtnMainCenter>
+                                </>
+                            ) : (
+                                <S.HeaderBtnMainCenter
                                 className="header__btn-main-enter btn-hov01"
                                 id="btnMainEnter"
                             >
                                 Вход в личный кабинет
                             </S.HeaderBtnMainCenter>
+                            )}
+
+                           
                         </S.HeaderNav>
                     </S.Header>
 

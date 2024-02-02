@@ -5,8 +5,7 @@ function Logo() {
         <>
             <S.SearchLogoLink
                 className="search__logo-link"
-                href="#"
-                target="_blank"
+                to={'/'}
             >
                 <S.SearchLogoImg
                     className="search__logo-img"
@@ -16,8 +15,7 @@ function Logo() {
             </S.SearchLogoLink>
             <S.SearchLogoMobLink
                 className="search__logo-mob-link"
-                href="#"
-                target="_blank"
+                to={'/'}
             >
                 <S.SearchLogoMobImg
                     className="search__logo-mob-img"
