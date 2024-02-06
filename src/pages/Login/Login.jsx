@@ -8,6 +8,7 @@ import {
 import { useDispatch } from 'react-redux';
 import { setAuth } from '../../redux/RequestsWithAds/authSlice';
 import { useNavigate } from 'react-router-dom';
+import { setCurrentUser } from '../../redux/RequestsWithAds/adsSlice';
 
 function Login() {
     const [getToken, { isError }] = useGetTokenAndLoginMutation();
@@ -32,7 +33,12 @@ function Login() {
     const ChallengeGetTokenAndLogin = async () => {
         await getTokenAndLogin().then((res) => {
             console.log(res);
-            localStorage.setItem('user', JSON.stringify(res));
+            dispatch(
+                setCurrentUser(
+                    localStorage.setItem('user', JSON.stringify(res)),
+                ),
+            );
+
             console.log(localStorage.getItem('user'));
         });
     };
@@ -45,7 +51,7 @@ function Login() {
         })
             .unwrap()
             .then((token) => {
-                console.log(token);
+                // console.log(token);
                 dispatch(
                     setAuth({
                         access: token?.access_token,
@@ -58,7 +64,7 @@ function Login() {
         navigate('/');
     };
 
-    // console.log(localStorage.getItem('user'));
+    console.log(localStorage.getItem('user'));
 
     return (
         <S.Wrapper className="wrapper">

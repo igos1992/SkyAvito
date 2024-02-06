@@ -1,7 +1,14 @@
 import * as S from './SellerRight.styled';
 import ShowPhoneButton from '../../UI/ShowPhoneButton/ShowPhoneButton';
+import { useGetAllTheAdsOfTheCurrentUserQuery } from '../../../redux/RequestsWithAds/serviceQuery';
+import { useParams } from 'react-router-dom';
 
 function SellerRight() {
+    const params = useParams();
+
+    const { data } = useGetAllTheAdsOfTheCurrentUserQuery(Number(params.id));
+    console.log(data);
+
     return (
         <S.SellerRight className="seller__right">
             <S.SellerTitle className="seller__title">

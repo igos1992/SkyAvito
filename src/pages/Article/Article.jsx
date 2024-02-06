@@ -14,8 +14,7 @@ function Article() {
     const { data: dataAds } = useGetAdsIDQuery(Number(params.id));
 
 
-
-    console.log(dataAds);
+    // console.log(dataAds);
     return (
         <S.Main className="main">
             <S.MainContainer className="main__container">
@@ -42,7 +41,7 @@ function Article() {
                     <S.MainTitle className="main__title title">
                         Описание товара
                     </S.MainTitle>
-                    <MainContent dataAds={dataAds}/>
+                    <MainContent dataAds={dataAds} />
                 </S.MainContainer>
             </>
         </S.Main>

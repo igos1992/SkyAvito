@@ -8,10 +8,10 @@ function ModalReviews() {
     return (
         <>
             <S.ModalReviews className="modal__reviews reviews">
-                {reviewsId.map((comm, id) => (
+                {reviewsId.map((comm) => (
                     <S.ReviewsReview
                         className="reviews__review review"
-                        key={id}
+                        key={comm.id}
                     >
                         <S.ReviewItem className="review__item">
                             <S.ReviewLeft className="review__left">

@@ -172,6 +172,16 @@ export const RequestsWithAds = createApi({
                         : [{ type: 'Ads', id: 'LIST' }],
             }),
         }),
+        getAllTheAdsOfTheCurrentUser: builder.query({
+            query: () => '/ads/me',
+            providesTags: (result) =>
+                result
+                    ? [
+                          ...result.map(({ id }) => ({ type: 'AdsUser', id })),
+                          { type: 'AdsUser', id: 'LIST' },
+                      ]
+                    : [{ type: 'AdsUser', id: 'LIST' }],
+        }),
     }),
 });
 
@@ -183,5 +193,9 @@ export const {
 
 export const { useGetUserMutation } = OperationsWithUsers;
 
-export const { useGetAdsQuery, useGetAdsIDQuery, useGetAllCommentsQuery } =
-    RequestsWithAds;
+export const {
+    useGetAdsQuery,
+    useGetAdsIDQuery,
+    useGetAllCommentsQuery,
+    useGetAllTheAdsOfTheCurrentUserQuery,
+} = RequestsWithAds;

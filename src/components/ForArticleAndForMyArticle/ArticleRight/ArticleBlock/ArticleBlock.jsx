@@ -11,14 +11,17 @@ function ArticleBlock({ dataAds }) {
     const params = useParams();
     const dispatch = useDispatch();
 
+    console.log(dataAds);
+    console.log(dataAds?.user);
+
     const [modalProductReviewsIsOpen, setModalProductReviewsIsOpen] =
         useState(false);
     const { data: dataComments } = useGetAllCommentsQuery(Number(params.id));
-    console.log(dataComments?.length);
 
     useEffect(() => {
         dispatch(setReviewsId(dataComments));
-    });
+    }, [dataComments]);
+    
 
     let quantityReviews;
 
@@ -74,7 +77,7 @@ function ArticleBlock({ dataAds }) {
                     </S.AuthorImgItem>
                     <S.AuthorCont className="author__cont">
                         <S.AuthorName className="author__name">
-                            <S.AuthorNameLink to={'/sellerProfile'}>
+                            <S.AuthorNameLink to={`/sellerProfile/${dataAds?.user.id}`}>
                                 {dataAds?.user.name}
                             </S.AuthorNameLink>
                         </S.AuthorName>
