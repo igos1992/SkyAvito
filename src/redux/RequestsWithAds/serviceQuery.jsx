@@ -7,7 +7,7 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
 
         prepareHeaders: (headers, { getState }) => {
             const token = getState().auth.access;
-            console.debug('Использую токен из стора', { token });
+            // console.debug('Использую токен из стора', { token });
             if (token) {
                 headers.set('authorization', `Bearer ${token}`);
             }
@@ -16,20 +16,20 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
     });
 
     const result = await baseQuery(args, api, extraOptions);
-    console.debug('Результат первого запроса', { result });
+    // console.debug('Результат первого запроса', { result });
 
     if (result?.error?.status !== 401) {
         return result;
     }
 
     const forceLogout = () => {
-        console.debug('Принудительная авторизация!');
+        // console.debug('Принудительная авторизация!');
         api.dispatch(setAuth(null));
         window.location.navigate('/login');
     };
 
     const { auth } = api.getState();
-    console.debug('Данные пользователя в сторе', { auth });
+    // console.debug('Данные пользователя в сторе', { auth });
     if (!auth.refresh) {
         return forceLogout();
     }
@@ -46,7 +46,7 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
         extraOptions,
     );
 
-    console.debug('Результат запроса на обновление токена', { refreshResult });
+    // console.debug('Результат запроса на обновление токена', { refreshResult });
 
     if (!refreshResult.data.access) {
         return forceLogout();
@@ -60,7 +60,7 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
         return forceLogout();
     }
 
-    console.debug('Повторный запрос завершился успешно');
+    // console.debug('Повторный запрос завершился успешно');
 
     return retryResult;
 };
@@ -152,6 +152,26 @@ export const RequestsWithAds = createApi({
                       ]
                     : [{ type: 'Ads', id: 'LIST' }],
         }),
+        getAdsID: builder.query({
+            query: (pk) => ({
+                url: `ads/${pk}`,
+            }),
+        }),
+        getAllComments: builder.query({
+            query: (pk) => ({
+                url: `ads/${pk}/comments`,
+                providesTags: (result) =>
+                    result
+                        ? [
+                              ...result.map(({ id }) => ({
+                                  type: 'Ads',
+                                  id,
+                              })),
+                              { type: 'Ads', id: 'LIST' },
+                          ]
+                        : [{ type: 'Ads', id: 'LIST' }],
+            }),
+        }),
     }),
 });
 
@@ -163,4 +183,5 @@ export const {
 
 export const { useGetUserMutation } = OperationsWithUsers;
 
-export const { useGetAdsQuery } = RequestsWithAds;
+export const { useGetAdsQuery, useGetAdsIDQuery, useGetAllCommentsQuery } =
+    RequestsWithAds;

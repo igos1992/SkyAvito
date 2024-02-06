@@ -1,7 +1,9 @@
-import * as S from './ArticleBlock.styled';
-import ShowPhoneButton from '../../UI/ShowPhoneButton/ShowPhoneButton';
+import * as S from './MyArticleBlock.styled';
+import { useState } from 'react';
+import Atclsettings from '../../../PoPups/Atclsettings/Atclsettings';
 
 function ArticleBlock() {
+    const [modalEditAnAddIsOpen, setModalEditAnAddIsOpen] = useState(false);
     return (
         <S.ArticleBlock className="article__block">
             <S.ArticleTitle className="article__title title">
@@ -20,16 +22,22 @@ function ArticleBlock() {
                     target="_blank"
                     rel=""
                 >
-                    23 отзыва
+                    4 отзыва
                 </S.ArticleLink>
             </S.ArticleInfo>
             <S.ArticlePrice className="article__price">2 200 ₽</S.ArticlePrice>
             {/* Необходима логика на кнопки, что если юзер то одна кнопка, если продавец, то две кнопки */}
-            <ShowPhoneButton />
             <S.ArticleBtnBlock className="article__btn-block">
-                <S.ArticleBtnRedact className="article__btn btn-redact btn-hov02">
+                <S.ArticleBtnRedact
+                    className="article__btn btn-redact btn-hov02"
+                    onClick={() => setModalEditAnAddIsOpen(true)}
+                >
                     Редактировать
                 </S.ArticleBtnRedact>
+                <Atclsettings
+                    isOpen={modalEditAnAddIsOpen}
+                    onClose={() => setModalEditAnAddIsOpen(false)}
+                />
                 <S.ArticleBtnRemove className="article__btn btn-remove btn-hov02">
                     Снять с публикации
                 </S.ArticleBtnRemove>
@@ -39,9 +47,9 @@ function ArticleBlock() {
                     <S.AuthorImg className="author__img" src="" alt="" />
                 </S.AuthorImgItem>
                 <S.AuthorCont className="author__cont">
-                    <S.AuthorName className="author__name">Кирилл</S.AuthorName>
+                    <S.AuthorName className="author__name">Антон</S.AuthorName>
                     <S.AuthorAbout className="author__about">
-                        Продает товары с августа 2021
+                        Продает товары с мая 2022
                     </S.AuthorAbout>
                 </S.AuthorCont>
             </S.ArticleAuthor>

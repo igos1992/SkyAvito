@@ -5,9 +5,11 @@ import {
     OperationsWithUsers,
 } from './RequestsWithAds/serviceQuery';
 import { authReducer } from './RequestsWithAds/authSlice';
+import adsSliceReducer from './RequestsWithAds/adsSlice';
 
 const store = configureStore({
     reducer: {
+        ads: adsSliceReducer,
         auth: authReducer,
         [RequestsWithAds.reducerPath]: RequestsWithAds.reducer,
         [fetchUsersToken.reducerPath]: fetchUsersToken.reducer,

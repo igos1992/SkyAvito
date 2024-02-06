@@ -9,17 +9,27 @@ export const device = {
 };
 
 export const Wrapper = styled.div`
+position: fixed;
+top: 0;
+left: 0;
     width: 100%;
     min-height: 100%;
     overflow: hidden;
+    background-color: rgba(0, 0, 0, 0.75);
+    overflow-y: auto;
+    transition: opacity 0.3sS;
+    z-index: 999;
 `;
 
 export const ContainerBg = styled.div`
+position: absolute;
+top: 0;
+left: 0;
     max-width: 100%;
     height: 100vh;
     margin: 0 auto;
     position: relative;
-    background-color: #f4f5f6;
+   
 `;
 
 export const ModalBlock = styled.div`
@@ -98,6 +108,57 @@ export const ModalTitle = styled.h3`
             left: 0;
             cursor: pointer;
         }
+    }
+`;
+
+export const ModalBtnClose = styled.button`
+    width: 23px;
+    height: 23px;
+    position: absolute;
+    top: 47px;
+    right: 50px;
+    z-index: 3;
+    cursor: pointer;
+    border: none;
+    background-color: #ffffff;
+    @media ${device.mobile} {
+        display: none;
+    }
+`;
+
+export const ModalBtnCloseLine = styled.div`
+    position: relative;
+    width: 100%;
+    height: 100%;
+    &:hover {
+        background-color: #0080c1;
+    }
+    &::before {
+        content: '';
+        position: absolute;
+        width: 30px;
+        height: 2px;
+        border-radius: 2px;
+        background-color: #d9d9d9;
+        top: 47%;
+        right: -4px;
+        -webkit-transform: rotate(45deg);
+        transform: rotate(45deg);
+    }
+    &::after {
+        content: '';
+        position: absolute;
+        width: 30px;
+        height: 2px;
+        border-radius: 2px;
+        background-color: #d9d9d9;
+        top: 47%;
+        right: -4px;
+        -webkit-transform: rotate(-45deg);
+        transform: rotate(-45deg);
+    }
+    @media ${device.mobile} {
+        display: none;
     }
 `;
 

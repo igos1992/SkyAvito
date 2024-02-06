@@ -131,7 +131,7 @@ export const HeaderBtnLkLink = styled(NavLink)`
     }
 `;
 
-export const HeaderBtnMainCenter = styled.button`
+export const HeaderBtnMainCenter = styled(NavLink)`
     width: 224px;
     height: 40px;
     margin-left: 10px;
@@ -141,6 +141,9 @@ export const HeaderBtnMainCenter = styled.button`
     color: #ffffff;
     font-size: 16px;
     line-height: 1;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
     &:hover {
         background: rgba(255, 255, 255, 0.15);
         border: 1px solid #ffffff;

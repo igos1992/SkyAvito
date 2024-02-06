@@ -1,4 +1,3 @@
-import { NavLink } from 'react-router-dom';
 import { styled } from 'styled-components';
 
 const size = {
@@ -43,7 +42,7 @@ export const MainSearch = styled.div`
     }
 `;
 
-export const SearchForm = styled(NavLink)`
+export const SearchForm = styled.form`
     margin-left: 60px;
     max-width: 1044px;
     width: 100%;
@@ -159,7 +158,7 @@ export const SearchTextMob = styled.input`
     }
 `;
 
-export const SearchBtn = styled.button`
+export const SearchBtn = styled.input`
     margin-left: 10px;
     width: 158px;
     height: 50px;

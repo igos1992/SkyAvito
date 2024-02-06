@@ -1,7 +1,7 @@
 import ArticleImgBar from '../../components/ForArticleAndForMyArticle/ArticleImgBar/ArticleImgBar';
 import ArticleImgBarMob from '../../components/ForArticleAndForMyArticle/ArticleImgBarMob/ArticleImgBarMob';
 import ArticleImgItem from '../../components/ForArticleAndForMyArticle/ArticleImgItem/ArticleImgItem';
-import ArticleBlock from '../../components/ForArticleAndForMyArticle/ArticleRight/ArticleBlock';
+import MyArticleBlock from '../../components/ForArticleAndForMyArticle/ArticleRight/MyArticleBlock/MyArticleBlock'
 import MainMenu from '../../components/MainMenu/MainMenu';
 import MainContent from '../../components/ProductDescription/MainContent';
 import * as S from './MyArticle.styled';
@@ -23,7 +23,7 @@ function MyArticle() {
                         </S.ArticleFillImg>
                     </S.ArticleLeft>
                     <S.ArticleRight className="article__right">
-                        <ArticleBlock />
+                        <MyArticleBlock />
                     </S.ArticleRight>
                 </S.ArticContent>
             </S.MainArtic>

@@ -1,3 +1,4 @@
+import { NavLink } from 'react-router-dom';
 import { styled } from 'styled-components';
 
 const size = {
@@ -76,6 +77,8 @@ export const CardImageItem = styled.img`
 `;
 
 export const CardContent = styled.div``;
+
+export const TitleLink = styled(NavLink)``;
 
 export const CardTitle = styled.h3`
     height: 52px;

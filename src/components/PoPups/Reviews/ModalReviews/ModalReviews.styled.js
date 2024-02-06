@@ -11,6 +11,24 @@ export const device = {
 export const ModalReviews = styled.div`
     width: 100%;
     height: 495px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    overflow-y: scroll;
+    color: #fff;
+    color: #ad61ff;
+    transition: color 0.3s ease;
+    &::-webkit-scrollbar {
+        width: 4px;
+    }
+    &::-webkit-scrollbar-track {
+        background-color: #4b4949;
+    }
+    &::-webkit-scrollbar-thumb {
+        background-color: #ffffff;
+        border-radius: 2px;
+        height: 65px;
+    }
 `;
 
 export const ReviewsReview = styled.div`

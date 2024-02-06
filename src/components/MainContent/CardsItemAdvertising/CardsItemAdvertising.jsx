@@ -1,15 +1,27 @@
 import * as S from './CardsItemAdvertising.styled';
 // import ArrayData from '../../ArrayData/ArrayData';
 import { useGetAdsQuery } from '../../../redux/RequestsWithAds/serviceQuery';
+import { selectSearchByAdsTitle } from '../../../redux/RequestsWithAds/adsSlice';
+import { useSelector } from 'react-redux';
 
 function CardsItemAdvertising() {
-    const { data = [] } = useGetAdsQuery();
+    const { data } = useGetAdsQuery();
+    // console.log(data?.id);
     // console.log(data);
-    // console.log(data[0]);
     // console.log(localStorage.getItem('user'));
+    const searchByAdsTitleText = useSelector(selectSearchByAdsTitle);
+    const searchLetter = data?.filter((cards) => {
+        const matchesTitle = cards.title
+            .toLowerCase()
+            .includes(searchByAdsTitleText.toLowerCase());
+        return matchesTitle;
+    });
+
+    // console.log(searchLetter);
+
     return (
         <>
-            {data.map((cards) => (
+            {searchLetter?.map((cards) => (
                 <S.CardsItem className="cards__item" key={cards.id}>
                     <S.CardsCard className="cards__card card">
                         <S.CardImage className="card__image">
@@ -21,11 +33,11 @@ function CardsItemAdvertising() {
                             </a>
                         </S.CardImage>
                         <S.CardContent className="card__content">
-                            <a href="" target="_blank">
+                            <S.TitleLink to={`/article/${cards.id}`}>
                                 <S.CardTitle className="card__title">
                                     {cards.title}
                                 </S.CardTitle>
-                            </a>
+                            </S.TitleLink>
                             <S.CardPrice className="card__price">
                                 {cards.price} ₽
                             </S.CardPrice>

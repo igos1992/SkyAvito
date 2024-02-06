@@ -5,10 +5,7 @@ import { useEffect, useState } from 'react';
 import Addnewat from '../PoPups/Addnewat/Addnewat';
 
 function Layout() {
-
-    const [isActivePopUpLogin, setActivePopUpLogin] = useState(false);
-
-    
+    const [modalNewAddIsOpen, setModalNewAddIsOpen] = useState(false);
 
     const changingUserInformation = () => {
         localStorage.removeItem('user');
@@ -20,7 +17,6 @@ function Layout() {
 
     useEffect(() => {
         setLoginButton(localStorage.getItem('user'));
-        setActivePopUpLogin(Addnewat)
     }, []);
 
     return (
@@ -48,20 +44,27 @@ function Layout() {
                                     <S.HeaderBtnPutAd
                                         className="header__btn-putAd btn-hov01"
                                         id="btputAd"
-                                        onClick={() => isActivePopUpLogin}
+                                        onClick={() =>
+                                            setModalNewAddIsOpen(true)
+                                        }
                                     >
                                         Разместить объявление
                                     </S.HeaderBtnPutAd>
-                                    <S.HeaderBtnLkLink
-                                    to={'/profile'}>
-                                    <S.HeaderBtnLk
-                                        className="header__btn-lk btn-hov01"
-                                        id="btnlk"
-                                    >
-                                        Личный кабинет
-                                    </S.HeaderBtnLk>
+                                    <Addnewat
+                                        isOpen={modalNewAddIsOpen}
+                                        onClose={() =>
+                                            setModalNewAddIsOpen(false)
+                                        }
+                                    />
+                                    <S.HeaderBtnLkLink to={'/profile'}>
+                                        <S.HeaderBtnLk
+                                            className="header__btn-lk btn-hov01"
+                                            id="btnlk"
+                                        >
+                                            Личный кабинет
+                                        </S.HeaderBtnLk>
                                     </S.HeaderBtnLkLink>
-                                    
+
                                     <S.HeaderBtnMainCenter
                                         className="header__btn-main-enter btn-hov01"
                                         id="btnMainEnter"
@@ -69,19 +72,18 @@ function Layout() {
                                             changingUserInformation()
                                         }
                                     >
-                                        Выйти из личного кабинета
+                                        Выйти
                                     </S.HeaderBtnMainCenter>
                                 </>
                             ) : (
                                 <S.HeaderBtnMainCenter
-                                className="header__btn-main-enter btn-hov01"
-                                id="btnMainEnter"
-                            >
-                                Вход в личный кабинет
-                            </S.HeaderBtnMainCenter>
+                                    className="header__btn-main-enter btn-hov01"
+                                    id="btnMainEnter"
+                                    to={'/login'}
+                                >
+                                    Вход в личный кабинет
+                                </S.HeaderBtnMainCenter>
                             )}
-
-                           
                         </S.HeaderNav>
                     </S.Header>
 
