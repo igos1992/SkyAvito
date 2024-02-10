@@ -281,6 +281,11 @@ export const FormNewArtInput = styled.input`
     }
 `;
 
+export const FillInTheField = styled.div`
+    color: red;
+    margin-top: 15px;
+`;
+
 export const FormNewArtArea = styled.textarea`
     padding: 13px 19px;
     background: #ffffff;

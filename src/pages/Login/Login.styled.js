@@ -172,9 +172,12 @@ export const ModalInput = styled.input`
 
 export const FillInTheField = styled.div`
     color: red;
-    margin-top: -25px;
-    margin-bottom: 20px;
 `;
+
+export const FillInTheFieldP = styled.p`
+    margin: 0px;
+`;
+
 
 export const ModalBtnEnter = styled.button`
     width: 278px;

@@ -1,27 +1,23 @@
 import * as S from './ArticleImgBar.styled';
 
-function ArticleImgBar() {
+function ArticleImgBar({ dataAds }) {
+    // console.log(dataAds?.images.map((img) =>));
     return (
-        <S.ArticleImgBar className="article__img-bar">
-            <S.ArticleImgBarDiv className="article__img-bar-div">
-                <S.ArticleImg src="" alt="" />
-            </S.ArticleImgBarDiv>
-            <S.ArticleImgBarDiv className="article__img-bar-div">
-                <S.ArticleImg src="" alt="" />
-            </S.ArticleImgBarDiv>
-            <S.ArticleImgBarDiv className="article__img-bar-div">
-                <S.ArticleImg src="" alt="" />
-            </S.ArticleImgBarDiv>
-            <S.ArticleImgBarDiv className="article__img-bar-div">
-                <S.ArticleImg src="" alt="" />
-            </S.ArticleImgBarDiv>
-            <S.ArticleImgBarDiv className="article__img-bar-div">
-                <S.ArticleImg src="" alt="" />
-            </S.ArticleImgBarDiv>
-            <S.ArticleImgBarDiv className="article__img-bar-div">
-                <S.ArticleImg src="" alt="" />
-            </S.ArticleImgBarDiv>
-        </S.ArticleImgBar>
+        <>
+            {dataAds?.images.map((img) => (
+                <S.ArticleImgBar className="article__img-bar" key={img.id}>
+                    <S.ArticleImgBarDiv className="article__img-bar-div">
+                        {img?.url ? (
+                            <S.ArticleImg src={`http://localhost:8090/${img?.url}`} alt="" />
+                        ) : (
+                            <p>Нет фото</p>
+                        )
+                        }
+                        
+                    </S.ArticleImgBarDiv>
+                </S.ArticleImgBar>
+            ))}
+        </>
     );
 }
 

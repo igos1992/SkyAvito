@@ -1,4 +1,3 @@
-import { NavLink } from 'react-router-dom';
 import { css, styled } from 'styled-components';
 
 const size = {
@@ -56,6 +55,24 @@ export const ProfileSettings = styled.div`
     }
 `;
 
+export const SettingsImg = styled.div`
+    width: 170px;
+    height: 170px;
+    border-radius: 50%;
+    @media ${device.mobile} {
+        width: 132px;
+        height: 132px;
+    }
+`;
+
+export const SettingsImgItem = styled.img`
+    width: 100%;
+    height: auto;
+    display: block;
+    -o-object-fit: cover;
+    object-fit: cover;
+`;
+
 export const SettingsLeft = styled.div`
     display: -webkit-box;
     display: -ms-flexbox;
@@ -83,6 +100,35 @@ export const SettingsLeft = styled.div`
     }
 `;
 
+export const UploadFileInput = styled.input`
+    opacity: 0;
+    position: absolute;
+    z-index: -1;
+    overflow: hidden;
+    width: 0.4px;
+    height: 0.4px;
+`;
+
+export const UploadFileLabel = styled.label`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 240px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.25s ease;
+`;
+
+export const UploadFileButton = styled.button`
+    margin-top: 10px;
+    margin-bottom: 30px;
+    text-decoration: none;
+    font-size: 16px;
+    line-height: 24px;
+    color: #009ee4;
+    transition: 0.25s ease;
+`;
+
 export const SettingsRight = styled.div`
     width: 630px;
     @media ${device.mobile} {
@@ -90,7 +136,7 @@ export const SettingsRight = styled.div`
     }
 `;
 
-export const SettingsForm = styled(NavLink)`
+export const SettingsForm = styled.form`
     width: 630px;
     display: -webkit-box;
     display: -ms-flexbox;

@@ -1,8 +1,34 @@
+import { useForm } from 'react-hook-form';
 import FormNewArtBarImg from '../FormNewArtBarImg/FormNewArtBarImg';
 // import ModalBtnClose from '../ModalBtnClose/ModalBtnClose';
 import * as S from './Atclsettings.styled';
+import { useGetEditAdMutation } from '../../../redux/RequestsWithAds/serviceQuery';
+import { useParams } from 'react-router-dom';
 
-function Atclsettings({ isOpen, onClose }) {
+function Atclsettings({ isOpen, onClose, dataAds }) {
+    console.log(dataAds);
+
+    const { id } = useParams();
+
+    const [editAd] = useGetEditAdMutation(Number(id));
+
+    const {
+        register,
+        formState: { errors },
+        handleSubmit,
+    } = useForm({
+        mode: 'onBlur',
+    });
+
+    const onSubmit = async ({ title, description, price }) => {
+        await editAd({
+            id,
+            title: title,
+            description: description,
+            price: price,
+        });
+    };
+
     return (
         <>
             {isOpen && (
@@ -24,6 +50,7 @@ function Atclsettings({ isOpen, onClose }) {
                                     className="modal__form-newArt form-newArt"
                                     id="formNewArt"
                                     action="#"
+                                    onSubmit={handleSubmit(onSubmit)}
                                 >
                                     <S.FormNewArtBlock className="form-newArt__block">
                                         <S.FormNewArtBlockLabel htmlFor="name">
@@ -32,11 +59,25 @@ function Atclsettings({ isOpen, onClose }) {
                                         <S.FormNewArtInput
                                             className="form-newArt__input"
                                             type="text"
-                                            name="name"
+                                            name="title"
                                             id="formName"
                                             placeholder="Введите название"
-                                            // value="Ракетка для большого тенниса Triumph Pro STС Б/У"
+                                            defaultValue={dataAds?.title}
+                                            {...register('title', {
+                                                required: false,
+                                                onChange: (event) => {
+                                                    event.target.defaultValue;
+                                                },
+                                            })}
                                         />
+                                        <S.FillInTheField>
+                                            {errors.title && (
+                                                <S.FillInTheFieldP>
+                                                    {errors.title.message ||
+                                                        'Error!'}
+                                                </S.FillInTheFieldP>
+                                            )}
+                                        </S.FillInTheField>
                                     </S.FormNewArtBlock>
                                     <S.FormNewArtBlock className="form-newArt__block">
                                         <S.FormNewArtBlockLabel htmlFor="text">
@@ -44,27 +85,27 @@ function Atclsettings({ isOpen, onClose }) {
                                         </S.FormNewArtBlockLabel>
                                         <S.FormNewArtArea
                                             className="form-newArt__area"
-                                            name="text"
+                                            name="description"
                                             id="formArea"
                                             cols="auto"
                                             rows="10"
                                             placeholder="Введите описание"
-                                        >
-                                            Lorem ipsum dolor sit amet,
-                                            consectetur adipiscing elit, sed do
-                                            eiusmod tempor incididunt ut labore
-                                            et dolore magna aliqua. Ut enim ad
-                                            minim veniam, quis nostrud
-                                            exercitation ullamco laboris nisi ut
-                                            aliquip ex ea commodo consequat.
-                                            Duis aute irure dolor in
-                                            reprehenderit in voluptate velit
-                                            esse cillum dolore eu fugiat nulla
-                                            pariatur. Excepteur sint occaecat
-                                            cupidatat non proident, sunt in
-                                            culpa qui officia deserunt mollit
-                                            anim id est laborum.
-                                        </S.FormNewArtArea>
+                                            defaultValue={dataAds?.description}
+                                            {...register('description', {
+                                                required: false,
+                                                onChange: (event) => {
+                                                    event.target.defaultValue;
+                                                },
+                                            })}
+                                        />
+                                        <S.FillInTheField>
+                                            {errors.description && (
+                                                <S.FillInTheFieldP>
+                                                    {errors.description
+                                                        .message || 'Error!'}
+                                                </S.FillInTheFieldP>
+                                            )}
+                                        </S.FillInTheField>
                                     </S.FormNewArtBlock>
                                     <S.FormNewArtBlock className="form-newArt__block">
                                         <S.FormNewArtP className="form-newArt__p">
@@ -84,14 +125,29 @@ function Atclsettings({ isOpen, onClose }) {
                                             type="text"
                                             name="price"
                                             id="formName"
-                                            // value="2 200"
+                                            defaultValue={dataAds?.price}
+                                            {...register('price', {
+                                                required: false,
+                                                onChange: (event) => {
+                                                    event.target.defaultValue;
+                                                },
+                                            })}
                                         />
+                                        <S.FillInTheField>
+                                            {errors.price && (
+                                                <S.FillInTheFieldP>
+                                                    {errors.price.message ||
+                                                        'Error!'}
+                                                </S.FillInTheFieldP>
+                                            )}
+                                        </S.FillInTheField>
                                         <S.FormNewArtInputPriceCover className="form-newArt__input-price-cover" />
                                     </S.FormNewArtBlock>
 
                                     <S.FormNewArtBtnPub
                                         className="form-newArt__btn-pub btn-hov02"
                                         id="btnPublish"
+                                        type="submit"
                                     >
                                         Сохранить
                                     </S.FormNewArtBtnPub>

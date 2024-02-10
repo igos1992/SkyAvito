@@ -55,6 +55,7 @@ function Layout() {
                                         onClose={() =>
                                             setModalNewAddIsOpen(false)
                                         }
+                                    
                                     />
                                     <S.HeaderBtnLkLink to={'/profile'}>
                                         <S.HeaderBtnLk

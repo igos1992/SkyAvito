@@ -238,7 +238,7 @@ export const FormNewArtBlockLabel = styled.label`
     }
 `;
 
-export const FormNewArtArea = styled.textarea`
+export const FormNewArtArea = styled.input`
     font-family: 'Roboto', sans-serif;
     padding: 10px 19px;
     background: #ffffff;
@@ -313,6 +313,16 @@ export const FormNewArtArea = styled.textarea`
         }
     }
 `;
+
+export const FillInTheField = styled.div`
+    color: red;
+    margin-top: 15px;
+`;
+
+export const FillInTheFieldP = styled.p`
+    margin: 0px;
+`;
+
 
 export const FormNewArtBtnPub = styled.button`
     width: 181px;

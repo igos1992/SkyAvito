@@ -9,25 +9,26 @@ import { useParams } from 'react-router-dom';
 import { useGetAdsIDQuery } from '../../redux/RequestsWithAds/serviceQuery';
 
 function Article() {
-    const params = useParams();
+    const { id } = useParams();
+    const { data: dataAds } = useGetAdsIDQuery(id);
+    console.log(dataAds);
 
-    const { data: dataAds } = useGetAdsIDQuery(Number(params.id));
-
-
-    // console.log(dataAds);
     return (
-        <S.Main className="main">
-            <S.MainContainer className="main__container">
-                <MainMenu />
-            </S.MainContainer>
+        <>
+            <S.Main className="main">
+                <S.MainContainer className="main__container">
+                    <MainMenu />
+                </S.MainContainer>
 
-            <>
                 <S.MainArtic className="main__artic artic">
                     <S.ArticContent className="artic__content article">
                         <S.ArticleLeft className="article__left">
                             <S.ArticleFillImg className="article__fill-img">
-                                <ArticleImgItem />
-                                <ArticleImgBar />
+                                <ArticleImgItem dataAds={dataAds} />
+                                <S.ArticleImgBarItem>
+                                    <ArticleImgBar dataAds={dataAds} />
+                                </S.ArticleImgBarItem>
+
                                 <ArticleImgBarMob />
                             </S.ArticleFillImg>
                         </S.ArticleLeft>
@@ -43,8 +44,8 @@ function Article() {
                     </S.MainTitle>
                     <MainContent dataAds={dataAds} />
                 </S.MainContainer>
-            </>
-        </S.Main>
+            </S.Main>
+        </>
     );
 }
 

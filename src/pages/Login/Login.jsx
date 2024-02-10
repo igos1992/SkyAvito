@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import * as S from './Login.styled';
 import { useForm } from 'react-hook-form';
 import {
@@ -8,19 +8,21 @@ import {
 import { useDispatch } from 'react-redux';
 import { setAuth } from '../../redux/RequestsWithAds/authSlice';
 import { useNavigate } from 'react-router-dom';
-import { setCurrentUser } from '../../redux/RequestsWithAds/adsSlice';
+// import { setCurrentUser } from '../../redux/RequestsWithAds/adsSlice';
+import { UserContext } from '../../UserContext/UserContext';
 
 function Login() {
-    const [getToken, { isError }] = useGetTokenAndLoginMutation();
+    const [getToken] = useGetTokenAndLoginMutation();
     const [getTokenAndLogin] = useGetUserMutation();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [offButton, setOffButton] = useState(false);
+    const { changingUserData } = useContext(UserContext);
     // const [error, setError] = useState(null);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    console.log(isError);
+    // console.log(isError);
 
     const {
         register,
@@ -33,13 +35,15 @@ function Login() {
     const ChallengeGetTokenAndLogin = async () => {
         await getTokenAndLogin().then((res) => {
             console.log(res);
-            dispatch(
-                setCurrentUser(
-                    localStorage.setItem('user', JSON.stringify(res)),
-                ),
-            );
+            // dispatch(
+            //     setCurrentUser(
+            //         localStorage.setItem('user', JSON.stringify(res)),
+            //     ),
+            // );
+            localStorage.setItem('user', JSON.stringify(res)),
+            changingUserData(JSON.parse(localStorage.getItem('user')));
 
-            console.log(localStorage.getItem('user'));
+            // console.log(localStorage.getItem('user'));
         });
     };
 
@@ -51,20 +55,32 @@ function Login() {
         })
             .unwrap()
             .then((token) => {
-                // console.log(token);
+                console.log(token);
                 dispatch(
                     setAuth({
                         access: token?.access_token,
                         refresh: token?.refresh_token,
-                        user: JSON.parse(localStorage.getItem('user')),
+                        user: 
+                        // JSON.parse(
+                            localStorage.getItem('user')
+                            // ),
                     }),
+                );
+                localStorage.setItem(
+                    'access_token',
+                    token?.access_token.toString(),
+                );
+                localStorage.setItem(
+                    'refresh_token',
+                    token?.refresh_token.toString(),
                 );
             });
         await ChallengeGetTokenAndLogin();
         navigate('/');
     };
+    // console.log(localStorage.getItem('access_token'));
 
-    console.log(localStorage.getItem('user'));
+    // console.log(localStorage.getItem('user'));
 
     return (
         <S.Wrapper className="wrapper">
@@ -100,7 +116,7 @@ function Login() {
                         />
                         <S.FillInTheField>
                             {errors.login && (
-                                <p>{errors.login.message || 'Error!'}</p>
+                                <S.FillInTheFieldP>{errors.login.message || 'Error!'}</S.FillInTheFieldP>
                             )}
                         </S.FillInTheField>
                         <S.ModalInput
@@ -121,7 +137,7 @@ function Login() {
                         />
                         <S.FillInTheField>
                             {errors.password && (
-                                <p>{errors.password.message || 'Error!'}</p>
+                                <S.FillInTheFieldP>{errors.password.message || 'Error!'}</S.FillInTheFieldP>
                             )}
                         </S.FillInTheField>
                         {/* {error && <S.Error>{error}</S.Error>} */}

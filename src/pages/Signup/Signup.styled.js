@@ -150,8 +150,10 @@ export const ModalInput = styled.input`
 
 export const FillInTheField = styled.div`
     color: red;
-    margin-top: -25px;
-    margin-bottom: 20px;
+`;
+
+export const FillInTheFieldP = styled.p`
+    margin: 0px;
 `;
 
 export const ModalBtnSignupEnt = styled.button`
@@ -192,10 +194,10 @@ export const ModalBtnSignupEnt = styled.button`
 `;
 
 export const Error = styled.div`
-  color: coral;
-  font-weight: 400;
-  font-size: 18px;
-  line-height: 24px;
-  margin-top: 20px;
-  text-align: left;
+    color: coral;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 24px;
+    margin-top: 20px;
+    text-align: left;
 `;

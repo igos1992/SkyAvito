@@ -358,6 +358,16 @@ export const FormNewArtArea = styled.textarea`
     }
 `;
 
+export const FillInTheField = styled.div`
+    color: red;
+    margin-top: 15px;
+`;
+
+export const FillInTheFieldP = styled.p`
+    margin: 0px;
+`;
+
+
 export const FormNewArtP = styled.p`
     font-size: 16px;
     line-height: 24px;

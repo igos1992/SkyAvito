@@ -1,27 +1,33 @@
 import * as S from './ArticleBlock.styled';
-import ShowPhoneButton from '../../../UI/ShowPhoneButton/ShowPhoneButton';
 import Reviews from '../../../PoPups/Reviews/Reviews';
 import { useEffect, useState } from 'react';
-import { useGetAllCommentsQuery } from '../../../../redux/RequestsWithAds/serviceQuery';
+import {
+    useGetAdsIDQuery,
+    useGetAllCommentsQuery,
+} from '../../../../redux/RequestsWithAds/serviceQuery';
 import { useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setReviewsId } from '../../../../redux/RequestsWithAds/adsSlice';
+import ShowPhoneButton from '../../../UI/ShowPhoneButton/ShowPhoneButton';
 
 function ArticleBlock({ dataAds }) {
-    const params = useParams();
+    const { id } = useParams();
+    console.log(id);
     const dispatch = useDispatch();
-
-    console.log(dataAds);
-    console.log(dataAds?.user);
 
     const [modalProductReviewsIsOpen, setModalProductReviewsIsOpen] =
         useState(false);
-    const { data: dataComments } = useGetAllCommentsQuery(Number(params.id));
+    const { data: dataComments } = useGetAllCommentsQuery(Number(id));
+
+    const { data: dataSeller } = useGetAdsIDQuery(Number(id));
 
     useEffect(() => {
         dispatch(setReviewsId(dataComments));
-    }, [dataComments]);
-    
+    }, [dataComments, dataAds, dataSeller]);
+
+    const [isShowPhone, setIsShowPhone] = useState(false);
+
+    // console.log(dataAds);
 
     let quantityReviews;
 
@@ -70,14 +76,21 @@ function ArticleBlock({ dataAds }) {
                 <S.ArticlePrice className="article__price">
                     {dataAds?.price} ₽
                 </S.ArticlePrice>
-                <ShowPhoneButton />
+
+                <ShowPhoneButton
+                    dataAds={dataAds}
+                    isShowPhone={isShowPhone}
+                    setIsShowPhone={setIsShowPhone}
+                />
                 <S.ArticleAuthor className="article__author author">
                     <S.AuthorImgItem className="author__img-item">
                         <S.AuthorImg className="author__img" src="" alt="" />
                     </S.AuthorImgItem>
                     <S.AuthorCont className="author__cont">
                         <S.AuthorName className="author__name">
-                            <S.AuthorNameLink to={`/sellerProfile/${dataAds?.user.id}`}>
+                            <S.AuthorNameLink
+                                to={`/sellerProfile/${dataAds?.user.id}`}
+                            >
                                 {dataAds?.user.name}
                             </S.AuthorNameLink>
                         </S.AuthorName>

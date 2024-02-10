@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import * as S from './Signup.styled';
 import { useForm } from 'react-hook-form';
 import {
@@ -8,6 +8,7 @@ import {
 import { useDispatch } from 'react-redux';
 import { setAuth } from '../../redux/RequestsWithAds/authSlice';
 import { useNavigate } from 'react-router-dom';
+import { UserContext } from '../../UserContext/UserContext';
 
 function Signup() {
     const [userSignUp, { isError }] = useGetUserSignUpMutation();
@@ -22,6 +23,7 @@ function Signup() {
     const [error, setError] = useState(null);
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const { changingUserData } = useContext(UserContext);
 
     console.log(isError);
     const {
@@ -43,6 +45,14 @@ function Signup() {
                         refresh: token.refresh_token,
                         user: JSON.parse(localStorage.getItem('user')),
                     }),
+                );
+                localStorage.setItem(
+                    'access_token',
+                    token?.access_token.toString(),
+                );
+                localStorage.setItem(
+                    'refresh_token',
+                    token?.refresh_token.toString(),
                 );
             })
             .catch((error) => {
@@ -67,9 +77,10 @@ function Signup() {
                 surname: surname,
                 city: city,
             }).then((response) => {
-                console.log(response);
+                // console.log(response);
                 localStorage.setItem('user', JSON.stringify(response));
-                console.log(localStorage.getItem('user'));
+                // console.log(localStorage.getItem('user'));
+                changingUserData(JSON.parse(localStorage.getItem('user')));
             });
             // .unwrap()
 
@@ -112,7 +123,7 @@ function Signup() {
                         />
                         <S.FillInTheField>
                             {errors.login && (
-                                <p>{errors.login.message || 'Error!'}</p>
+                                <S.FillInTheFieldP>{errors.login.message || 'Error!'}</S.FillInTheFieldP>
                             )}
                         </S.FillInTheField>
                         <S.ModalInput
@@ -134,7 +145,7 @@ function Signup() {
 
                         <S.FillInTheField>
                             {errors.password && (
-                                <p>{errors.password.message || 'Error!'}</p>
+                                <S.FillInTheFieldP>{errors.password.message || 'Error!'}</S.FillInTheFieldP>
                             )}
                         </S.FillInTheField>
                         <S.ModalInput
@@ -156,9 +167,9 @@ function Signup() {
 
                         <S.FillInTheField>
                             {errors.repeatPassword && (
-                                <p>
+                                <S.FillInTheFieldP>
                                     {errors.repeatPassword.message || 'Error!'}
-                                </p>
+                                </S.FillInTheFieldP>
                             )}
                         </S.FillInTheField>
                         <S.ModalInput
@@ -170,10 +181,21 @@ function Signup() {
                             type="text"
                             placeholder="Имя (необязательно)"
                             value={name}
-                            onChange={(event) => {
-                                setName(event.target.value);
-                            }}
+                            // onChange={(event) => {
+                            //     setName(event.target.value);
+                            // }}
+                            {...register('name', {
+                                required: false,
+                                onChange: (event) => {
+                                    setName(event.target.value);
+                                },
+                            })}
                         />
+                        <S.FillInTheField>
+                            {errors.name && (
+                                <S.FillInTheFieldP>{errors.name.message || 'Error!'}</S.FillInTheFieldP>
+                            )}
+                        </S.FillInTheField>
 
                         <S.ModalInput
                             className="modal__input first-last"
@@ -184,10 +206,21 @@ function Signup() {
                             type="text"
                             placeholder="Фамилия (необязательно)"
                             value={surname}
-                            onChange={(event) => {
-                                setSurname(event.target.value);
-                            }}
+                            // onChange={(event) => {
+                            //     setSurname(event.target.value);
+                            // }}
+                            {...register('surname', {
+                                required: false,
+                                onChange: (event) => {
+                                    setSurname(event.target.value);
+                                },
+                            })}
                         />
+                        <S.FillInTheField>
+                            {errors.surname && (
+                                <S.FillInTheFieldP>{errors.surname.message || 'Error!'}</S.FillInTheFieldP>
+                            )}
+                        </S.FillInTheField>
                         <S.ModalInput
                             className="modal__input city"
                             // type="text"
@@ -197,10 +230,21 @@ function Signup() {
                             type="text"
                             placeholder="Город (необязательно)"
                             value={city}
-                            onChange={(event) => {
-                                setCity(event.target.value);
-                            }}
+                            // onChange={(event) => {
+                            //     setCity(event.target.value);
+                            // }}
+                            {...register('city', {
+                                required: false,
+                                onChange: (event) => {
+                                    setCity(event.target.value);
+                                },
+                            })}
                         />
+                        <S.FillInTheField>
+                            {errors.city && (
+                                <S.FillInTheFieldP>{errors.city.message || 'Error!'}</S.FillInTheFieldP>
+                            )}
+                        </S.FillInTheField>
                         {error && <S.Error>{error}</S.Error>}
                         <S.ModalBtnSignupEnt
                             className="modal__btn-signup-ent"

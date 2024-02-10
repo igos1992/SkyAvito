@@ -1,24 +1,29 @@
 import * as S from './SellerRight.styled';
 import ShowPhoneButton from '../../UI/ShowPhoneButton/ShowPhoneButton';
-import { useGetAllTheAdsOfTheCurrentUserQuery } from '../../../redux/RequestsWithAds/serviceQuery';
+import { useGetAllUserQuery } from '../../../redux/RequestsWithAds/serviceQuery';
 import { useParams } from 'react-router-dom';
+import { useState } from 'react';
 
 function SellerRight() {
-    const params = useParams();
+    const { userId } = useParams();
+    const [isShowPhone, setIsShowPhone] = useState(false);
 
-    const { data } = useGetAllTheAdsOfTheCurrentUserQuery(Number(params.id));
-    console.log(data);
+    const { data: users } = useGetAllUserQuery();
+    const sellerId = users?.find((user) => user.id === Number(userId));
+    console.log(sellerId);
+
+    
 
     return (
         <S.SellerRight className="seller__right">
             <S.SellerTitle className="seller__title">
-                Кирилл Матвеев
+                {sellerId?.name}
             </S.SellerTitle>
             <S.SellerCity className="seller__city">
-                Санкт-Петербург
+                {sellerId?.city}
             </S.SellerCity>
             <S.SellerInfo className="seller__info">
-                Продает товары с августа 2021
+                Продает товары с {sellerId?.sells_from}
             </S.SellerInfo>
 
             <S.SellerImgMobBlock className="seller__img-mob-block">
@@ -29,7 +34,11 @@ function SellerRight() {
                 </S.SellerImgMob>
             </S.SellerImgMobBlock>
 
-            <ShowPhoneButton />
+            <ShowPhoneButton
+                sellerId={sellerId}
+                isShowPhone={isShowPhone}
+                setIsShowPhone={setIsShowPhone}
+            />
         </S.SellerRight>
     );
 }

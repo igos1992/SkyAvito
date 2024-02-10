@@ -150,6 +150,10 @@ export const ArticleFillImg = styled.div`
     }
 `;
 
+export const ArticleImgBarItem = styled.div`
+    display: flex;
+`;
+
 export const ArticleRight = styled.div`
     max-width: 621px;
     @media ${device.mobile} {
