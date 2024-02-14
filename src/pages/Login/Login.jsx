@@ -94,7 +94,7 @@ function Login() {
                         </S.ModalLogo>
                         <S.ModalInput
                             className="modal__input login"
-                            type="text"
+                            type="email"
                             placeholder="Почта"
                             value={email}
                             {...register('login', {

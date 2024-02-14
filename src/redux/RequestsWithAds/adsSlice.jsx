@@ -6,6 +6,12 @@ const initialState = {
     addingImages: [],
     addingImagesAvatar: '',
     addingImagesAtclsettings: [],
+
+    addingImagesAvatarAtclsettingsOne: '',
+    addingImagesAvatarAtclsettingsTwo: '',
+    addingImagesAvatarAtclsettingsThrees: '',
+    addingImagesAvatarAtclsettingsFour: '',
+    addingImagesAvatarAtclsettingsFive: '',
 };
 
 const adsSlice = createSlice({
@@ -29,6 +35,28 @@ const adsSlice = createSlice({
         setAddingImagesAtclsettings: (state, action) => {
             state.addingImagesAtclsettings.push(action.payload);
         },
+
+        // Сохранить добавленную аватарку перед запросом Один
+        setAddingImagesAvatarAtclsettingsOne: (state, action) => {
+            state.addingImagesAvatarAtclsettingsOne = action.payload;
+        },
+        // Сохранить добавленную аватарку перед запросом Два
+        setAddingImagesAvatarAtclsettingsTwo: (state, action) => {
+            state.addingImagesAvatarAtclsettingsTwo = action.payload;
+        },
+        // Сохранить добавленную аватарку перед запросом Три
+        setAddingImagesAvatarAtclsettingsThrees: (state, action) => {
+            state.addingImagesAvatarAtclsettingsThrees = action.payload;
+        },
+        // Сохранить добавленную аватарку перед запросом Четыре
+        setAddingImagesAvatarAtclsettingsFour: (state, action) => {
+            state.addingImagesAvatarAtclsettingsFour = action.payload;
+        },
+        // Сохранить добавленную аватарку перед запросом Пять
+        setAddingImagesAvatarAtclsettingsFive: (state, action) => {
+            state.addingImagesAvatarAtclsettingsFive = action.payload;
+        },
+
         // Сохранить добавленную аватарку перед запросом
         setAddingImagesAvatar: (state, action) => {
             state.addingImagesAvatar = action.payload;
@@ -47,6 +75,11 @@ export const {
     setAddingImagesAvatar,
     setClearingImagesAvatar,
     setAddingImagesAtclsettings,
+    setAddingImagesAvatarAtclsettingsOne,
+    setAddingImagesAvatarAtclsettingsTwo,
+    setAddingImagesAvatarAtclsettingsThrees,
+    setAddingImagesAvatarAtclsettingsFour,
+    setAddingImagesAvatarAtclsettingsFive,
 } = adsSlice.actions;
 
 export default adsSlice.reducer;

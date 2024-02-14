@@ -118,4 +118,5 @@ export const Label = styled.label`
     height: 100%;
     background-color: #f0f0f0;
     z-index: 2;
+    cursor: pointer;
 `;

@@ -168,6 +168,7 @@ export const SearchBtn = styled.input`
     font-size: 16px;
     line-height: 24px;
     color: #ffffff;
+    cursor: pointer;
     &:hover {
         background-color: #0080c1;
     }

@@ -9,6 +9,7 @@ function Reviews({ isOpen, onClose }) {
     const { id } = useParams();
     const [createCommentAd] = useGetCreateCommentAdMutation(Number(id));
     const [loginButton, setLoginButton] = useState(false);
+    const [offButton, setOffButton] = useState(false);
 
     useEffect(() => {
         setLoginButton(localStorage.getItem('user'));
@@ -24,6 +25,7 @@ function Reviews({ isOpen, onClose }) {
     });
 
     const onSubmit = async ({ text }) => {
+        setOffButton(true);
         await createCommentAd({ id, text: text })
             .unwrap()
             .then((res) => {
@@ -33,6 +35,8 @@ function Reviews({ isOpen, onClose }) {
                 console.log(error.message);
             });
         reset();
+        isValid;
+        setOffButton(false);
     };
 
     return (
@@ -66,18 +70,10 @@ function Reviews({ isOpen, onClose }) {
                                                 className="form-newArt__area"
                                                 name="text"
                                                 placeholder="Введите описание"
-                                                {...(loginButton
-                                                    ? {
-                                                          ...register('text', {
-                                                              required:
-                                                                  '* Пожалуйста, напишиnе комментарий',
-                                                          }),
-                                                      }
-                                                    : {
-                                                          ...register('text', {
-                                                              required: false,
-                                                          }),
-                                                      })}
+                                                {...register('text', {
+                                                    required:
+                                                        '* Пожалуйста, напишиnе комментарий',
+                                                })}
                                             />
                                             <S.FillInTheField>
                                                 {errors.text && (
@@ -92,7 +88,11 @@ function Reviews({ isOpen, onClose }) {
                                             <S.FormNewArtBtnPub
                                                 className="form-newArt__btn-pub btn-hov02"
                                                 type="submit"
-                                                disabled={!isValid}
+                                                disabled={
+                                                    isValid
+                                                        ? offButton
+                                                        : !isValid
+                                                }
                                             >
                                                 Опубликовать
                                             </S.FormNewArtBtnPub>

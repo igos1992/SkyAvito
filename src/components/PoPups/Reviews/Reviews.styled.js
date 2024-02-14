@@ -331,7 +331,7 @@ export const FillInTheFieldPNoComments = styled.p`
 export const FormNewArtBtnPub = styled.button`
     width: 181px;
     height: 50px;
-    background: #d9d9d9;
+    background: #0080c1;
     border: 1px solid #d9d9d9;
     border-radius: 6px;
     font-size: 16px;
@@ -341,7 +341,7 @@ export const FormNewArtBtnPub = styled.button`
         background-color: #0080c1;
     }
     &:disable {
-        background-color: #0080c1;
+        background-color: #d9d9d9;
     }
     @media ${device.mobile} {
         margin-top: 0px;
