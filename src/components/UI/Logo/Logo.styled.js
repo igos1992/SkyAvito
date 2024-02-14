@@ -36,9 +36,9 @@ export const SearchLogoMobLink = styled(NavLink)`
 export const SearchLogoMobImg = styled.img`
     @media ${device.mobile} {
         width: 32px;
-        height: auto;
+        height: 100%;
         display: block;
-        -o-object-fit: cover;
-        object-fit: cover;
+        -o-object-fit: fill;
+        object-fit: fill;
     }
 `;

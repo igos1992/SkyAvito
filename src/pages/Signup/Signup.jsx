@@ -41,8 +41,8 @@ function Signup() {
                 // console.log(token.access_token);
                 dispatch(
                     setAuth({
-                        access: token.access_token,
-                        refresh: token.refresh_token,
+                        access: token?.access_token,
+                        refresh: token?.refresh_token,
                         user: JSON.parse(localStorage.getItem('user')),
                     }),
                 );
@@ -54,6 +54,11 @@ function Signup() {
                     'refresh_token',
                     token?.refresh_token.toString(),
                 );
+                localStorage.setItem(
+                    'user',
+                    JSON.stringify(token?.access_token),
+                ),
+                    changingUserData(JSON.parse(localStorage.getItem('user')));
             })
             .catch((error) => {
                 return error;
@@ -76,15 +81,27 @@ function Signup() {
                 name: name,
                 surname: surname,
                 city: city,
-            }).then((response) => {
-                // console.log(response);
-                localStorage.setItem('user', JSON.stringify(response));
-                // console.log(localStorage.getItem('user'));
-                changingUserData(JSON.parse(localStorage.getItem('user')));
-            });
-            // .unwrap()
+            })
+                .unwrap()
+                .then((response) => {
+                    // console.log(response);
+                    localStorage.setItem('user', JSON.stringify(response));
+                    // console.log(localStorage.getItem('user'));
+                    changingUserData(JSON.parse(localStorage.getItem('user')));
+                    navigate('/');
+                })
+                .catch((err) => {
+                    console.log(err);
+                    if (err?.data?.message === 'Database Error') {
+                        setError('Такой пользователь уже существует');
+                        return;
+                    }
+                    setError(err?.data?.message);
+                })
+                .finally(() => {
+                    setOffButton(false);
+                });
 
-            navigate('/');
             responseToken();
         }
     };
@@ -95,7 +112,6 @@ function Signup() {
                 <S.ModalBlock className="modal__block">
                     <S.ModalFormLogin
                         className="modal__form-login"
-                        id="formLogUp"
                         action="#"
                         onSubmit={handleSubmit(onSubmit)}
                     >
@@ -107,11 +123,7 @@ function Signup() {
                         </S.ModalLogo>
                         <S.ModalInput
                             className="modal__input login"
-                            // type="text"
-                            // name="login"
-                            // id="loginReg"
-                            // placeholder="email"
-                            type="text"
+                            type="email"
                             placeholder="Почта"
                             value={email}
                             {...register('login', {
@@ -123,15 +135,13 @@ function Signup() {
                         />
                         <S.FillInTheField>
                             {errors.login && (
-                                <S.FillInTheFieldP>{errors.login.message || 'Error!'}</S.FillInTheFieldP>
+                                <S.FillInTheFieldP>
+                                    {errors.login.message || 'Error!'}
+                                </S.FillInTheFieldP>
                             )}
                         </S.FillInTheField>
                         <S.ModalInput
                             className="modal__input password-first"
-                            // type="password"
-                            // name="password"
-                            // id="passwordFirst"
-                            // placeholder="Пароль"
                             type="password"
                             placeholder="Пароль"
                             value={password}
@@ -145,15 +155,13 @@ function Signup() {
 
                         <S.FillInTheField>
                             {errors.password && (
-                                <S.FillInTheFieldP>{errors.password.message || 'Error!'}</S.FillInTheFieldP>
+                                <S.FillInTheFieldP>
+                                    {errors.password.message || 'Error!'}
+                                </S.FillInTheFieldP>
                             )}
                         </S.FillInTheField>
                         <S.ModalInput
                             className="modal__input password-double"
-                            // type="password"
-                            // name="password"
-                            // id="passwordSecond"
-                            // placeholder="Повторите пароль"
                             type="password"
                             value={repeatPassword}
                             placeholder="Повторите пароль"
@@ -174,16 +182,9 @@ function Signup() {
                         </S.FillInTheField>
                         <S.ModalInput
                             className="modal__input first-name"
-                            // type="text"
-                            // name="first-name"
-                            // id="first-name"
-                            // placeholder="Имя (необязательно)"
                             type="text"
                             placeholder="Имя (необязательно)"
                             value={name}
-                            // onChange={(event) => {
-                            //     setName(event.target.value);
-                            // }}
                             {...register('name', {
                                 required: false,
                                 onChange: (event) => {
@@ -193,22 +194,17 @@ function Signup() {
                         />
                         <S.FillInTheField>
                             {errors.name && (
-                                <S.FillInTheFieldP>{errors.name.message || 'Error!'}</S.FillInTheFieldP>
+                                <S.FillInTheFieldP>
+                                    {errors.name.message || 'Error!'}
+                                </S.FillInTheFieldP>
                             )}
                         </S.FillInTheField>
 
                         <S.ModalInput
                             className="modal__input first-last"
-                            // type="text"
-                            // name="first-last"
-                            // id="first-last"
-                            // placeholder="Фамилия (необязательно)"
                             type="text"
                             placeholder="Фамилия (необязательно)"
                             value={surname}
-                            // onChange={(event) => {
-                            //     setSurname(event.target.value);
-                            // }}
                             {...register('surname', {
                                 required: false,
                                 onChange: (event) => {
@@ -218,21 +214,16 @@ function Signup() {
                         />
                         <S.FillInTheField>
                             {errors.surname && (
-                                <S.FillInTheFieldP>{errors.surname.message || 'Error!'}</S.FillInTheFieldP>
+                                <S.FillInTheFieldP>
+                                    {errors.surname.message || 'Error!'}
+                                </S.FillInTheFieldP>
                             )}
                         </S.FillInTheField>
                         <S.ModalInput
                             className="modal__input city"
-                            // type="text"
-                            // name="city"
-                            // id="city"
-                            // placeholder="Город (необязательно)"
                             type="text"
                             placeholder="Город (необязательно)"
                             value={city}
-                            // onChange={(event) => {
-                            //     setCity(event.target.value);
-                            // }}
                             {...register('city', {
                                 required: false,
                                 onChange: (event) => {
@@ -242,13 +233,14 @@ function Signup() {
                         />
                         <S.FillInTheField>
                             {errors.city && (
-                                <S.FillInTheFieldP>{errors.city.message || 'Error!'}</S.FillInTheFieldP>
+                                <S.FillInTheFieldP>
+                                    {errors.city.message || 'Error!'}
+                                </S.FillInTheFieldP>
                             )}
                         </S.FillInTheField>
                         {error && <S.Error>{error}</S.Error>}
                         <S.ModalBtnSignupEnt
                             className="modal__btn-signup-ent"
-                            // id="SignUpEnter"
                             type="submit"
                             disabled={offButton}
                         >

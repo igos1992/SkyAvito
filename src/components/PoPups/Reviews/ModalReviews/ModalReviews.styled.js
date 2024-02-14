@@ -74,9 +74,9 @@ export const ReviewImg = styled.div`
 export const ReviewImgImg = styled.img`
     display: block;
     width: 100%;
-    height: auto;
-    -o-object-fit: cover;
-    object-fit: cover;
+    height: 100$;
+    -o-object-fit: fill;
+    object-fit: fill;
 `;
 
 export const ReviewRight = styled.div`

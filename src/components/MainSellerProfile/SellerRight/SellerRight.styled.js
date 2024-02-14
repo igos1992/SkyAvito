@@ -101,10 +101,10 @@ export const ShowPhoneButtonSpan = styled.span`
 export const SellerImgMobItem = styled.img`
     @media ${device.mobile} {
         width: 100%;
-        height: auto;
+        height: 100%;
         display: block;
-        -o-object-fit: cover;
-        object-fit: cover;
+        -o-object-fit: fill;
+        object-fit: fill;
     }
 `;
 

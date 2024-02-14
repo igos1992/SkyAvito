@@ -11,7 +11,7 @@ function App() {
         setUser(localStorage.removeItem('user'));
         window.location.pathname = '/login';
     };
-    // console.log(user);
+    console.log(user);
 
     return (
         <UserContext.Provider

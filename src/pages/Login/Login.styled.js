@@ -174,10 +174,18 @@ export const FillInTheField = styled.div`
     color: red;
 `;
 
+export const Error = styled.div`
+    color: coral;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 24px;
+    margin-top: 20px;
+    text-align: left;
+`;
+
 export const FillInTheFieldP = styled.p`
     margin: 0px;
 `;
-
 
 export const ModalBtnEnter = styled.button`
     width: 278px;
@@ -202,11 +210,15 @@ export const ModalBtnEnter = styled.button`
     line-height: 24px;
     letter-spacing: -0.05px;
     color: #ffffff;
+    cursor: pointer;
     &:hover {
         background-color: #0080c1;
     }
     &:active {
         background-color: #0080c1;
+    }
+    &:disabled {
+        background-color: #d9d9d9;
     }
     @media ${device.mobile} {
         height: 46px;
@@ -215,6 +227,9 @@ export const ModalBtnEnter = styled.button`
         border: none;
         font-size: 16px;
         line-height: 24px;
+        &:disabled {
+            background-color: #d9d9d9;
+        }
     }
 `;
 

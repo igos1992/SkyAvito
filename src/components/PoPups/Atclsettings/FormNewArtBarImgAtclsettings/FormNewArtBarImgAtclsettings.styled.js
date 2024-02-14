@@ -45,6 +45,8 @@ export const FormNewArtBarImg = styled.div`
     }
 `;
 
+
+
 export const FormNewArtImg = styled.div`
     width: 90px;
     height: 90px;
@@ -54,7 +56,7 @@ export const FormNewArtImg = styled.div`
     top: 0;
     left: 0;
     background-color: #f0f0f0;
-    &::after {
+    &:after {
         content: '';
         position: absolute;
         width: 30px;
@@ -64,7 +66,7 @@ export const FormNewArtImg = styled.div`
         top: 50%;
         right: calc(50% - (30px / 2));
     }
-    &::before {
+    &:before {
         content: '';
         position: absolute;
         width: 30px;
@@ -86,28 +88,78 @@ export const FormNewArtImg = styled.div`
     }
 `;
 
+
 export const FormNewArtImgImg = styled.img`
     display: block;
     width: 100%;
-    height: auto;
-    -o-object-fit: cover;
-    object-fit: cover;
+    height: 100%;
+    -o-object-fit: fill;
+    object-fit: fill;
     z-index: 2;
+    position: relative;
     @media ${device.mobile} {
         display: block;
         width: 100%;
-        height: auto;
-        -o-object-fit: cover;
-        object-fit: cover;
+        height: 100%;
+        -o-object-fit: fill;
+        object-fit: fill;
+    }
+`;
+
+export const FormNewArtImgImgLabel = styled.label`
+    width: 90px;
+    height: 90px;
+    margin-right: 10px;
+    position: relative;
+    z-index: 0;
+    top: 0;
+    left: 0;
+    background-color: #f0f0f0;
+    &:after {
+        content: '';
+        position: absolute;
+        width: 30px;
+        height: 2px;
+        border-radius: 2px;
+        background-color: #d9d9d9;
+        top: 50%;
+        right: calc(50% - (30px / 2));
+    }
+    &:before {
+        content: '';
+        position: absolute;
+        width: 30px;
+        height: 2px;
+        border-radius: 2px;
+        background-color: #d9d9d9;
+        top: 50%;
+        right: calc(50% - (30px / 2));
+        -webkit-transform: rotate(90deg);
+        transform: rotate(90deg);
+    }
+    @media ${device.mobile} {
+        display: block;
+        width: 84px;
+        min-width: 84px;
+        height: 90px;
+        background-color: #f0f0f0;
+        margin: 0 5px;
     }
 `;
 
 export const FormNewArtImgCover = styled.input`
-
     opacity: 0;
     position: absolute;
     z-index: -1;
     overflow: hidden;
     width: 0.4px;
-    height: 0.4px;
+    height: 100px;
+`;
+
+export const Label = styled.label`
+display: flex;
+width: 100%;
+height: 100%;
+background-color: #f0f0f0;
+z-index: 2;
 `;

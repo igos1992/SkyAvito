@@ -208,7 +208,7 @@ export const ArticleAuthor = styled.div`
     }
 `;
 
-export const AuthorImgItem = styled.div`
+export const AuthorImgItem = styled(NavLink)`
     width: 40px;
     height: 40px;
     background-color: #f0f0f0;
@@ -217,10 +217,11 @@ export const AuthorImgItem = styled.div`
 
 export const AuthorImg = styled.img`
     width: 100%;
-    height: auto;
+    height: 100%;
     display: block;
-    -o-object-fit: cover;
-    object-fit: cover;
+    -o-object-fit: fill;
+    object-fit: fill;
+    border-radius: 50%;
 `;
 
 export const AuthorCont = styled.div`

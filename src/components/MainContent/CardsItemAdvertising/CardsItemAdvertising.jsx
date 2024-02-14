@@ -3,7 +3,7 @@ import * as S from './CardsItemAdvertising.styled';
 function CardsItemAdvertising({ cards }) {
     return (
         <>
-            <S.CardsItem className="cards__item">
+            <S.CardsItem className="cards__item" to={`/article/${cards?.id}`}>
                 <S.CardsCard className="cards__card card">
                     <S.CardImage className="card__image">
                         {cards?.images[0] ? (
@@ -16,11 +16,11 @@ function CardsItemAdvertising({ cards }) {
                         )}
                     </S.CardImage>
                     <S.CardContent className="card__content">
-                        <S.TitleLink to={`/article/${cards?.id}`}>
+                        {/* <S.TitleLink to={`/article/${cards?.id}`}> */}
                             <S.CardTitle className="card__title">
                                 {cards?.title}
                             </S.CardTitle>
-                        </S.TitleLink>
+                        {/* </S.TitleLink> */}
                         <S.CardPrice className="card__price">
                             {cards?.price} ₽
                         </S.CardPrice>

@@ -17,14 +17,14 @@ const AppRoutes = () => {
             <Route path="signup" element={<Signup />} />
             <Route path="/" element={<Layout />}>
                 <Route path="article/:id" element={<Article />} />
+                <Route
+                    path="sellerProfile/:userId"
+                    element={<SellerProfile />}
+                />
                 <Route index element={<Main />} />
                 <Route element={<ProtectedRoute />}>
                     {/* <Route path="myArticle" element={<MyArticle />} /> */}
                     <Route path="profile" element={<Profile />} />
-                    <Route
-                        path="sellerProfile/:userId"
-                        element={<SellerProfile />}
-                    />
                 </Route>
             </Route>
         </Routes>

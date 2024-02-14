@@ -9,9 +9,9 @@ export const device = {
 };
 
 export const Wrapper = styled.div`
-position: fixed;
-top: 0;
-left: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
     min-height: 100%;
     overflow: hidden;
@@ -22,14 +22,13 @@ left: 0;
 `;
 
 export const ContainerBg = styled.div`
-position: absolute;
-top: 0;
-left: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
     max-width: 100%;
     height: 100vh;
     margin: 0 auto;
     position: relative;
-   
 `;
 
 export const ModalBlock = styled.div`
@@ -323,6 +322,11 @@ export const FillInTheFieldP = styled.p`
     margin: 0px;
 `;
 
+export const FillInTheFieldPNoComments = styled.p`
+    margin: 0px;
+    color: red;
+    margin-bottom: 15px;
+`;
 
 export const FormNewArtBtnPub = styled.button`
     width: 181px;
@@ -335,6 +339,34 @@ export const FormNewArtBtnPub = styled.button`
     color: #ffffff;
     &:hover {
         background-color: #0080c1;
+    }
+    &:disable {
+        background-color: #0080c1;
+    }
+    @media ${device.mobile} {
+        margin-top: 0px;
+        width: 100%;
+        height: 46px;
+        background-color: #009ee4;
+    }
+`;
+
+export const FormNewArtBtnPubInput = styled.input`
+    width: 181px;
+    height: 50px;
+    background: #d9d9d9;
+    border: 1px solid #d9d9d9;
+    border-radius: 6px;
+    font-size: 16px;
+    line-height: 24px;
+    color: #ffffff;
+    cursor: pointer;
+    &::placeholder {
+        color: blue;
+        font-size: 16px;
+        line-height: 24px;
+        color: #ffffff;
+        text-align: center;
     }
     @media ${device.mobile} {
         margin-top: 0px;

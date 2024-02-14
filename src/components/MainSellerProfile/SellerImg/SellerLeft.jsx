@@ -1,14 +1,26 @@
+import SkeletonSellerAvatar from '../../UI/Skeletons/SkeletonSellerAvatar';
 import * as S from './SellerLeft.styled';
 
-function SellerLeft() {
+function SellerLeft({ sellerId, isLoadingAvatar }) {
     return (
-        <S.SellerLeft className="seller__left">
-            <S.SellerImg className="seller__img">
-                <a href="" target="_self">
-                    <S.SellerImgItem src="#" alt="" />
-                </a>
-            </S.SellerImg>
-        </S.SellerLeft>
+        <>
+            {isLoadingAvatar ? (
+                <SkeletonSellerAvatar />
+            ) : (
+                <S.SellerLeft className="seller__left">
+                    <S.SellerImg className="seller__img">
+                        {sellerId?.avatar ? (
+                            <S.SellerImgItem
+                                src={`http://localhost:8090/${sellerId?.avatar}`}
+                                alt=""
+                            />
+                        ) : (
+                            <span>Нет фото</span>
+                        )}
+                    </S.SellerImg>
+                </S.SellerLeft>
+            )}
+        </>
     );
 }
 

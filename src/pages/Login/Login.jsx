@@ -3,7 +3,7 @@ import * as S from './Login.styled';
 import { useForm } from 'react-hook-form';
 import {
     useGetTokenAndLoginMutation,
-    useGetUserMutation,
+    // useGetUserQuery,
 } from '../../redux/RequestsWithAds/serviceQuery';
 import { useDispatch } from 'react-redux';
 import { setAuth } from '../../redux/RequestsWithAds/authSlice';
@@ -13,16 +13,13 @@ import { UserContext } from '../../UserContext/UserContext';
 
 function Login() {
     const [getToken] = useGetTokenAndLoginMutation();
-    const [getTokenAndLogin] = useGetUserMutation();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [offButton, setOffButton] = useState(false);
+    const [error, setError] = useState(null);
     const { changingUserData } = useContext(UserContext);
-    // const [error, setError] = useState(null);
     const dispatch = useDispatch();
     const navigate = useNavigate();
-
-    // console.log(isError);
 
     const {
         register,
@@ -32,21 +29,7 @@ function Login() {
         mode: 'onBlur',
     });
 
-    const ChallengeGetTokenAndLogin = async () => {
-        await getTokenAndLogin().then((res) => {
-            console.log(res);
-            // dispatch(
-            //     setCurrentUser(
-            //         localStorage.setItem('user', JSON.stringify(res)),
-            //     ),
-            // );
-            localStorage.setItem('user', JSON.stringify(res)),
-            changingUserData(JSON.parse(localStorage.getItem('user')));
-
-            // console.log(localStorage.getItem('user'));
-        });
-    };
-
+ 
     const onSubmit = async () => {
         setOffButton(true);
         await getToken({
@@ -60,10 +43,10 @@ function Login() {
                     setAuth({
                         access: token?.access_token,
                         refresh: token?.refresh_token,
-                        user: 
-                        // JSON.parse(
-                            localStorage.getItem('user')
-                            // ),
+                        user:
+                            JSON.parse(
+                            localStorage.getItem('user'),
+                        ),
                     }),
                 );
                 localStorage.setItem(
@@ -74,9 +57,33 @@ function Login() {
                     'refresh_token',
                     token?.refresh_token.toString(),
                 );
+                localStorage.setItem(
+                    'user',
+                    JSON.stringify(token?.access_token),
+                ),
+                    changingUserData(JSON.parse(localStorage.getItem('user')));
+                navigate('/');
+            })
+            .catch((error) => {
+                console.log(error?.data?.detail[0]?.msg);
+                console.log(error);
+
+                if (
+                    error?.data?.detail[0]?.msg ===
+                        'value is not a valid email address' ||
+                    error?.message ===
+                        'window.location.navigate is not a function'
+                ) {
+                    setError('Не правильно введен emeal или пароль');
+                    return;
+                }
+                setError(error?.data?.detail[0]?.msg);
+            })
+            .finally(() => {
+                setOffButton(false);
             });
-        await ChallengeGetTokenAndLogin();
-        navigate('/');
+
+       
     };
     // console.log(localStorage.getItem('access_token'));
 
@@ -88,7 +95,6 @@ function Login() {
                 <S.ModalBlock className="modal__block">
                     <S.ModalFormLogin
                         className="modal__form-login"
-                        id="formLogIn"
                         action="#"
                         onSubmit={handleSubmit(onSubmit)}
                     >
@@ -100,10 +106,7 @@ function Login() {
                         </S.ModalLogo>
                         <S.ModalInput
                             className="modal__input login"
-                            // type="text"
-                            // name="login"
-                            // id="formlogin"
-                            // placeholder="email"
+                           
                             type="text"
                             placeholder="Почта"
                             value={email}
@@ -116,15 +119,14 @@ function Login() {
                         />
                         <S.FillInTheField>
                             {errors.login && (
-                                <S.FillInTheFieldP>{errors.login.message || 'Error!'}</S.FillInTheFieldP>
+                                <S.FillInTheFieldP>
+                                    {errors.login.message || 'Error!'}
+                                </S.FillInTheFieldP>
                             )}
                         </S.FillInTheField>
                         <S.ModalInput
                             className="modal__input password"
-                            // type="password"
-                            // name="password"
-                            // id="formpassword"
-                            // placeholder="Пароль"
+                       
                             type="password"
                             placeholder="Пароль"
                             value={password}
@@ -137,10 +139,12 @@ function Login() {
                         />
                         <S.FillInTheField>
                             {errors.password && (
-                                <S.FillInTheFieldP>{errors.password.message || 'Error!'}</S.FillInTheFieldP>
+                                <S.FillInTheFieldP>
+                                    {errors.password.message || 'Error!'}
+                                </S.FillInTheFieldP>
                             )}
                         </S.FillInTheField>
-                        {/* {error && <S.Error>{error}</S.Error>} */}
+                        {error && <S.Error>{error}</S.Error>}
                         <S.ModalBtnEnter
                             className="modal__btn-enter"
                             type="submit"

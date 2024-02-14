@@ -1,42 +1,60 @@
-import FormNewArtBarImg from '../FormNewArtBarImg/FormNewArtBarImg';
+import FormNewArtBarImg from './FormNewArtBarImg/FormNewArtBarImg';
 import * as S from './Addnewat.styled';
 import {
     useGetCreateAdsWithoutImagesMutation,
     useGetUploadImagesAdMutation,
 } from '../../../redux/RequestsWithAds/serviceQuery';
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+    selectAddingImages,
+    setAddingImages,
+    setClearingImagesAvatar,
+} from '../../../redux/RequestsWithAds/adsSlice';
 
 function Addnewat({ isOpen, onClose }) {
     const [createAds] = useGetCreateAdsWithoutImagesMutation();
     const [getUploadImagesAd] = useGetUploadImagesAdMutation();
     const [selectedFile, setSelectedFile] = useState([]);
-    const [upload, setUpload] = useState();
-    const filePicker = useRef(null);
+    // const filePicker = useRef(null);
+    const dispatch = useDispatch();
+    const [offButton, setOffButton] = useState(false);
 
-    console.log(upload);
+    const addingImages = useSelector(selectAddingImages);
+    console.log(addingImages);
 
     const {
         register,
-        formState: { errors },
+        formState: { errors, isValid },
         handleSubmit,
-        reset
+        reset,
     } = useForm({
         mode: 'onBlur',
     });
 
     const handleImages = (event) => {
         console.log(event.target.files);
-        setSelectedFile([...selectedFile, event.target.files?.[0]]);
+        const reader = new FileReader();
+        if (!event.target.files[0]) {
+            return;
+        }
+        reader.readAsDataURL(event.target.files[0]);
+        reader.onloadend = () => {
+            dispatch(setAddingImages(reader.result));
+        };
+
+        setSelectedFile([...selectedFile, event.target.files[0]]);
     };
 
     console.log(selectedFile);
 
-    const handlePick = () => {
-        filePicker.current.click();
-    };
+    // const handlePick = () => {
+    //     filePicker.current.click();
+    // };
 
     const onSubmit = async ({ title, description, price }) => {
+        setOffButton(true);
         await createAds({
             title: title,
             description: description,
@@ -47,21 +65,20 @@ function Addnewat({ isOpen, onClose }) {
                 selectedFile.forEach(async (image) => {
                     await getUploadImagesAd({
                         image,
-                        id: res?.data.id,
+                        id: res?.data?.id,
                     }).then((data) => {
                         console.log(data);
-                        setUpload(data);
                     });
                 });
             }
             return res;
         });
-        reset()
+        dispatch(setClearingImagesAvatar());
+        reset();
+        isValid;
+        setOffButton(false);
+        onClose();
     };
-
-    // const [title, setTitle] = useState('');
-    // const [description, setDescription] = useState('');
-    // const [price, setPrice] = useState('');
 
     return (
         <>
@@ -75,7 +92,6 @@ function Addnewat({ isOpen, onClose }) {
                                 </S.ModalTitle>
                                 <S.ModalFormNewArt
                                     className="modal__form-newArt form-newArt"
-                                    id="formNewArt"
                                     // action="#"
                                     onSubmit={handleSubmit(onSubmit)}
                                 >
@@ -85,35 +101,19 @@ function Addnewat({ isOpen, onClose }) {
                                     >
                                         <S.ModalBtnCloseLine className="modal__btn-close-line" />
                                     </S.ModalBtnClose>
-                                    {/* <S.ModalFormNewArt
-                                    className="modal__form-newArt form-newArt"
-                                    id="formNewArt"
-                                    // action="#"
-                                    onSubmit={handleSubmit(onSubmit)}
-                                > */}
                                     <S.FormNewArtBlock className="form-newArt__block">
-                                        <S.FormNewArtBlockLabel htmlFor="formName">
+                                        <S.FormNewArtBlockLabel>
                                             Название
                                         </S.FormNewArtBlockLabel>
                                         <S.FormNewArtInput
                                             className="form-newArt__input"
                                             type="text"
                                             name="title"
-                                            id="formName"
                                             placeholder="Введите название"
                                             autoComplete="on"
-                                            // value={title}
-                                            // onChange={(event) => {
-                                            //     setTitle(event.target.value);
-                                            // }}
                                             {...register('title', {
                                                 required:
                                                     'Добавьте, пожалуйста, название',
-                                                // onChange: (event) => {
-                                                //     setTitle(
-                                                //         event.target.value,
-                                                //     );
-                                                // },
                                             })}
                                         />
                                         <S.FillInTheField>
@@ -126,32 +126,20 @@ function Addnewat({ isOpen, onClose }) {
                                         </S.FillInTheField>
                                     </S.FormNewArtBlock>
                                     <S.FormNewArtBlock className="form-newArt__block">
-                                        <S.FormNewArtBlockLabel htmlFor="formArea">
+                                        <S.FormNewArtBlockLabel>
                                             Описание
                                         </S.FormNewArtBlockLabel>
                                         <S.FormNewArtArea
                                             className="form-newArt__area"
                                             name="description"
-                                            id="formArea"
                                             cols="auto"
                                             rows="10"
                                             placeholder="Введите описание"
-                                            // value={description}
-                                            // onChange={(event) => {
-                                            //     setDescription(
-                                            //         event.target.value,
-                                            //     );
-                                            // }}
                                             {...register('description', {
                                                 required:
                                                     'Добавьте, пожалуйста, описание товара',
-                                                // onChange: (event) => {
-                                                //     setDescription(
-                                                //         event.target.value,
-                                                //     );
-                                                // },
                                             })}
-                                        ></S.FormNewArtArea>
+                                        />
                                         <S.FillInTheField>
                                             {errors.description && (
                                                 <p>
@@ -168,35 +156,29 @@ function Addnewat({ isOpen, onClose }) {
                                                 не более 5 фотографий
                                             </S.FormNewArtPSpan>
                                         </S.FormNewArtP>
-                                        {/* Перебрать массив фотографий */}
                                         <FormNewArtBarImg
-                                            handlePick={handlePick}
-                                            filePicker={filePicker}
+                                            // handlePick={handlePick}
+                                            // filePicker={filePicker}
                                             handleImages={handleImages}
                                         />
                                     </S.FormNewArtBlock>
                                     <S.FormNewArtBlock className="form-newArt__block block-price">
-                                        <S.FormNewArtBlockLabel htmlFor="formNameOne">
+                                        <S.FormNewArtBlockLabel>
                                             Цена
                                         </S.FormNewArtBlockLabel>
                                         <S.FormNewArtInputPrice
                                             className="form-newArt__input-price"
                                             type="text"
                                             name="price"
-                                            id="formNameOne"
                                             autoComplete="on"
-                                            // value={price}
-                                            // onChange={(event) => {
-                                            //     setPrice(event.target.value);
-                                            // }}
                                             {...register('price', {
                                                 required:
                                                     'Укажите, пожалуйста, цену',
-                                                // onChange: (event) => {
-                                                //     setPrice(
-                                                //         event.target.value,
-                                                //     );
-                                                // },
+                                                pattern: {
+                                                    value: /^[0-9+-]+$/,
+                                                    message:
+                                                        'Ведите цену цифрами',
+                                                },
                                             })}
                                         />
                                         <S.FillInTheField>
@@ -212,8 +194,10 @@ function Addnewat({ isOpen, onClose }) {
 
                                     <S.FormNewArtBtnPub
                                         className="form-newArt__btn-pub btn-hov02"
-                                        id="btnPublish"
                                         type="submit"
+                                        disabled={
+                                            isValid ? offButton : !isValid
+                                        }
                                     >
                                         Опубликовать
                                     </S.FormNewArtBtnPub>

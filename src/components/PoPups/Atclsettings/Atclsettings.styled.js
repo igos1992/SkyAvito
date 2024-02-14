@@ -513,9 +513,15 @@ export const FormNewArtBtnPub = styled.button`
     &:hover {
         background-color: #0080c1;
     }
+    &:disabled {
+        background-color: #d9d9d9;
+    }
     @media ${device.mobile} {
         margin-top: 10px;
         width: 100%;
         height: 46px;
+        &:disabled {
+            background-color: #d9d9d9;
+    }
     }
 `;

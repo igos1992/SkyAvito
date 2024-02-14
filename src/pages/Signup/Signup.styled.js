@@ -178,11 +178,15 @@ export const ModalBtnSignupEnt = styled.button`
     line-height: 24px;
     letter-spacing: -0.05px;
     color: #ffffff;
+    cursor: pointer;
     &:hover {
         background-color: #0080c1;
     }
     &:active {
         background-color: #0080c1;
+    }
+     &:disabled {
+        background-color: #d9d9d9;
     }
     @media ${device.mobile} {
         height: 46px;
@@ -190,7 +194,11 @@ export const ModalBtnSignupEnt = styled.button`
         margin-top: 26px;
         font-size: 16px;
         line-height: 24px;
+         &:disabled {
+        background-color: #d9d9d9;
     }
+    }
+    
 `;
 
 export const Error = styled.div`

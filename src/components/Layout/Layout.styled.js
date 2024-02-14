@@ -73,10 +73,10 @@ export const HeaderLogo = styled.div`
 export const LogoMobImg = styled.img`
     @media ${device.mobile} {
         width: 32px;
-        height: auto;
+        height: 100%;
         display: block;
-        -o-object-fit: cover;
-        object-fit: cover;
+        -o-object-fit: fill;
+        object-fit: fill;
     }
 `;
 
@@ -201,7 +201,7 @@ export const FooterImgItem = styled.img`
         width: 100%;
         height: 100%;
         display: block;
-        -o-object-fit: cover;
-        object-fit: cover;
+        -o-object-fit: fill;
+        object-fit: fill;
     }
 `;

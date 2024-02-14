@@ -65,7 +65,6 @@ export const ArticleBtnRedact = styled.button`
 
     @media ${device.tablet} {
         width: 225px;
-        margin-right: 0;
     }
     @media ${device.mobile} {
         width: 100%;

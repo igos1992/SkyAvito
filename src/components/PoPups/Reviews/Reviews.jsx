@@ -4,6 +4,7 @@ import * as S from './Reviews.styled';
 import { useForm } from 'react-hook-form';
 import { useGetCreateCommentAdMutation } from '../../../redux/RequestsWithAds/serviceQuery';
 import { useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
 function Reviews({ isOpen, onClose }) {
     const { id } = useParams();
@@ -14,7 +15,7 @@ function Reviews({ isOpen, onClose }) {
 
     const {
         register,
-        formState: { errors },
+        formState: { errors, isValid },
         handleSubmit,
         reset,
     } = useForm({
@@ -32,6 +33,12 @@ function Reviews({ isOpen, onClose }) {
             });
         reset();
     };
+
+    const [loginButton, setLoginButton] = useState(false);
+
+    useEffect(() => {
+        setLoginButton(localStorage.getItem('user'));
+    }, [loginButton]);
 
     return (
         <>
@@ -54,31 +61,42 @@ function Reviews({ isOpen, onClose }) {
                                 <S.ModalScroll className="modal__scroll">
                                     <S.ModalFormNewArt
                                         className="modal__form-newArt form-newArt"
-                                        id="formNewArt"
                                         // action="#"
                                         onSubmit={handleSubmit(onSubmit)}
                                     >
                                         <S.FormNewArtBlock className="form-newArt__block">
-                                            <S.FormNewArtBlockLabel htmlFor="formArea">
+                                            <S.FormNewArtBlockLabel>
                                                 Добавить отзыв
                                             </S.FormNewArtBlockLabel>
                                             <S.FormNewArtArea
                                                 className="form-newArt__area"
                                                 name="text"
-                                                // id="formArea"
                                                 // cols="auto"
                                                 // rows="5"
                                                 // value={text}
                                                 placeholder="Введите описание"
-                                                {...register('text', {
-                                                    required:
-                                                        '* Пожалуйста, напишиье комментарий',
-                                                    // onChange: (event) => {
-                                                    //     setText(
-                                                    //         event.target.value,
-                                                    //     );
-                                                    // },
-                                                })}
+                                                {...(loginButton
+                                                    ? {
+                                                          ...register('text', {
+                                                              required:
+                                                                  '* Пожалуйста, напишиnе комментарий',
+                                                              // onChange: (event) => {
+                                                              //     setText(
+                                                              //         event.target.value,
+                                                              //     );
+                                                              // },
+                                                          }),
+                                                      }
+                                                    : {
+                                                          ...register('text', {
+                                                              required: false,
+                                                              // onChange: (event) => {
+                                                              //     setText(
+                                                              //         event.target.value,
+                                                              //     );
+                                                              // },
+                                                          }),
+                                                      })}
                                             />
                                             <S.FillInTheField>
                                                 {errors.text && (
@@ -89,13 +107,37 @@ function Reviews({ isOpen, onClose }) {
                                                 )}
                                             </S.FillInTheField>
                                         </S.FormNewArtBlock>
-                                        <S.FormNewArtBtnPub
+                                        {loginButton ? (
+                                            <S.FormNewArtBtnPub
+                                                className="form-newArt__btn-pub btn-hov02"
+                                                type="submit"
+                                                disabled={!isValid}
+                                            >
+                                                Опубликовать
+                                            </S.FormNewArtBtnPub>
+                                        ) : (
+                                            <>
+                                                <S.FillInTheFieldPNoComments>
+                                                    Чтобы оставить отзыв,
+                                                    необходима авторизация
+                                                </S.FillInTheFieldPNoComments>
+
+                                                <S.FormNewArtBtnPubInput
+                                                    className="form-newArt__btn-pub btn-hov02"
+                                                    placeholder="Опубликовать"
+                                                    disabled
+                                                />
+                                            </>
+                                        )}
+                                        {/* <S.FormNewArtBtnPub
                                             className="form-newArt__btn-pub btn-hov02"
                                             type="submit"
-                                            id="btnPublish"
+                                            disabled={
+                                                loginButton ? !isValid : isValid
+                                            }
                                         >
                                             Опубликовать
-                                        </S.FormNewArtBtnPub>
+                                        </S.FormNewArtBtnPub> */}
                                     </S.ModalFormNewArt>
 
                                     <ModalReviews />

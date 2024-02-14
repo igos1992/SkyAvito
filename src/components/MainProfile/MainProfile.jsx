@@ -1,36 +1,60 @@
-import { useContext, useRef, useState } from 'react';
-import { UserContext } from '../../UserContext/UserContext';
-// import SettingsImg from '../MainProfile/SettingsImg/SettingsImg';
+import { useRef, useState } from 'react';
 import * as S from './MainProfile.styled';
-// import SettingsChangePhoto from './SettingsChangePhoto/SettingsChangePhoto';
 import {
     useChangeTheRecordOfTheCurrentUserMutation,
     useUploadAnAvatarForTheUserMutation,
+    useUpdateCurrentUserPasswordMutation,
 } from '../../redux/RequestsWithAds/serviceQuery';
 import { useForm } from 'react-hook-form';
 import SettingsImg from './SettingsImg/SettingsImg';
-// import { useDispatch } from 'react-redux';
-// import { setCurrentUser } from '../../redux/RequestsWithAds/adsSlice';
+import { useDispatch } from 'react-redux';
+import { setAddingImagesAvatar } from '../../redux/RequestsWithAds/adsSlice';
 
-function MainProfile() {
-    const { userData } = useContext(UserContext);
-    const { changingUserData } = useContext(UserContext);
-    // const dispatch = useDispatch();
-    // console.log(userData);
+import UpdateCurrentUserPasswordPoPup from '../PoPups/UpdateCurrentUserPasswordPoPup/UpdateCurrentUserPasswordPoPup';
+import { useEffect } from 'react';
 
+function MainProfile({ currentUser }) {
     const [getChangingUserData] = useChangeTheRecordOfTheCurrentUserMutation();
     const [uploadAvatarForUser] = useUploadAnAvatarForTheUserMutation();
+    const [updateCurrentUserPassword] = useUpdateCurrentUserPasswordMutation();
     const filePicker = useRef(null);
     const [selectedFile, setSelectedFile] = useState();
-    const [upload, setUpload] = useState();
+    const [modalNewAddIsOpen, setModalNewAddIsOpen] = useState(false);
+    const dispatch = useDispatch();
+
+    console.log(currentUser);
+
+    const [password_1, setPassword_1] = useState('');
+    const [password_2, setPassword_2] = useState('');
+    const [offButton, setOffButton] = useState(false);
+    const [name, setName] = useState('');
+    const [surname, setSurname] = useState('');
+    const [city, setCity] = useState('');
+    const [phone, setPhone] = useState('');
 
     const {
         register,
-        // formState: { errors },
+        formState: { errors },
         handleSubmit,
     } = useForm({
         mode: 'onBlur',
     });
+
+    const updateUserPassword = async () => {
+        await updateCurrentUserPassword({
+            password_1: password_1,
+            password_2: password_2,
+        }).then((res) => {
+            console.log(res);
+        });
+    };
+
+    useEffect(() => {
+        setName(currentUser?.name || '');
+        setSurname(currentUser?.surname || '');
+        setCity(currentUser?.city || '');
+        setPhone(currentUser?.phone || '');
+    }, [currentUser]);
 
     // console.log(upload);
 
@@ -38,6 +62,15 @@ function MainProfile() {
 
     const handleAvatar = (event) => {
         console.log(event.target.files);
+        const reader = new FileReader();
+        if (!event.target.files[0]) {
+            return;
+        }
+        reader.readAsDataURL(event.target.files[0]);
+        reader.onloadend = () => {
+            dispatch(setAddingImagesAvatar(reader.result));
+        };
+
         setSelectedFile(event.target.files?.[0]);
     };
 
@@ -50,8 +83,7 @@ function MainProfile() {
         const formData = new FormData();
         formData.append('file', selectedFile);
         await uploadAvatarForUser(formData).then((data) => {
-            // console.log(data);
-            setUpload(data);
+            console.log(data);
         });
     };
 
@@ -59,21 +91,24 @@ function MainProfile() {
         filePicker.current.click();
     };
 
-    const onSubmit = async ({ name, surname, phone, city }) => {
+    const onSubmit = async () => {
+        setOffButton(true);
+
         await getChangingUserData({
             name: name,
             surname: surname,
             city: city,
             phone: phone,
-        })
-            // .unwrap()
-            .then((res) => {
-                // console.log(res);
-
-                localStorage.setItem('user', JSON.stringify(res));
-                changingUserData(JSON.parse(localStorage.getItem('user')));
-            });
+        });
         await handleUpload();
+        setOffButton(false);
+
+        if (password_1 && password_2) {
+            // console.log('Файл не загружен');
+            return await updateUserPassword();
+        } else {
+            return;
+        }
     };
 
     // console.log(JSON.parse(localStorage.getItem('user')));
@@ -94,7 +129,7 @@ function MainProfile() {
                             {/* <SettingsImg /> */}
                             {/* <SettingsChangePhoto /> */}
 
-                            <SettingsImg upload={upload} />
+                            <SettingsImg />
                             <S.UploadFileInput
                                 type="file"
                                 id="upload-file__input_1"
@@ -105,11 +140,11 @@ function MainProfile() {
                             />
 
                             <S.UploadFileButton
-                                type="submit"
+                                type="button"
                                 className="upload-file__button"
                                 onClick={handlePick}
                             >
-                                Заменить фото
+                                Заменить аватарку
                             </S.UploadFileButton>
                         </S.SettingsLeft>
                         <S.SettingsRight className="settings__right">
@@ -122,12 +157,13 @@ function MainProfile() {
                                     id="settings-fname"
                                     name="fname"
                                     type="text"
-                                    defaultValue={userData?.data?.name}
-                                    placeholder=""
+                                    // defaultValue={currentUser?.name}
+                                    value={name}
+                                    placeholder="Имя"
                                     {...register('name', {
                                         required: false,
                                         onChange: (event) => {
-                                            event.target.defaultValue;
+                                            setName(event.target.value);
                                         },
                                     })}
                                 />
@@ -142,12 +178,12 @@ function MainProfile() {
                                     id="settings-lname"
                                     name="lname"
                                     type="text"
-                                    defaultValue={userData?.data?.surname}
-                                    placeholder=""
+                                    value={surname}
+                                    placeholder="Фамилия"
                                     {...register('surname', {
                                         required: false,
                                         onChange: (event) => {
-                                            event.target.defaultValue;
+                                            setSurname(event.target.value);
                                         },
                                     })}
                                 />
@@ -162,12 +198,12 @@ function MainProfile() {
                                     id="settings-city"
                                     name="city"
                                     type="text"
-                                    defaultValue={userData?.data?.city}
-                                    placeholder=""
+                                    value={city}
+                                    placeholder="Город"
                                     {...register('city', {
                                         required: false,
                                         onChange: (event) => {
-                                            event.target.defaultValue;
+                                            setCity(event.target.value);
                                         },
                                     })}
                                 />
@@ -182,22 +218,53 @@ function MainProfile() {
                                     id="settings-phone"
                                     name="phone"
                                     type="tel"
-                                    defaultValue={userData?.data?.phone}
+                                    value={phone}
                                     placeholder="+79161234567"
                                     {...register('phone', {
                                         required: false,
                                         onChange: (event) => {
-                                            event.target.defaultValue;
+                                            setPhone(event.target.value);
+                                        },
+                                        pattern: {
+                                            value: /^[0-9+-]+$/,
+                                            message:
+                                                'Ведите номер телефона цифрами',
                                         },
                                     })}
                                 />
+                                <S.FillInTheField>
+                                    {errors.phone && (
+                                        <p>
+                                            {errors.phone.message || 'Error!'}
+                                        </p>
+                                    )}
+                                </S.FillInTheField>
                             </S.SettingsDiv>
+
+                            <S.HeaderBtnPutAd
+                                className="header__btn-putAd btn-hov01"
+                                id="btputAd"
+                                onClick={() => setModalNewAddIsOpen(true)}
+                            >
+                                Изменить пароль
+                            </S.HeaderBtnPutAd>
+
+                            <UpdateCurrentUserPasswordPoPup
+                                isOpen={modalNewAddIsOpen}
+                                onClose={() => setModalNewAddIsOpen(false)}
+                                password_1={password_1}
+                                setPassword_1={setPassword_1}
+                                password_2={password_2}
+                                setPassword_2={setPassword_2}
+                                register={register}
+                            />
 
                             <S.SettingsBtn
                                 className="settings__btn btn-hov02"
                                 type="submit"
+                                disabled={offButton}
                             >
-                                Сохранить
+                                Сохранить все изменения
                             </S.SettingsBtn>
                         </S.SettingsRight>
                     </S.ProfileSettings>

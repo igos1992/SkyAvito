@@ -12,6 +12,10 @@ export const SettingsImg = styled.div`
     width: 170px;
     height: 170px;
     border-radius: 50%;
+    display: flex;
+    align-items: center;
+    background-color: #f0f0f0;
+    justify-content: center;
     @media ${device.mobile} {
         width: 132px;
         height: 132px;
@@ -20,8 +24,13 @@ export const SettingsImg = styled.div`
 
 export const SettingsImgItem = styled.img`
     width: 100%;
-    height: auto;
+    height: 100%;
     display: block;
-    -o-object-fit: cover;
-    object-fit: cover;
+    -o-object-fit: fill;
+    object-fit: fill;
+    border-radius: 50%;
+`;
+
+export const AvatarSpan = styled.span`
+    color: #000000;
 `;

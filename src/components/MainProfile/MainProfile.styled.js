@@ -67,10 +67,10 @@ export const SettingsImg = styled.div`
 
 export const SettingsImgItem = styled.img`
     width: 100%;
-    height: auto;
+    height: 100%;
     display: block;
-    -o-object-fit: cover;
-    object-fit: cover;
+    -o-object-fit: fill;
+    object-fit: fill;
 `;
 
 export const SettingsLeft = styled.div`
@@ -121,12 +121,14 @@ export const UploadFileLabel = styled.label`
 
 export const UploadFileButton = styled.button`
     margin-top: 10px;
-    margin-bottom: 30px;
     text-decoration: none;
-    font-size: 16px;
-    line-height: 24px;
     color: #009ee4;
     transition: 0.25s ease;
+    padding: 0;
+    border: none;
+    font: inherit;
+    background-color: transparent;
+    cursor: pointer;
 `;
 
 export const SettingsRight = styled.div`
@@ -163,6 +165,35 @@ export const SettingsDiv = styled.div`
         margin: 0 0px 18px;
     }
 `;
+
+export const HeaderBtnPutAd = styled.div`
+    font-size: 16px;
+    line-height: 1;
+    color: #ffffff;
+    width: 154px;
+    height: 50px;
+    margin: 10px 7px 0;
+    background-color: #009ee4;
+    border-radius: 6px;
+    border: 1px solid #009ee4;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    justify-content: center;
+    :hover {
+        background-color: #0080c1;
+    }
+    @media ${device.mobile} {
+        font-size: 16px;
+        line-height: 1;
+        width: 100%;
+        height: 46px;
+        margin: 8px 0px 0;
+        display: flex;
+    align-items: center;
+    justify-content: center;
+    }
+}`;
 
 export const SettingsDivLabel = styled.label`
     font-size: 16px;
@@ -270,18 +301,26 @@ export const SettingsPhone = styled.input`
     }
 `;
 
+export const FillInTheField = styled.div`
+    color: red;
+    margin-top: 15px;
+`;
+
 export const SettingsBtn = styled.button`
     font-size: 16px;
     line-height: 1;
     color: #ffffff;
-    width: 154px;
     height: 50px;
     margin: 10px 7px 0;
+    padding: 10px;
     background-color: #009ee4;
     border-radius: 6px;
     border: 1px solid #009ee4;
     :hover {
         background-color: #0080c1;
+    }
+    &:disabled {
+        background-color: #303030;
     }
     @media ${device.mobile} {
         font-size: 16px;
@@ -289,5 +328,8 @@ export const SettingsBtn = styled.button`
         width: 100%;
         height: 46px;
         margin: 8px 0px 0;
+        &:disabled {
+            background-color: #303030;
+        }
     }
 `;

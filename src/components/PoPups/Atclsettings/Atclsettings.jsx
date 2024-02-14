@@ -1,32 +1,74 @@
 import { useForm } from 'react-hook-form';
-import FormNewArtBarImg from '../FormNewArtBarImg/FormNewArtBarImg';
+import FormNewArtBarImgAtclsettings from './FormNewArtBarImgAtclsettings/FormNewArtBarImgAtclsettings';
 // import ModalBtnClose from '../ModalBtnClose/ModalBtnClose';
 import * as S from './Atclsettings.styled';
-import { useGetEditAdMutation } from '../../../redux/RequestsWithAds/serviceQuery';
+import {
+    useGetEditAdMutation,
+    useGetUploadImagesAdMutation,
+} from '../../../redux/RequestsWithAds/serviceQuery';
 import { useParams } from 'react-router-dom';
+import {  useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { setAddingImagesAtclsettings } from '../../../redux/RequestsWithAds/adsSlice';
 
 function Atclsettings({ isOpen, onClose, dataAds }) {
     console.log(dataAds);
 
     const { id } = useParams();
 
+    const [getUploadImagesAd] = useGetUploadImagesAdMutation();
+
     const [editAd] = useGetEditAdMutation(Number(id));
+
+    const [offButton, setOffButton] = useState(false);
+    const dispatch = useDispatch();
+    const [selectedFile, setSelectedFile] = useState([]);
 
     const {
         register,
-        formState: { errors },
+        formState: { errors, isValid },
         handleSubmit,
     } = useForm({
         mode: 'onBlur',
     });
 
+    const handleImages = (event) => {
+        console.log(event.target.files);
+        const reader = new FileReader();
+        if (!event.target.files[0]) {
+            return;
+        }
+        reader.readAsDataURL(event.target.files[0]);
+        reader.onloadend = () => {
+            dispatch(setAddingImagesAtclsettings(reader.result));
+        };
+
+        setSelectedFile([...selectedFile, event.target.files[0]]);
+    };
+
     const onSubmit = async ({ title, description, price }) => {
+        setOffButton(true);
         await editAd({
             id,
             title: title,
             description: description,
             price: price,
+        }).then((res) => {
+            console.log(res);
+            if (selectedFile.length > 0) {
+                selectedFile.forEach(async (image) => {
+                    await getUploadImagesAd({
+                        image,
+                        id: res?.data?.id,
+                    }).then((data) => {
+                        console.log(data);
+                    });
+                });
+            }
+            return res;
         });
+        setOffButton(false);
+        onClose();
     };
 
     return (
@@ -39,7 +81,7 @@ function Atclsettings({ isOpen, onClose, dataAds }) {
                                 <S.ModalTitle className="modal__title">
                                     Редактировать объявление
                                 </S.ModalTitle>
-                                {/* <ModalBtnClose /> */}
+                          
                                 <S.ModalBtnClose
                                     className="modal__btn-close"
                                     onClick={() => onClose()}
@@ -48,23 +90,21 @@ function Atclsettings({ isOpen, onClose, dataAds }) {
                                 </S.ModalBtnClose>
                                 <S.ModalFormNewArt
                                     className="modal__form-newArt form-newArt"
-                                    id="formNewArt"
                                     action="#"
                                     onSubmit={handleSubmit(onSubmit)}
                                 >
                                     <S.FormNewArtBlock className="form-newArt__block">
-                                        <S.FormNewArtBlockLabel htmlFor="name">
+                                        <S.FormNewArtBlockLabel>
                                             Название
                                         </S.FormNewArtBlockLabel>
                                         <S.FormNewArtInput
                                             className="form-newArt__input"
                                             type="text"
                                             name="title"
-                                            id="formName"
                                             placeholder="Введите название"
                                             defaultValue={dataAds?.title}
                                             {...register('title', {
-                                                required: false,
+                                                required: true,
                                                 onChange: (event) => {
                                                     event.target.defaultValue;
                                                 },
@@ -74,25 +114,24 @@ function Atclsettings({ isOpen, onClose, dataAds }) {
                                             {errors.title && (
                                                 <S.FillInTheFieldP>
                                                     {errors.title.message ||
-                                                        'Error!'}
+                                                        'Добавьте, пожалуйста, название!'}
                                                 </S.FillInTheFieldP>
                                             )}
                                         </S.FillInTheField>
                                     </S.FormNewArtBlock>
                                     <S.FormNewArtBlock className="form-newArt__block">
-                                        <S.FormNewArtBlockLabel htmlFor="text">
+                                        <S.FormNewArtBlockLabel>
                                             Описание
                                         </S.FormNewArtBlockLabel>
                                         <S.FormNewArtArea
                                             className="form-newArt__area"
                                             name="description"
-                                            id="formArea"
                                             cols="auto"
                                             rows="10"
                                             placeholder="Введите описание"
                                             defaultValue={dataAds?.description}
                                             {...register('description', {
-                                                required: false,
+                                                required: true,
                                                 onChange: (event) => {
                                                     event.target.defaultValue;
                                                 },
@@ -102,7 +141,7 @@ function Atclsettings({ isOpen, onClose, dataAds }) {
                                             {errors.description && (
                                                 <S.FillInTheFieldP>
                                                     {errors.description
-                                                        .message || 'Error!'}
+                                                        .message || 'Добавьте, пожалуйста, описание товара!'}
                                                 </S.FillInTheFieldP>
                                             )}
                                         </S.FillInTheField>
@@ -114,22 +153,30 @@ function Atclsettings({ isOpen, onClose, dataAds }) {
                                                 не более 5 фотографий
                                             </S.FormNewArtPSpan>
                                         </S.FormNewArtP>
-                                        <FormNewArtBarImg />
+                                        <FormNewArtBarImgAtclsettings
+                                            dataAds={dataAds}
+                                       
+                                            handleImages={handleImages}
+                                        />
                                     </S.FormNewArtBlock>
                                     <S.FormNewArtBlock className="form-newArt__block block-price">
-                                        <S.FormNewArtBlockLabel htmlFor="price">
+                                        <S.FormNewArtBlockLabel>
                                             Цена
                                         </S.FormNewArtBlockLabel>
                                         <S.FormNewArtInputPrice
                                             className="form-newArt__input-price"
                                             type="text"
                                             name="price"
-                                            id="formName"
                                             defaultValue={dataAds?.price}
                                             {...register('price', {
-                                                required: false,
+                                                required: true,
                                                 onChange: (event) => {
                                                     event.target.defaultValue;
+                                                },
+                                                pattern: {
+                                                    value: /^[0-9+-]+$/,
+                                                    message:
+                                                        'Ведите цену цифрами',
                                                 },
                                             })}
                                         />
@@ -137,7 +184,7 @@ function Atclsettings({ isOpen, onClose, dataAds }) {
                                             {errors.price && (
                                                 <S.FillInTheFieldP>
                                                     {errors.price.message ||
-                                                        'Error!'}
+                                                        'Укажите, пожалуйста, цену'}
                                                 </S.FillInTheFieldP>
                                             )}
                                         </S.FillInTheField>
@@ -146,8 +193,8 @@ function Atclsettings({ isOpen, onClose, dataAds }) {
 
                                     <S.FormNewArtBtnPub
                                         className="form-newArt__btn-pub btn-hov02"
-                                        id="btnPublish"
                                         type="submit"
+                                        disabled={isValid ? offButton : !isValid}
                                     >
                                         Сохранить
                                     </S.FormNewArtBtnPub>

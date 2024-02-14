@@ -1,27 +1,25 @@
-// import { useParams } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
-// import MainContent from '../../components/MainContent/MainContent';
+
 import MainMenu from '../../components/MainMenu/MainMenu';
 import SellerLeft from '../../components/MainSellerProfile/SellerImg/SellerLeft';
 import SellerRight from '../../components/MainSellerProfile/SellerRight/SellerRight';
-import { useGetAdsQuery } from '../../redux/RequestsWithAds/serviceQuery';
+import {
+    useGetAdsQuery,
+    useGetAllUserQuery,
+} from '../../redux/RequestsWithAds/serviceQuery';
 import * as S from './SellerProfile.styled';
 import CardsItemAdvertising from '../../components/MainContent/CardsItemAdvertising/CardsItemAdvertising';
-// import {
-//     useGetAdsIDQuery,
-//     // useGetAllUserQuery,
-// } from '../../redux/RequestsWithAds/serviceQuery';
+import SkeletonMainAds from '../../components/UI/Skeletons/SkeletonMainAds';
 
 function SellerProfile() {
     const { userId } = useParams();
 
-    const { data: usersAllAds } = useGetAdsQuery();
+    const { data: usersAllAds, isLoading } = useGetAdsQuery();
+    const { data: users, isLoading: isLoadingAvatar } = useGetAllUserQuery();
     const sellerAllAds = usersAllAds?.filter(
         (item) => item.user.id === Number(userId),
     );
-    console.log(sellerAllAds);
-    // console.log(usersAllAds);
-    // console.log(usersAllAds && usersAllAds?.filter((item) => item.user.id === Number(userId)));
+    const sellerId = users?.find((user) => user.id === Number(userId));
 
     return (
         <S.Main className="main">
@@ -32,11 +30,11 @@ function SellerProfile() {
                     <S.MainProfileSell className="main__profile-sell profile-sell">
                         <S.ProfileSellContent className="profile-sell__content">
                             <S.ProfileSellSeller className="profile-sell__seller seller">
-                                <SellerLeft />
-                                <SellerRight
-                                // dataAds={dataAds}
-                                // AllUser={AllUser}
+                                <SellerLeft
+                                    sellerId={sellerId}
+                                    isLoadingAvatar={isLoadingAvatar}
                                 />
+                                <SellerRight />
                             </S.ProfileSellSeller>
                         </S.ProfileSellContent>
                     </S.MainProfileSell>
@@ -45,18 +43,20 @@ function SellerProfile() {
                         Товары продавца
                     </S.MainTitle>
                 </S.MainCenterBlock>
-                <S.MainContent className="main__content">
-                    <S.ContentCards className="content__cards cards">
-                    {sellerAllAds?.map((cards) => (
-                    <CardsItemAdvertising
-                        key={cards.id}
-                        cards={cards}
-                        // searchLetter={searchLetter}
-                    />
-                ))}
-                    </S.ContentCards>
-                </S.MainContent>
-                {/* <MainContent  /> */}
+                {isLoading ? (
+                    <SkeletonMainAds />
+                ) : (
+                    <S.MainContent className="main__content">
+                        <S.ContentCards className="content__cards cards">
+                            {sellerAllAds?.map((cards) => (
+                                <CardsItemAdvertising
+                                    key={cards.id}
+                                    cards={cards}
+                                />
+                            ))}
+                        </S.ContentCards>
+                    </S.MainContent>
+                )}
             </S.MainContainer>
         </S.Main>
     );

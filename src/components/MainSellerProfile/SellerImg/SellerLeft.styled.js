@@ -31,6 +31,9 @@ export const SellerImg = styled.div`
     height: 170px;
     border-radius: 50%;
     background-color: #f0f0f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     @media ${device.mobile} {
         display: none;
     }
@@ -38,8 +41,11 @@ export const SellerImg = styled.div`
 
 export const SellerImgItem = styled.img`
     width: 100%;
-    height: auto;
+    height: 100%;
     display: block;
-    -o-object-fit: cover;
-    object-fit: cover;
+    -o-object-fit: fill;
+    object-fit: fill;
+    border-radius: 50%;
 `;
+
+

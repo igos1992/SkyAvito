@@ -133,23 +133,32 @@ export const fetchUsersToken = createApi({
 
 export const OperationsWithUsers = createApi({
     reducerPath: 'OperationsWithUsers',
-    tagTypes: ['Users'],
+    tagTypes: ['Avatar', 'User'],
     baseQuery: baseQueryWithReauth,
     endpoints: (builder) => ({
+        // Получить всех пользователей
+        getAllUser: builder.query({
+            query: () => ({
+                url: '/user/all',
+                method: 'GET',
+            }),
+        }),
         // Получить текущего пользователя
-        getUser: builder.mutation({
+        getUser: builder.query({
             query: () => ({
                 url: '/user',
                 method: 'GET',
             }),
+            providesTags: [{ type: 'User', id: 'LIST' }],
         }),
+
         // Получить аватарку текущего пользователя
         getUserAvatar: builder.query({
             query: () => ({
                 url: '/user',
                 method: 'GET',
             }),
-            providesTags: [{ type: 'Users', id: 'LIST' }],
+            providesTags: [{ type: 'Avatar', id: 'LIST' }],
         }),
         // Изменить запись текущего пользователя:
         changeTheRecordOfTheCurrentUser: builder.mutation({
@@ -166,15 +175,12 @@ export const OperationsWithUsers = createApi({
                     'content-type': 'application/json',
                 },
             }),
-            invalidatesTags: [{ type: 'Users', id: 'LIST' }],
+            invalidatesTags: [
+                { type: 'Avatar', id: 'LIST' },
+                { type: 'User', id: 'LIST' },
+            ],
         }),
-        // Получить всех пользователей
-        getAllUser: builder.query({
-            query: () => ({
-                url: '/user/all',
-                method: 'GET',
-            }),
-        }),
+
         // Загрузить аватарку для пользователя
         uploadAnAvatarForTheUser: builder.mutation({
             query: (formData) => ({
@@ -182,7 +188,28 @@ export const OperationsWithUsers = createApi({
                 method: 'POST',
                 body: formData,
             }),
-            invalidatesTags: [{ type: 'Users', id: 'LIST' }],
+            invalidatesTags: [
+                { type: 'Avatar', id: 'LIST' },
+                { type: 'User', id: 'LIST' },
+            ],
+        }),
+        // Обновить пароль текущего пользователя
+        updateCurrentUserPassword: builder.mutation({
+            query: ({ password_1, password_2 }) => ({
+                url: '/user/password',
+                method: 'PUT',
+                body: JSON.stringify({
+                    password_1,
+                    password_2,
+                }),
+                headers: {
+                    'content-type': 'application/json',
+                },
+            }),
+            invalidatesTags: [
+                { type: 'Avatar', id: 'LIST' },
+                { type: 'User', id: 'LIST' },
+            ],
         }),
     }),
 });
@@ -195,10 +222,7 @@ export const RequestsWithAds = createApi({
         // Получить все объявления.
         getAds: builder.query({
             query: () => `ads`,
-            providesTags: [
-                { type: 'Ads', id: 'LIST' },
-                { type: 'AdsUser', id: 'LIST' },
-            ],
+            providesTags: [{ type: 'Ads', id: 'LIST' }],
         }),
         // Создать объявление без изображений
         getCreateAdsWithoutImages: builder.mutation({
@@ -242,10 +266,7 @@ export const RequestsWithAds = createApi({
             query: (pk) => ({
                 url: `ads/${pk}`,
             }),
-            providesTags: [
-                { type: 'Ads', id: 'LIST' },
-                { type: 'AdsUser', id: 'LIST' },
-            ],
+            providesTags: [{ type: 'Ads', id: 'LIST' }],
         }),
         // Получить все объявления текущего пользователя.
         getAllTheAdsOfTheCurrentUser: builder.query({
@@ -253,7 +274,7 @@ export const RequestsWithAds = createApi({
             headers: {
                 'content-type': 'application/json',
             },
-            providesTags: [{ type: 'Ads', id: 'LIST' }],
+            providesTags: [{ type: 'AdsUser', id: 'LIST' }],
         }),
         // Изменить объявление
         getEditAd: builder.mutation({
@@ -280,7 +301,10 @@ export const RequestsWithAds = createApi({
                 url: `ads/${pk}`,
                 method: 'DELETE',
             }),
-            invalidatesTags: [{ type: 'Ads', id: 'LIST' }],
+            invalidatesTags: [
+                { type: 'Ads', id: 'LIST' },
+                { type: 'AdsUser', id: 'LIST' },
+            ],
         }),
         // Получить все комментарии по объявлению.
         getAllComments: builder.query({
@@ -302,7 +326,10 @@ export const RequestsWithAds = createApi({
                     'content-type': 'application/json',
                 },
             }),
-            invalidatesTags: [{ type: 'Ads', id: 'LIST' }],
+            invalidatesTags: [
+                { type: 'Ads', id: 'LIST' },
+                { type: 'AdsUser', id: 'LIST' },
+            ],
         }),
     }),
 });
@@ -314,11 +341,12 @@ export const {
 } = fetchUsersToken;
 
 export const {
-    useGetUserMutation,
+    useGetUserQuery,
     useGetUserAvatarQuery,
     useChangeTheRecordOfTheCurrentUserMutation,
     useGetAllUserQuery,
     useUploadAnAvatarForTheUserMutation,
+    useUpdateCurrentUserPasswordMutation,
 } = OperationsWithUsers;
 
 export const {

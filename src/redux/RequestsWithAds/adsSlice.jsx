@@ -8,7 +8,10 @@ const initialState = {
     reviewsId: '',
     // currentUser: {},
     currentAds: {},
-    idUserAds: ''
+    idUserAds: '',
+    addingImages: [],
+    addingImagesAvatar: '',
+    addingImagesAtclsettings: [],
 };
 
 const adsSlice = createSlice({
@@ -46,7 +49,25 @@ const adsSlice = createSlice({
         // ID пользователя
         setIdUserAds: (state, action) => {
             state.idUserAds = action.payload;
-        }
+        },
+
+        // Сохранение картинок для отображения когда добавляют в объявление
+        setAddingImages: (state, action) => {
+            state.addingImages.push(action.payload);
+        },
+
+        // Сохранение картинок для отображения при редактировании объявление
+        setAddingImagesAtclsettings: (state, action) => {
+            state.addingImagesAtclsettings.push(action.payload);
+        },
+        // Сохранить добавленную аватарку перед запросом
+        setAddingImagesAvatar: (state, action) => {
+            state.addingImagesAvatar = action.payload;
+        },
+        // Сохранение аватарки для отображения когда
+        setClearingImagesAvatar: (state) => {
+            state.addingImages = [];
+        },
     },
 });
 
@@ -57,7 +78,11 @@ export const {
     setReviewsId,
     // setCurrentUser,
     setCurrentAds,
-    setIdUserAds
+    setIdUserAds,
+    setAddingImages,
+    setAddingImagesAvatar,
+    setClearingImagesAvatar,
+    setAddingImagesAtclsettings,
 } = adsSlice.actions;
 
 export const selectGetAllAds = (state) => state.ads.getAllAds;
@@ -68,5 +93,9 @@ export const selectReviewsId = (state) => state.ads.reviewsId;
 // export const selectCurrentUser = (state) => state.ads.currentUser;
 export const selectCurrentAds = (state) => state.ads.currentAds;
 export const selectIdUserAds = (state) => state.ads.idUserAds;
+export const selectAddingImages = (state) => state.ads.addingImages;
+export const selectAddingImagesAvatar = (state) => state.ads.addingImagesAvatar;
+export const selectAddingImagesAtclsettings = (state) =>
+    state.ads.addingImagesAtclsettings;
 
 export default adsSlice.reducer;

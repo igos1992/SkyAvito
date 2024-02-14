@@ -1,23 +1,20 @@
 import { Outlet } from 'react-router-dom';
 import GlobalStyle from '../../App.CreateGlobalStyle';
 import * as S from './Layout.styled';
-import { useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 import Addnewat from '../PoPups/Addnewat/Addnewat';
+import { UserContext } from '../../UserContext/UserContext';
 
 function Layout() {
     const [modalNewAddIsOpen, setModalNewAddIsOpen] = useState(false);
+    const { userData } = useContext(UserContext);
 
     const changingUserInformation = () => {
         localStorage.removeItem('user');
         console.log(localStorage.getItem('user'));
         window.location.pathname = '/login';
     };
-
-    const [loginButton, setLoginButton] = useState(false);
-
-    useEffect(() => {
-        setLoginButton(localStorage.getItem('user'));
-    }, []);
+    console.log(userData);
 
     return (
         <>
@@ -39,11 +36,10 @@ function Layout() {
                                     />
                                 </S.LogoMobLink>
                             </S.HeaderLogo>
-                            {loginButton ? (
+                            {userData ? (
                                 <>
                                     <S.HeaderBtnPutAd
                                         className="header__btn-putAd btn-hov01"
-                                        id="btputAd"
                                         onClick={() =>
                                             setModalNewAddIsOpen(true)
                                         }
@@ -55,20 +51,15 @@ function Layout() {
                                         onClose={() =>
                                             setModalNewAddIsOpen(false)
                                         }
-                                    
                                     />
                                     <S.HeaderBtnLkLink to={'/profile'}>
-                                        <S.HeaderBtnLk
-                                            className="header__btn-lk btn-hov01"
-                                            id="btnlk"
-                                        >
+                                        <S.HeaderBtnLk className="header__btn-lk btn-hov01">
                                             Личный кабинет
                                         </S.HeaderBtnLk>
                                     </S.HeaderBtnLkLink>
 
                                     <S.HeaderBtnMainCenter
                                         className="header__btn-main-enter btn-hov01"
-                                        id="btnMainEnter"
                                         onClick={() =>
                                             changingUserInformation()
                                         }
@@ -79,7 +70,6 @@ function Layout() {
                             ) : (
                                 <S.HeaderBtnMainCenter
                                     className="header__btn-main-enter btn-hov01"
-                                    id="btnMainEnter"
                                     to={'/login'}
                                 >
                                     Вход в личный кабинет

@@ -13,7 +13,7 @@ export const device = {
     laptop: `(max-width: ${size.laptop})`,
 };
 
-export const CardsItem = styled.div`
+export const CardsItem = styled(NavLink)`
     margin: 0;
     @media ${device.mobile} {
         margin: 0;
@@ -63,14 +63,14 @@ export const CardImageItem = styled.img`
     width: 100%;
     height: 100%;
     display: block;
-    -o-object-fit: cover;
-    object-fit: cover;
+    -o-object-fit: fill;
+    object-fit: fill;
     @media ${device.mobile} {
         width: 100%;
         height: 100%;
         display: block;
-        -o-object-fit: cover;
-        object-fit: cover;
+        -o-object-fit: fill;
+        object-fit: fill;
         border-top-left-radius: 6px;
         border-top-right-radius: 6px;
     }

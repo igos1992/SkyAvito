@@ -42,6 +42,7 @@ export const MainCenterBlock = styled.div`
 export const MainContent = styled.div`
     width: 100%;
     margin: 0 auto;
+    text-align: center
     @media ${device.mobile} {
         width: 100%;
         margin: 0 auto;
@@ -103,6 +104,13 @@ export const ContentCards = styled.div`
         justify-content: center;
     }
 `;
+
+export const SpanNotTracksFavorite = styled.span`
+  font-family: 'Roboto';
+  font-size: 30px;
+  margin-top: 50px;
+  text-align: justify;
+`
 
 export const MenuLogoLink = styled(NavLink)`
     width: 54;
