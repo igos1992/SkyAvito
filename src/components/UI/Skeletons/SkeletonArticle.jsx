@@ -15,7 +15,6 @@ const ProductDetails = (props) => {
             <rect x="260" y="430" rx="5" ry="5" width="70" height="70" />
             <rect x="340" y="430" rx="5" ry="5" width="70" height="70" />
 
-
             <rect x="470" y="20" rx="10" ry="10" width="300" height="40" />
             <rect x="470" y="80" rx="10" ry="10" width="300" height="40" />
             <rect x="470" y="140" rx="10" ry="10" width="300" height="40" />
@@ -25,7 +24,5 @@ const ProductDetails = (props) => {
         </ContentLoader>
     );
 };
-
-
 
 export default ProductDetails;

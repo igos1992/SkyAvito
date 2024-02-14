@@ -100,11 +100,6 @@ export const ReviewName = styled.p`
     ${FontT}
 `;
 
-export const ReviewNameSpan = styled.span`
-    margin-left: 10px;
-    color: #5f5f5f;
-`;
-
 export const ReviewTitle = styled.h5`
     font-weight: 600;
     ${FontT}

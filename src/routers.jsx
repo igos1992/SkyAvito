@@ -1,7 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
 import Main from './pages/Main/Main';
 import Article from './pages/Article/Article';
-// import MyArticle from './pages/MyArticle/MyArticle';
 import Profile from './pages/Profile/Profile';
 import SellerProfile from './pages/SellerProfile/SellerProfile';
 import Login from './pages/Login/Login';
@@ -23,7 +22,6 @@ const AppRoutes = () => {
                 />
                 <Route index element={<Main />} />
                 <Route element={<ProtectedRoute />}>
-                    {/* <Route path="myArticle" element={<MyArticle />} /> */}
                     <Route path="profile" element={<Profile />} />
                 </Route>
             </Route>

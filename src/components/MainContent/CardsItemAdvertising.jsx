@@ -16,11 +16,10 @@ function CardsItemAdvertising({ cards }) {
                         )}
                     </S.CardImage>
                     <S.CardContent className="card__content">
-                        {/* <S.TitleLink to={`/article/${cards?.id}`}> */}
-                            <S.CardTitle className="card__title">
-                                {cards?.title}
-                            </S.CardTitle>
-                        {/* </S.TitleLink> */}
+                        <S.CardTitle className="card__title">
+                            {cards?.title}
+                        </S.CardTitle>
+
                         <S.CardPrice className="card__price">
                             {cards?.price} ₽
                         </S.CardPrice>
@@ -33,7 +32,6 @@ function CardsItemAdvertising({ cards }) {
                     </S.CardContent>
                 </S.CardsCard>
             </S.CardsItem>
-            {/* ))} */}
         </>
     );
 }

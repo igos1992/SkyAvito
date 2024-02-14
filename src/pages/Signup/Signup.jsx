@@ -1,18 +1,24 @@
 import { useContext, useState } from 'react';
-import * as S from './Signup.styled';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import {
     useGetTokenAndLoginMutation,
     useGetUserSignUpMutation,
 } from '../../redux/RequestsWithAds/serviceQuery';
-import { useDispatch } from 'react-redux';
 import { setAuth } from '../../redux/RequestsWithAds/authSlice';
-import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../../UserContext/UserContext';
+import * as S from './Signup.styled';
 
 function Signup() {
-    const [userSignUp, { isError }] = useGetUserSignUpMutation();
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    const [userSignUp] = useGetUserSignUpMutation();
     const [getTokenAndLogin] = useGetTokenAndLoginMutation();
+
+    const { changingUserData } = useContext(UserContext);
+
     const [email, setEmail] = useState('');
     const [name, setName] = useState('');
     const [surname, setSurname] = useState('');
@@ -21,11 +27,7 @@ function Signup() {
     const [city, setCity] = useState('');
     const [offButton, setOffButton] = useState(false);
     const [error, setError] = useState(null);
-    const navigate = useNavigate();
-    const dispatch = useDispatch();
-    const { changingUserData } = useContext(UserContext);
 
-    console.log(isError);
     const {
         register,
         formState: { errors },
@@ -38,7 +40,6 @@ function Signup() {
         await getTokenAndLogin({ email, password })
             .unwrap()
             .then((token) => {
-                // console.log(token.access_token);
                 dispatch(
                     setAuth({
                         access: token?.access_token,
@@ -84,9 +85,7 @@ function Signup() {
             })
                 .unwrap()
                 .then((response) => {
-                    // console.log(response);
                     localStorage.setItem('user', JSON.stringify(response));
-                    // console.log(localStorage.getItem('user'));
                     changingUserData(JSON.parse(localStorage.getItem('user')));
                     navigate('/');
                 })

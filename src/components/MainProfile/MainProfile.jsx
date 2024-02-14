@@ -1,29 +1,26 @@
 import { useRef, useState } from 'react';
-import * as S from './MainProfile.styled';
+import { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
 import {
     useChangeTheRecordOfTheCurrentUserMutation,
     useUploadAnAvatarForTheUserMutation,
     useUpdateCurrentUserPasswordMutation,
 } from '../../redux/RequestsWithAds/serviceQuery';
-import { useForm } from 'react-hook-form';
-import SettingsImg from './SettingsImg/SettingsImg';
-import { useDispatch } from 'react-redux';
 import { setAddingImagesAvatar } from '../../redux/RequestsWithAds/adsSlice';
-
+import SettingsImg from './SettingsImg/SettingsImg';
 import UpdateCurrentUserPasswordPoPup from '../PoPups/UpdateCurrentUserPasswordPoPup/UpdateCurrentUserPasswordPoPup';
-import { useEffect } from 'react';
+import * as S from './MainProfile.styled';
 
 function MainProfile({ currentUser }) {
+    const dispatch = useDispatch();
+    const filePicker = useRef(null);
+
     const [getChangingUserData] = useChangeTheRecordOfTheCurrentUserMutation();
     const [uploadAvatarForUser] = useUploadAnAvatarForTheUserMutation();
     const [updateCurrentUserPassword] = useUpdateCurrentUserPasswordMutation();
-    const filePicker = useRef(null);
     const [selectedFile, setSelectedFile] = useState();
     const [modalNewAddIsOpen, setModalNewAddIsOpen] = useState(false);
-    const dispatch = useDispatch();
-
-    console.log(currentUser);
-
     const [password_1, setPassword_1] = useState('');
     const [password_2, setPassword_2] = useState('');
     const [offButton, setOffButton] = useState(false);
@@ -31,6 +28,13 @@ function MainProfile({ currentUser }) {
     const [surname, setSurname] = useState('');
     const [city, setCity] = useState('');
     const [phone, setPhone] = useState('');
+
+    useEffect(() => {
+        setName(currentUser?.name || '');
+        setSurname(currentUser?.surname || '');
+        setCity(currentUser?.city || '');
+        setPhone(currentUser?.phone || '');
+    }, [currentUser]);
 
     const {
         register,
@@ -49,17 +53,6 @@ function MainProfile({ currentUser }) {
         });
     };
 
-    useEffect(() => {
-        setName(currentUser?.name || '');
-        setSurname(currentUser?.surname || '');
-        setCity(currentUser?.city || '');
-        setPhone(currentUser?.phone || '');
-    }, [currentUser]);
-
-    // console.log(upload);
-
-    // console.log(selectedFile);
-
     const handleAvatar = (event) => {
         console.log(event.target.files);
         const reader = new FileReader();
@@ -76,10 +69,8 @@ function MainProfile({ currentUser }) {
 
     const handleUpload = async () => {
         if (!selectedFile) {
-            // console.log('Файл не загружен');
             return;
         }
-
         const formData = new FormData();
         formData.append('file', selectedFile);
         await uploadAvatarForUser(formData).then((data) => {
@@ -104,14 +95,11 @@ function MainProfile({ currentUser }) {
         setOffButton(false);
 
         if (password_1 && password_2) {
-            // console.log('Файл не загружен');
             return await updateUserPassword();
         } else {
             return;
         }
     };
-
-    // console.log(JSON.parse(localStorage.getItem('user')));
 
     return (
         <S.MainProfile className="main__profile profile">
@@ -121,14 +109,10 @@ function MainProfile({ currentUser }) {
                 </S.ProfileTitle>
                 <S.SettingsForm
                     className="settings__form"
-                    // action="#"
                     onSubmit={handleSubmit(onSubmit)}
                 >
                     <S.ProfileSettings className="profile__settings settings">
                         <S.SettingsLeft className="settings__left">
-                            {/* <SettingsImg /> */}
-                            {/* <SettingsChangePhoto /> */}
-
                             <SettingsImg />
                             <S.UploadFileInput
                                 type="file"
@@ -138,7 +122,6 @@ function MainProfile({ currentUser }) {
                                 onChange={handleAvatar}
                                 accept=".jpg, .jpeg, .png,"
                             />
-
                             <S.UploadFileButton
                                 type="button"
                                 className="upload-file__button"
@@ -157,7 +140,6 @@ function MainProfile({ currentUser }) {
                                     id="settings-fname"
                                     name="fname"
                                     type="text"
-                                    // defaultValue={currentUser?.name}
                                     value={name}
                                     placeholder="Имя"
                                     {...register('name', {

@@ -1,14 +1,11 @@
-import * as S from './SettingsImg.styled';
-import { useGetUserAvatarQuery } from '../../../redux/RequestsWithAds/serviceQuery';
 import { useSelector } from 'react-redux';
-import { selectAddingImagesAvatar } from '../../../redux/RequestsWithAds/adsSlice';
+import { useGetUserAvatarQuery } from '../../../redux/RequestsWithAds/serviceQuery';
+import { selectAddingImagesAvatar } from '../../../redux/selectedFile/selectedFile';
+import * as S from './SettingsImg.styled';
 
 function SettingsImg() {
     const { data: avatar } = useGetUserAvatarQuery();
-    console.log(avatar);
-
     const imagesAvatar = useSelector(selectAddingImagesAvatar);
-    console.log(imagesAvatar);
 
     return (
         <S.SettingsImg className="settings__img">

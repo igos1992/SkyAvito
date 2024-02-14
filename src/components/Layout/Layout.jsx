@@ -1,9 +1,9 @@
+import { useContext, useState } from 'react';
 import { Outlet } from 'react-router-dom';
+import { UserContext } from '../../UserContext/UserContext';
+import Addnewat from '../PoPups/Addnewat/Addnewat';
 import GlobalStyle from '../../App.CreateGlobalStyle';
 import * as S from './Layout.styled';
-import { useContext, useState } from 'react';
-import Addnewat from '../PoPups/Addnewat/Addnewat';
-import { UserContext } from '../../UserContext/UserContext';
 
 function Layout() {
     const [modalNewAddIsOpen, setModalNewAddIsOpen] = useState(false);
@@ -14,7 +14,6 @@ function Layout() {
         console.log(localStorage.getItem('user'));
         window.location.pathname = '/login';
     };
-    console.log(userData);
 
     return (
         <>

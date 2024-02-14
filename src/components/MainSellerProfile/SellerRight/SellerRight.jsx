@@ -1,18 +1,16 @@
-import * as S from './SellerRight.styled';
-import ShowPhoneButton from '../../UI/ShowPhoneButton/ShowPhoneButton';
-import { useGetAllUserQuery } from '../../../redux/RequestsWithAds/serviceQuery';
-import { useParams } from 'react-router-dom';
 import { useState } from 'react';
-import SkeletonSellerData from '../../UI/Skeletons/SkeletonSellerData';
+import { useParams } from 'react-router-dom';
 import ChangeDate from '../../UI/СhangeDate/СhangeDate';
+import { useGetAllUserQuery } from '../../../redux/RequestsWithAds/serviceQuery';
+import ShowPhoneButton from '../../UI/ShowPhoneButton/ShowPhoneButton';
+import SkeletonSellerData from '../../UI/Skeletons/SkeletonSellerData';
+import * as S from './SellerRight.styled';
 
 function SellerRight() {
     const { userId } = useParams();
-    const [isShowPhone, setIsShowPhone] = useState(false);
-
     const { data: users, isLoading } = useGetAllUserQuery();
     const sellerId = users?.find((user) => user.id === Number(userId));
-    console.log(sellerId);
+    const [isShowPhone, setIsShowPhone] = useState(false);
 
     return (
         <S.SellerRight className="seller__right">

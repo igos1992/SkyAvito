@@ -1,17 +1,18 @@
-// import { useState } from 'react';
-import ModalReviews from './ModalReviews/ModalReviews';
-import * as S from './Reviews.styled';
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { useGetCreateCommentAdMutation } from '../../../redux/RequestsWithAds/serviceQuery';
-import { useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import ModalReviews from './ModalReviews/ModalReviews';
+import * as S from './Reviews.styled';
 
 function Reviews({ isOpen, onClose }) {
     const { id } = useParams();
-    console.log(id);
-    // const [text, setText] = useState('');
-    // console.log(text);
     const [createCommentAd] = useGetCreateCommentAdMutation(Number(id));
+    const [loginButton, setLoginButton] = useState(false);
+
+    useEffect(() => {
+        setLoginButton(localStorage.getItem('user'));
+    }, [loginButton]);
 
     const {
         register,
@@ -34,12 +35,6 @@ function Reviews({ isOpen, onClose }) {
         reset();
     };
 
-    const [loginButton, setLoginButton] = useState(false);
-
-    useEffect(() => {
-        setLoginButton(localStorage.getItem('user'));
-    }, [loginButton]);
-
     return (
         <>
             {isOpen && (
@@ -61,7 +56,6 @@ function Reviews({ isOpen, onClose }) {
                                 <S.ModalScroll className="modal__scroll">
                                     <S.ModalFormNewArt
                                         className="modal__form-newArt form-newArt"
-                                        // action="#"
                                         onSubmit={handleSubmit(onSubmit)}
                                     >
                                         <S.FormNewArtBlock className="form-newArt__block">
@@ -71,30 +65,17 @@ function Reviews({ isOpen, onClose }) {
                                             <S.FormNewArtArea
                                                 className="form-newArt__area"
                                                 name="text"
-                                                // cols="auto"
-                                                // rows="5"
-                                                // value={text}
                                                 placeholder="Введите описание"
                                                 {...(loginButton
                                                     ? {
                                                           ...register('text', {
                                                               required:
                                                                   '* Пожалуйста, напишиnе комментарий',
-                                                              // onChange: (event) => {
-                                                              //     setText(
-                                                              //         event.target.value,
-                                                              //     );
-                                                              // },
                                                           }),
                                                       }
                                                     : {
                                                           ...register('text', {
                                                               required: false,
-                                                              // onChange: (event) => {
-                                                              //     setText(
-                                                              //         event.target.value,
-                                                              //     );
-                                                              // },
                                                           }),
                                                       })}
                                             />
@@ -129,15 +110,6 @@ function Reviews({ isOpen, onClose }) {
                                                 />
                                             </>
                                         )}
-                                        {/* <S.FormNewArtBtnPub
-                                            className="form-newArt__btn-pub btn-hov02"
-                                            type="submit"
-                                            disabled={
-                                                loginButton ? !isValid : isValid
-                                            }
-                                        >
-                                            Опубликовать
-                                        </S.FormNewArtBtnPub> */}
                                     </S.ModalFormNewArt>
 
                                     <ModalReviews />

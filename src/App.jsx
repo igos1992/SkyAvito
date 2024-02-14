@@ -3,10 +3,7 @@ import AppRoutes from './routers';
 import { UserContext } from './UserContext/UserContext';
 
 function App() {
-    const [user, setUser] = useState(
-        JSON.parse(
-            localStorage.getItem('user'))
-            );
+    const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
     const changingUserInformation = () => {
         setUser(localStorage.removeItem('user'));
         window.location.pathname = '/login';

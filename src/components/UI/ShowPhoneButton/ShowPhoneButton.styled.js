@@ -38,7 +38,6 @@ export const ShowPhoneButtonSpan = styled.span`
     }
 `;
 
-
 export const ArticleBtnBlock = styled.div`
     display: -webkit-box;
     display: -ms-flexbox;
@@ -99,24 +98,5 @@ export const ArticleBtnRemove = styled.button`
         font-size: 14px;
         line-height: 20px;
         color: #ffffff;
-    }
-`;
-
-export const ArticleAuthor = styled.div`
-    margin-top: 34px;
-    margin-bottom: 20px;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-orient: horizontal;
-    -webkit-box-direction: normal;
-    -ms-flex-direction: row;
-    flex-direction: row;
-    -webkit-box-align: start;
-    -ms-flex-align: start;
-    align-items: flex-start;
-    @media ${device.mobile} {
-        margin-top: 30px;
-        margin-bottom: 30px;
     }
 `;

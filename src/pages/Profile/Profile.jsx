@@ -1,27 +1,24 @@
-// import { useContext } from 'react';
-// import { UserContext } from '../../UserContext/UserContext';
-// import MainContent from '../../components/MainContent/MainContent';
-import MainMenu from '../../components/MainMenu/MainMenu';
-import MainProfile from '../../components/MainProfile/MainProfile';
-import * as S from './Profile.styled';
+import { useParams } from 'react-router-dom';
 import {
     useGetAllTheAdsOfTheCurrentUserQuery,
     useGetUserQuery,
 } from '../../redux/RequestsWithAds/serviceQuery';
-import { useParams } from 'react-router-dom';
-import CardsItemAdvertising from '../../components/MainContent/CardsItemAdvertising/CardsItemAdvertising';
+import MainMenu from '../../components/MainMenu/MainMenu';
+import MainProfile from '../../components/MainProfile/MainProfile';
+import CardsItemAdvertising from '../../components/MainContent/CardsItemAdvertising';
 import SkeletonMainAds from '../../components/UI/Skeletons/SkeletonMainAds';
+import * as S from './Profile.styled';
 
 function Profile() {
-    // const { userData } = useContext(UserContext);
-    // console.log(userData);
-
     const params = useParams();
-    const { data: currentUser } = useGetUserQuery();
 
-    const { data: adsCurrentUser, isLoading } =
-        useGetAllTheAdsOfTheCurrentUserQuery(Number(params.id));
-    console.log(adsCurrentUser);
+    const { data: currentUser } = useGetUserQuery();
+    const {
+        data: adsCurrentUser,
+        isLoading,
+        isError,
+        error,
+    } = useGetAllTheAdsOfTheCurrentUserQuery(Number(params.id));
 
     return (
         <S.Main className="main">
@@ -42,22 +39,30 @@ function Profile() {
                 {isLoading ? (
                     <SkeletonMainAds />
                 ) : (
-                    <S.MainContent className="main__content">
-                        {adsCurrentUser?.length === 0 ? (
-                            <S.SpanNotTracksFavorite>
-                                У вас пока нет объявлений
-                            </S.SpanNotTracksFavorite>
-                        ) : (
-                            <S.ContentCards className="content__cards cards">
-                                {adsCurrentUser?.map((cards) => (
-                                    <CardsItemAdvertising
-                                        key={cards.id}
-                                        cards={cards}
-                                    />
-                                ))}
-                            </S.ContentCards>
+                    <>
+                        {isError && (
+                            <S.SpanErrorBlock>
+                                Не удалось загрузить объявления, попробуйте
+                                позже: {error?.error}
+                            </S.SpanErrorBlock>
                         )}
-                    </S.MainContent>
+                        <S.MainContent className="main__content">
+                            {adsCurrentUser?.length === 0 ? (
+                                <S.SpanNotTracksFavorite>
+                                    У вас пока нет объявлений
+                                </S.SpanNotTracksFavorite>
+                            ) : (
+                                <S.ContentCards className="content__cards cards">
+                                    {adsCurrentUser?.map((cards) => (
+                                        <CardsItemAdvertising
+                                            key={cards.id}
+                                            cards={cards}
+                                        />
+                                    ))}
+                                </S.ContentCards>
+                            )}
+                        </S.MainContent>
+                    </>
                 )}
             </S.MainContainer>
         </S.Main>

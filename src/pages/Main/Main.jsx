@@ -1,22 +1,20 @@
-import * as S from './Main.styled';
-import MainSearch from '../../components/MainSearch/MainSearch';
-// import MainContent from '../../components/MainContent/MainContent';
-import CardsItemAdvertising from '../../components/MainContent/CardsItemAdvertising/CardsItemAdvertising';
-import { useGetAdsQuery } from '../../redux/RequestsWithAds/serviceQuery';
-import { useSelector } from 'react-redux';
-import { selectSearchByAdsTitle } from '../../redux/RequestsWithAds/adsSlice';
 import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { useGetAdsQuery } from '../../redux/RequestsWithAds/serviceQuery';
+import { selectSearchByAdsTitle } from '../../redux/selectedFile/selectedFile';
+import MainSearch from '../../components/MainSearch/MainSearch';
+import CardsItemAdvertising from '../../components/MainContent/CardsItemAdvertising';
 import SkeletonMainAds from '../../components/UI/Skeletons/SkeletonMainAds';
+import * as S from './Main.styled';
 
 function Main() {
-    const { data, isLoading } = useGetAdsQuery();
+    const { data, isLoading, isError, error } = useGetAdsQuery();
     const [ads, setAds] = useState([]);
-    // console.log(ads);
 
     useEffect(() => {
         setAds(data);
     }, [data]);
-    // console.log(data);
+
     const searchByAdsTitleText = useSelector(selectSearchByAdsTitle);
     const searchLetter = ads?.filter((cards) => {
         const matchesTitle = cards.title
@@ -24,8 +22,6 @@ function Main() {
             .includes(searchByAdsTitleText.toLowerCase());
         return matchesTitle;
     });
-
-    console.log(searchLetter);
 
     return (
         <S.Main className="main">
@@ -35,16 +31,35 @@ function Main() {
                 {isLoading ? (
                     <SkeletonMainAds />
                 ) : (
-                    <S.MainContent className="main__content">
-                        <S.ContentCards className="content__cards cards">
-                            {searchLetter?.reverse()?.map((cards) => (
-                                <CardsItemAdvertising
-                                    key={cards.id}
-                                    cards={cards}
-                                />
-                            ))}
-                        </S.ContentCards>
-                    </S.MainContent>
+                    <>
+                        {!searchLetter?.length ? (
+                            <S.SpanErrorBlock>
+                                По Вашему запросу объявлений не найдено.
+                                Попробуйте ещё раз
+                            </S.SpanErrorBlock>
+                        ) : (
+                            <>
+                                {isError && (
+                                    <S.SpanErrorBlock>
+                                        Не удалось загрузить объявления,
+                                        попробуйте позже: {error?.error}
+                                    </S.SpanErrorBlock>
+                                )}
+                                <S.MainContent className="main__content">
+                                    <S.ContentCards className="content__cards cards">
+                                        {searchLetter
+                                            ?.reverse()
+                                            ?.map((cards) => (
+                                                <CardsItemAdvertising
+                                                    key={cards.id}
+                                                    cards={cards}
+                                                />
+                                            ))}
+                                    </S.ContentCards>
+                                </S.MainContent>
+                            </>
+                        )}
+                    </>
                 )}
             </S.MainContainer>
         </S.Main>

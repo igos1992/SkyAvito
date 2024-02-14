@@ -185,7 +185,7 @@ export const ModalBtnSignupEnt = styled.button`
     &:active {
         background-color: #0080c1;
     }
-     &:disabled {
+    &:disabled {
         background-color: #d9d9d9;
     }
     @media ${device.mobile} {
@@ -194,11 +194,10 @@ export const ModalBtnSignupEnt = styled.button`
         margin-top: 26px;
         font-size: 16px;
         line-height: 24px;
-         &:disabled {
-        background-color: #d9d9d9;
+        &:disabled {
+            background-color: #d9d9d9;
+        }
     }
-    }
-    
 `;
 
 export const Error = styled.div`

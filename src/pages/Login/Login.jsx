@@ -1,25 +1,22 @@
 import { useContext, useState } from 'react';
-import * as S from './Login.styled';
-import { useForm } from 'react-hook-form';
-import {
-    useGetTokenAndLoginMutation,
-    // useGetUserQuery,
-} from '../../redux/RequestsWithAds/serviceQuery';
 import { useDispatch } from 'react-redux';
-import { setAuth } from '../../redux/RequestsWithAds/authSlice';
 import { useNavigate } from 'react-router-dom';
-// import { setCurrentUser } from '../../redux/RequestsWithAds/adsSlice';
+import { useForm } from 'react-hook-form';
+import { useGetTokenAndLoginMutation } from '../../redux/RequestsWithAds/serviceQuery';
+import { setAuth } from '../../redux/RequestsWithAds/authSlice';
 import { UserContext } from '../../UserContext/UserContext';
+import * as S from './Login.styled';
 
 function Login() {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
     const [getToken] = useGetTokenAndLoginMutation();
+    const { changingUserData } = useContext(UserContext);
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [offButton, setOffButton] = useState(false);
     const [error, setError] = useState(null);
-    const { changingUserData } = useContext(UserContext);
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
 
     const {
         register,
@@ -29,7 +26,6 @@ function Login() {
         mode: 'onBlur',
     });
 
- 
     const onSubmit = async () => {
         setOffButton(true);
         await getToken({
@@ -43,10 +39,7 @@ function Login() {
                     setAuth({
                         access: token?.access_token,
                         refresh: token?.refresh_token,
-                        user:
-                            JSON.parse(
-                            localStorage.getItem('user'),
-                        ),
+                        user: JSON.parse(localStorage.getItem('user')),
                     }),
                 );
                 localStorage.setItem(
@@ -82,12 +75,7 @@ function Login() {
             .finally(() => {
                 setOffButton(false);
             });
-
-       
     };
-    // console.log(localStorage.getItem('access_token'));
-
-    // console.log(localStorage.getItem('user'));
 
     return (
         <S.Wrapper className="wrapper">
@@ -106,7 +94,6 @@ function Login() {
                         </S.ModalLogo>
                         <S.ModalInput
                             className="modal__input login"
-                           
                             type="text"
                             placeholder="Почта"
                             value={email}
@@ -126,7 +113,6 @@ function Login() {
                         </S.FillInTheField>
                         <S.ModalInput
                             className="modal__input password"
-                       
                             type="password"
                             placeholder="Пароль"
                             value={password}

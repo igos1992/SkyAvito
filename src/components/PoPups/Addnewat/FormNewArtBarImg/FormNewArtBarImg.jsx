@@ -1,10 +1,10 @@
 import { useSelector } from 'react-redux';
-import { selectAddingImages } from '../../../../redux/RequestsWithAds/adsSlice';
+import { selectAddingImages } from '../../../../redux/selectedFile/selectedFile';
 import * as S from './FormNewArtBarImg.styled';
 
 function FormNewArtBarImg({ handleImages }) {
     const addingImages = useSelector(selectAddingImages);
-    console.log(addingImages);
+
     return (
         <S.FormNewArtBarImg className="form-newArt__bar-img">
             <S.FormNewArtImg className="form-newArt__img">

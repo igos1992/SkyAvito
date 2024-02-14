@@ -45,8 +45,6 @@ export const FormNewArtBarImg = styled.div`
     }
 `;
 
-
-
 export const FormNewArtImg = styled.div`
     width: 90px;
     height: 90px;
@@ -115,9 +113,9 @@ export const FormNewArtImgCover = styled.input`
 `;
 
 export const Label = styled.label`
-display: flex;
-width: 100%;
-height: 100%;
-background-color: #f0f0f0;
-z-index: 2;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    background-color: #f0f0f0;
+    z-index: 2;
 `;

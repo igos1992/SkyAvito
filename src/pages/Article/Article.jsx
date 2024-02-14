@@ -1,18 +1,17 @@
+import { useParams } from 'react-router-dom';
 import ArticleImgBar from '../../components/ForArticleAndForMyArticle/ArticleImgBar/ArticleImgBar';
 import ArticleImgBarMob from '../../components/ForArticleAndForMyArticle/ArticleImgBarMob/ArticleImgBarMob';
 import ArticleImgItem from '../../components/ForArticleAndForMyArticle/ArticleImgItem/ArticleImgItem';
-import ArticleBlock from '../../components/ForArticleAndForMyArticle/ArticleRight/ArticleBlock/ArticleBlock';
+import ArticleBlock from '../../components/ForArticleAndForMyArticle/ArticleRight/ArticleBlock';
 import MainMenu from '../../components/MainMenu/MainMenu';
 import MainContent from '../../components/ProductDescription/MainContent';
-import * as S from './Article.styled';
-import { useParams } from 'react-router-dom';
 import { useGetAdsIDQuery } from '../../redux/RequestsWithAds/serviceQuery';
 import ProductDetails from '../../components/UI/Skeletons/SkeletonArticle';
+import * as S from './Article.styled';
 
 function Article() {
     const { id } = useParams();
-    const { data: dataAds, isLoading } = useGetAdsIDQuery(id);
-    console.log(dataAds);
+    const { data: dataAds, isLoading, isError, error } = useGetAdsIDQuery(id);
 
     return (
         <>
@@ -25,6 +24,12 @@ function Article() {
                     <ProductDetails />
                 ) : (
                     <>
+                        {isError && (
+                            <S.SpanErrorBlock>
+                                Не удалось загрузить объявления, попробуйте
+                                позже: {error?.error}
+                            </S.SpanErrorBlock>
+                        )}
                         <S.MainArtic className="main__artic artic">
                             <S.ArticContent className="artic__content article">
                                 <S.ArticleLeft className="article__left">

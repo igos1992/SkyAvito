@@ -1,4 +1,3 @@
-import { NavLink } from 'react-router-dom';
 import { styled } from 'styled-components';
 
 const size = {
@@ -30,6 +29,12 @@ export const MainCenterBlock = styled.div`
         margin: 0 auto;
         padding: 0 20px;
     }
+`;
+
+export const SpanErrorBlock = styled.span`
+    font-family: 'StratosSkyeng';
+    font-size: 30px;
+    color: #000000;
 `;
 
 export const MainContent = styled.div`
@@ -95,16 +100,6 @@ export const ContentCards = styled.div`
         -ms-flex-pack: center;
         justify-content: center;
     }
-`;
-
-export const MenuLogoLink = styled(NavLink)`
-    width: 54;
-    height: 50px;
-`;
-
-export const MenuLogoImg = styled.img`
-    width: 54px;
-    height: auto;
 `;
 
 export const MainH2 = styled.h2`
@@ -183,7 +178,6 @@ export const ProfileSellSeller = styled.div`
     }
 `;
 
-
 export const MainTitle = styled.h3`
     margin-bottom: 20px;
     font-size: 32px;
@@ -196,4 +190,3 @@ export const MainTitle = styled.h3`
         margin-bottom: 30px;
     }
 `;
-

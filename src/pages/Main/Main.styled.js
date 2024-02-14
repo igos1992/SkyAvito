@@ -55,6 +55,12 @@ export const MainH2 = styled.h2`
     }
 `;
 
+export const SpanErrorBlock = styled.span`
+    font-family: 'StratosSkyeng';
+    font-size: 30px;
+    color: #000000;
+`;
+
 export const MainContent = styled.div`
     width: 100%;
     margin: 0 auto;

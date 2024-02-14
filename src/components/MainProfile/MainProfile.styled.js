@@ -55,24 +55,6 @@ export const ProfileSettings = styled.div`
     }
 `;
 
-export const SettingsImg = styled.div`
-    width: 170px;
-    height: 170px;
-    border-radius: 50%;
-    @media ${device.mobile} {
-        width: 132px;
-        height: 132px;
-    }
-`;
-
-export const SettingsImgItem = styled.img`
-    width: 100%;
-    height: 100%;
-    display: block;
-    -o-object-fit: fill;
-    object-fit: fill;
-`;
-
 export const SettingsLeft = styled.div`
     display: -webkit-box;
     display: -ms-flexbox;
@@ -107,16 +89,6 @@ export const UploadFileInput = styled.input`
     overflow: hidden;
     width: 0.4px;
     height: 0.4px;
-`;
-
-export const UploadFileLabel = styled.label`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    max-width: 240px;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: 0.25s ease;
 `;
 
 export const UploadFileButton = styled.button`
@@ -317,10 +289,12 @@ export const SettingsBtn = styled.button`
     border-radius: 6px;
     border: 1px solid #009ee4;
     :hover {
+        border: 1px solid #d9d9d9;
         background-color: #0080c1;
     }
     &:disabled {
-        background-color: #303030;
+        border: 1px solid #d9d9d9;
+        background-color: #d9d9d9;
     }
     @media ${device.mobile} {
         font-size: 16px;

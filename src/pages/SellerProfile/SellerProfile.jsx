@@ -1,21 +1,21 @@
 import { useParams } from 'react-router-dom';
-
-import MainMenu from '../../components/MainMenu/MainMenu';
-import SellerLeft from '../../components/MainSellerProfile/SellerImg/SellerLeft';
-import SellerRight from '../../components/MainSellerProfile/SellerRight/SellerRight';
 import {
     useGetAdsQuery,
     useGetAllUserQuery,
 } from '../../redux/RequestsWithAds/serviceQuery';
-import * as S from './SellerProfile.styled';
-import CardsItemAdvertising from '../../components/MainContent/CardsItemAdvertising/CardsItemAdvertising';
+import MainMenu from '../../components/MainMenu/MainMenu';
+import SellerLeft from '../../components/MainSellerProfile/SellerImg/SellerLeft';
+import SellerRight from '../../components/MainSellerProfile/SellerRight/SellerRight';
+import CardsItemAdvertising from '../../components/MainContent/CardsItemAdvertising';
 import SkeletonMainAds from '../../components/UI/Skeletons/SkeletonMainAds';
+import * as S from './SellerProfile.styled';
 
 function SellerProfile() {
     const { userId } = useParams();
 
-    const { data: usersAllAds, isLoading } = useGetAdsQuery();
+    const { data: usersAllAds, isLoading, isError, error } = useGetAdsQuery();
     const { data: users, isLoading: isLoadingAvatar } = useGetAllUserQuery();
+
     const sellerAllAds = usersAllAds?.filter(
         (item) => item.user.id === Number(userId),
     );
@@ -46,16 +46,24 @@ function SellerProfile() {
                 {isLoading ? (
                     <SkeletonMainAds />
                 ) : (
-                    <S.MainContent className="main__content">
-                        <S.ContentCards className="content__cards cards">
-                            {sellerAllAds?.map((cards) => (
-                                <CardsItemAdvertising
-                                    key={cards.id}
-                                    cards={cards}
-                                />
-                            ))}
-                        </S.ContentCards>
-                    </S.MainContent>
+                    <>
+                        {isError && (
+                            <S.SpanErrorBlock>
+                                Не удалось загрузить объявления, попробуйте
+                                позже: {error?.error}
+                            </S.SpanErrorBlock>
+                        )}
+                        <S.MainContent className="main__content">
+                            <S.ContentCards className="content__cards cards">
+                                {sellerAllAds?.map((cards) => (
+                                    <CardsItemAdvertising
+                                        key={cards.id}
+                                        cards={cards}
+                                    />
+                                ))}
+                            </S.ContentCards>
+                        </S.MainContent>
+                    </>
                 )}
             </S.MainContainer>
         </S.Main>

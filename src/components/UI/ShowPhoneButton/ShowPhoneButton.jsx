@@ -1,21 +1,15 @@
-// import { useState } from 'react';
-import {
-    // useContext,
-    useState,
-} from 'react';
-import * as S from './ShowPhoneButton.styled';
-import Atclsettings from '../../PoPups/Atclsettings/Atclsettings';
-// import { UserContext } from '../../../UserContext/UserContext';
+import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import {
     useGetDeleteAdIdMutation,
     useGetUserQuery,
 } from '../../../redux/RequestsWithAds/serviceQuery';
-import SkeletonArticleShowPhoneButton from '../Skeletons/SkeletonArticleShowPhoneButton';
+import Atclsettings from '../../PoPups/Atclsettings/Atclsettings';
 
-function ShowPhoneButton({ sellerId, dataAds, isShowPhone, setIsShowPhone }) {
-    // const { userData } = useContext(UserContext);
-    // const { userId } = useParams();
+import SkeletonArticleShowPhoneButton from '../Skeletons/SkeletonArticleShowPhoneButton';
+import * as S from './ShowPhoneButton.styled';
+
+function ShowPhoneButton({ dataAds, isShowPhone, setIsShowPhone }) {
     const { id } = useParams();
     const [deleteAdId] = useGetDeleteAdIdMutation(Number(id));
     const [modalEditAnAddIsOpen, setModalEditAnAddIsOpen] = useState(false);
@@ -35,15 +29,23 @@ function ShowPhoneButton({ sellerId, dataAds, isShowPhone, setIsShowPhone }) {
                     className="article__btn btn-hov02"
                     onClick={setIsShowPhone}
                 >
-                    Показать&nbsp;телефон
                     {!isShowPhone ? (
-                        <S.ShowPhoneButtonSpan className="article-span">
-                            {sellerId?.phone?.slice(0, 7)} XXX XX XX
-                        </S.ShowPhoneButtonSpan>
+                        <>
+                            <span>Показать&nbsp;телефон</span>
+                            <S.ShowPhoneButtonSpan className="article-span">
+                                {dataAds?.user.phone?.slice(0, 7)} XXX XX XX
+                            </S.ShowPhoneButtonSpan>
+                        </>
                     ) : (
-                        <S.ShowPhoneButtonSpan className="article-span">
-                            {sellerId?.phone}
-                        </S.ShowPhoneButtonSpan>
+                        <>
+                            {!dataAds?.user.phone ? (
+                                <span>Номер телефона отсутствует</span>
+                            ) : (
+                                <S.ShowPhoneButtonSpan className="article-span">
+                                    {dataAds?.user.phone}
+                                </S.ShowPhoneButtonSpan>
+                            )}
+                        </>
                     )}
                 </S.ShowPhoneButton>
             ) : (
@@ -81,16 +83,29 @@ function ShowPhoneButton({ sellerId, dataAds, isShowPhone, setIsShowPhone }) {
                                     className="article__btn btn-hov02"
                                     onClick={setIsShowPhone}
                                 >
-                                    Показать&nbsp;телефон
                                     {!isShowPhone ? (
-                                        <S.ShowPhoneButtonSpan className="article-span">
-                                            {dataAds?.user.phone?.slice(0, 7)}{' '}
-                                            XXX XX XX
-                                        </S.ShowPhoneButtonSpan>
+                                        <>
+                                            <span>Показать&nbsp;телефон</span>
+                                            <S.ShowPhoneButtonSpan className="article-span">
+                                                {dataAds?.user.phone?.slice(
+                                                    0,
+                                                    7,
+                                                )}{' '}
+                                                XXX XX XX
+                                            </S.ShowPhoneButtonSpan>
+                                        </>
                                     ) : (
-                                        <S.ShowPhoneButtonSpan className="article-span">
-                                            {dataAds?.user.phone}
-                                        </S.ShowPhoneButtonSpan>
+                                        <>
+                                            {!dataAds?.user.phone ? (
+                                                <span>
+                                                    Номер телефона отсутствует
+                                                </span>
+                                            ) : (
+                                                <S.ShowPhoneButtonSpan className="article-span">
+                                                    {dataAds?.user.phone}
+                                                </S.ShowPhoneButtonSpan>
+                                            )}
+                                        </>
                                     )}
                                 </S.ShowPhoneButton>
                             )}

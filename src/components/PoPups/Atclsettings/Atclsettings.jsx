@@ -1,27 +1,21 @@
+import { useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
-import FormNewArtBarImgAtclsettings from './FormNewArtBarImgAtclsettings/FormNewArtBarImgAtclsettings';
-// import ModalBtnClose from '../ModalBtnClose/ModalBtnClose';
-import * as S from './Atclsettings.styled';
 import {
     useGetEditAdMutation,
     useGetUploadImagesAdMutation,
 } from '../../../redux/RequestsWithAds/serviceQuery';
-import { useParams } from 'react-router-dom';
-import {  useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { setAddingImagesAtclsettings } from '../../../redux/RequestsWithAds/adsSlice';
+import FormNewArtBarImgAtclsettings from './FormNewArtBarImgAtclsettings/FormNewArtBarImgAtclsettings';
+import * as S from './Atclsettings.styled';
 
 function Atclsettings({ isOpen, onClose, dataAds }) {
-    console.log(dataAds);
-
     const { id } = useParams();
-
-    const [getUploadImagesAd] = useGetUploadImagesAdMutation();
-
-    const [editAd] = useGetEditAdMutation(Number(id));
-
-    const [offButton, setOffButton] = useState(false);
     const dispatch = useDispatch();
+    const [getUploadImagesAd] = useGetUploadImagesAdMutation();
+    const [editAd] = useGetEditAdMutation(Number(id));
+    const [offButton, setOffButton] = useState(false);
     const [selectedFile, setSelectedFile] = useState([]);
 
     const {
@@ -81,7 +75,7 @@ function Atclsettings({ isOpen, onClose, dataAds }) {
                                 <S.ModalTitle className="modal__title">
                                     Редактировать объявление
                                 </S.ModalTitle>
-                          
+
                                 <S.ModalBtnClose
                                     className="modal__btn-close"
                                     onClick={() => onClose()}
@@ -141,7 +135,8 @@ function Atclsettings({ isOpen, onClose, dataAds }) {
                                             {errors.description && (
                                                 <S.FillInTheFieldP>
                                                     {errors.description
-                                                        .message || 'Добавьте, пожалуйста, описание товара!'}
+                                                        .message ||
+                                                        'Добавьте, пожалуйста, описание товара!'}
                                                 </S.FillInTheFieldP>
                                             )}
                                         </S.FillInTheField>
@@ -155,7 +150,6 @@ function Atclsettings({ isOpen, onClose, dataAds }) {
                                         </S.FormNewArtP>
                                         <FormNewArtBarImgAtclsettings
                                             dataAds={dataAds}
-                                       
                                             handleImages={handleImages}
                                         />
                                     </S.FormNewArtBlock>
@@ -194,7 +188,9 @@ function Atclsettings({ isOpen, onClose, dataAds }) {
                                     <S.FormNewArtBtnPub
                                         className="form-newArt__btn-pub btn-hov02"
                                         type="submit"
-                                        disabled={isValid ? offButton : !isValid}
+                                        disabled={
+                                            isValid ? offButton : !isValid
+                                        }
                                     >
                                         Сохранить
                                     </S.FormNewArtBtnPub>

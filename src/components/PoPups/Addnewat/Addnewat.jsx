@@ -1,28 +1,25 @@
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { useForm } from 'react-hook-form';
 import FormNewArtBarImg from './FormNewArtBarImg/FormNewArtBarImg';
-import * as S from './Addnewat.styled';
 import {
     useGetCreateAdsWithoutImagesMutation,
     useGetUploadImagesAdMutation,
 } from '../../../redux/RequestsWithAds/serviceQuery';
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
 import {
-    selectAddingImages,
     setAddingImages,
     setClearingImagesAvatar,
 } from '../../../redux/RequestsWithAds/adsSlice';
 
+import * as S from './Addnewat.styled';
+
 function Addnewat({ isOpen, onClose }) {
+    const dispatch = useDispatch();
     const [createAds] = useGetCreateAdsWithoutImagesMutation();
     const [getUploadImagesAd] = useGetUploadImagesAdMutation();
     const [selectedFile, setSelectedFile] = useState([]);
-    // const filePicker = useRef(null);
-    const dispatch = useDispatch();
-    const [offButton, setOffButton] = useState(false);
 
-    const addingImages = useSelector(selectAddingImages);
-    console.log(addingImages);
+    const [offButton, setOffButton] = useState(false);
 
     const {
         register,
@@ -46,12 +43,6 @@ function Addnewat({ isOpen, onClose }) {
 
         setSelectedFile([...selectedFile, event.target.files[0]]);
     };
-
-    console.log(selectedFile);
-
-    // const handlePick = () => {
-    //     filePicker.current.click();
-    // };
 
     const onSubmit = async ({ title, description, price }) => {
         setOffButton(true);
@@ -157,8 +148,6 @@ function Addnewat({ isOpen, onClose }) {
                                             </S.FormNewArtPSpan>
                                         </S.FormNewArtP>
                                         <FormNewArtBarImg
-                                            // handlePick={handlePick}
-                                            // filePicker={filePicker}
                                             handleImages={handleImages}
                                         />
                                     </S.FormNewArtBlock>

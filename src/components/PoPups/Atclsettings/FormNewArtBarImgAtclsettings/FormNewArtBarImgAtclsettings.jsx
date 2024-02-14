@@ -1,16 +1,11 @@
 import { useSelector } from 'react-redux';
+import { selectAddingImagesAtclsettings } from '../../../../redux/selectedFile/selectedFile';
 import * as S from './FormNewArtBarImgAtclsettings.styled';
-import { selectAddingImagesAtclsettings } from '../../../../redux/RequestsWithAds/adsSlice';
 
-function FormNewArtBarImgAtclsettings({
-    handleImages,
-    dataAds,
-}) {
-    console.log(dataAds);
+function FormNewArtBarImgAtclsettings({ handleImages, dataAds }) {
     const addingImagesAtclsettings = useSelector(
         selectAddingImagesAtclsettings,
     );
-    console.log(addingImagesAtclsettings);
 
     return (
         <S.FormNewArtBarImg className="form-newArt__bar-img">
@@ -19,7 +14,6 @@ function FormNewArtBarImgAtclsettings({
                     className="form-newArt__img-cover"
                     id="input"
                     type="file"
-                    // ref={filePicker}
                     onChange={handleImages}
                     multiple
                     accept=".jpg, .jpeg, .png,"
@@ -30,13 +24,11 @@ function FormNewArtBarImgAtclsettings({
                     <>
                         {addingImagesAtclsettings[0] ? (
                             <S.FormNewArtImgImg
-                                // src={`http://localhost:8090/${dataAds?.images[0]?.url}`}
                                 src={addingImagesAtclsettings[0]}
                                 alt=""
                             />
                         ) : (
                             <S.FormNewArtImgImg
-                                // src={`http://localhost:8090/${dataAds?.images[0]?.url}`}
                                 src={`http://localhost:8090/${dataAds?.images[0]?.url}`}
                                 alt=""
                             />
@@ -50,7 +42,6 @@ function FormNewArtBarImgAtclsettings({
                     className="form-newArt__img-cover"
                     id="input1"
                     type="file"
-                    // ref={filePicker}
                     onChange={handleImages}
                     multiple
                     accept=".jpg, .jpeg, .png,"
@@ -61,13 +52,11 @@ function FormNewArtBarImgAtclsettings({
                     <>
                         {addingImagesAtclsettings[1] ? (
                             <S.FormNewArtImgImg
-                                // src={`http://localhost:8090/${dataAds?.images[0]?.url}`}
                                 src={addingImagesAtclsettings[1]}
                                 alt=""
                             />
                         ) : (
                             <S.FormNewArtImgImg
-                                // src={`http://localhost:8090/${dataAds?.images[0]?.url}`}
                                 src={`http://localhost:8090/${dataAds?.images[1]?.url}`}
                                 alt=""
                             />
@@ -80,7 +69,6 @@ function FormNewArtBarImgAtclsettings({
                     className="form-newArt__img-cover"
                     id="input2"
                     type="file"
-                    // ref={filePicker}
                     onChange={handleImages}
                     multiple
                     accept=".jpg, .jpeg, .png,"
@@ -91,13 +79,11 @@ function FormNewArtBarImgAtclsettings({
                     <>
                         {addingImagesAtclsettings[2] ? (
                             <S.FormNewArtImgImg
-                                // src={`http://localhost:8090/${dataAds?.images[0]?.url}`}
                                 src={addingImagesAtclsettings[2]}
                                 alt=""
                             />
                         ) : (
                             <S.FormNewArtImgImg
-                                // src={`http://localhost:8090/${dataAds?.images[0]?.url}`}
                                 src={`http://localhost:8090/${dataAds?.images[2]?.url}`}
                                 alt=""
                             />
@@ -110,7 +96,6 @@ function FormNewArtBarImgAtclsettings({
                     className="form-newArt__img-cover"
                     id="input3"
                     type="file"
-                    // ref={filePicker}
                     onChange={handleImages}
                     multiple
                     accept=".jpg, .jpeg, .png,"
@@ -121,13 +106,11 @@ function FormNewArtBarImgAtclsettings({
                     <>
                         {addingImagesAtclsettings[3] ? (
                             <S.FormNewArtImgImg
-                                // src={`http://localhost:8090/${dataAds?.images[0]?.url}`}
                                 src={addingImagesAtclsettings[3]}
                                 alt=""
                             />
                         ) : (
                             <S.FormNewArtImgImg
-                                // src={`http://localhost:8090/${dataAds?.images[0]?.url}`}
                                 src={`http://localhost:8090/${dataAds?.images[3]?.url}`}
                                 alt=""
                             />
@@ -140,7 +123,6 @@ function FormNewArtBarImgAtclsettings({
                     className="form-newArt__img-cover"
                     id="input4"
                     type="file"
-                    // ref={filePicker}
                     onChange={handleImages}
                     multiple
                     accept=".jpg, .jpeg, .png,"
@@ -151,13 +133,11 @@ function FormNewArtBarImgAtclsettings({
                     <>
                         {addingImagesAtclsettings[4] ? (
                             <S.FormNewArtImgImg
-                                // src={`http://localhost:8090/${dataAds?.images[0]?.url}`}
                                 src={addingImagesAtclsettings[4]}
                                 alt=""
                             />
                         ) : (
                             <S.FormNewArtImgImg
-                                // src={`http://localhost:8090/${dataAds?.images[0]?.url}`}
                                 src={`http://localhost:8090/${dataAds?.images[4]?.url}`}
                                 alt=""
                             />

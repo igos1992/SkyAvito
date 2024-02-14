@@ -367,7 +367,6 @@ export const FillInTheFieldP = styled.p`
     margin: 0px;
 `;
 
-
 export const FormNewArtP = styled.p`
     font-size: 16px;
     line-height: 24px;
@@ -522,6 +521,6 @@ export const FormNewArtBtnPub = styled.button`
         height: 46px;
         &:disabled {
             background-color: #d9d9d9;
-    }
+        }
     }
 `;

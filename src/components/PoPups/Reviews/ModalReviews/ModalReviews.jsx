@@ -1,10 +1,10 @@
-import * as S from './ModalReviews.styled';
-// import ArrayComments from '../../../ArrayData/ArrayComments';
-import { selectReviewsId } from '../../../../redux/RequestsWithAds/adsSlice';
 import { useSelector } from 'react-redux';
+import { selectReviewsId } from '../../../../redux/selectedFile/selectedFile';
+import * as S from './ModalReviews.styled';
 
 function ModalReviews() {
     const reviewsId = useSelector(selectReviewsId);
+
     return (
         <>
             <S.ModalReviews className="modal__reviews reviews">

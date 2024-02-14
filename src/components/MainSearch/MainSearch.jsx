@@ -1,19 +1,13 @@
-import * as S from './MainSearch.styled';
-import Logo from '../UI/Logo/Logo';
-import {
-    useDispatch,
-    // useSelector
-} from 'react-redux';
-import {
-    // selectSearchByAdsTitle,
-    setSearchByAdsTitle,
-} from '../../redux/RequestsWithAds/adsSlice';
-import { useSearchParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { useSearchParams } from 'react-router-dom';
+import { setSearchByAdsTitle } from '../../redux/RequestsWithAds/adsSlice';
+import Logo from '../UI/Logo/Logo';
+import * as S from './MainSearch.styled';
 
 function MainSearch() {
+    const dispatch = useDispatch();
     const [searchParams, setSearchParams] = useSearchParams();
-
     const postQuery = searchParams.get('ads') || '';
     const [search, setSearch] = useState(postQuery);
 
@@ -23,8 +17,6 @@ function MainSearch() {
         const query = form.search.value;
         setSearchParams({ ads: query });
     };
-
-    const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(setSearchByAdsTitle(postQuery));

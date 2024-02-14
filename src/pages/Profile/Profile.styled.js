@@ -1,4 +1,3 @@
-import { NavLink } from 'react-router-dom';
 import { styled } from 'styled-components';
 
 const size = {
@@ -39,11 +38,16 @@ export const MainCenterBlock = styled.div`
     }
 `;
 
+export const SpanErrorBlock = styled.span`
+    font-family: 'StratosSkyeng';
+    font-size: 30px;
+    color: #000000;
+`;
+
 export const MainContent = styled.div`
     width: 100%;
     margin: 0 auto;
-    text-align: center
-    @media ${device.mobile} {
+    text-align: center @media ${device.mobile} {
         width: 100%;
         margin: 0 auto;
         overflow: hidden;
@@ -106,20 +110,10 @@ export const ContentCards = styled.div`
 `;
 
 export const SpanNotTracksFavorite = styled.span`
-  font-family: 'Roboto';
-  font-size: 30px;
-  margin-top: 50px;
-  text-align: justify;
-`
-
-export const MenuLogoLink = styled(NavLink)`
-    width: 54;
-    height: 50px;
-`;
-
-export const MenuLogoImg = styled.img`
-    width: 54px;
-    height: auto;
+    font-family: 'Roboto';
+    font-size: 30px;
+    margin-top: 50px;
+    text-align: justify;
 `;
 
 export const MainH2 = styled.h2`

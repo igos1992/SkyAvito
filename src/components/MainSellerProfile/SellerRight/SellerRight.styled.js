@@ -89,15 +89,6 @@ export const ShowPhoneButton = styled.button`
     }
 `;
 
-export const ShowPhoneButtonSpan = styled.span`
-    display: block;
-    font-size: 14px;
-    font-weight: 400;
-    @media ${device.mobile} {
-        font-size: 12px;
-    }
-`;
-
 export const SellerImgMobItem = styled.img`
     @media ${device.mobile} {
         width: 100%;
