@@ -1,6 +1,7 @@
 import { useSelector } from 'react-redux';
 import { selectReviewsId } from '../../../../redux/selectedFile/selectedFile';
 import * as S from './ModalReviews.styled';
+import ChangeDate from '../../../UI/СhangeDate/СhangeDate';
 
 function ModalReviews() {
     const reviewsId = useSelector(selectReviewsId);
@@ -22,7 +23,7 @@ function ModalReviews() {
                             <S.ReviewRight className="review__right">
                                 <S.ReviewName className="review__name font-t">
                                     {comm.author.name}{' '}
-                                    <span>{comm.created_on}</span>
+                                    <ChangeDate comm={comm.created_on} />
                                 </S.ReviewName>
                                 <S.ReviewTitle className="review__title font-t">
                                     Комментарий

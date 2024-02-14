@@ -46,7 +46,7 @@ export const ModalBlock = styled.div`
     }
 `;
 
-export const SaveChangesPassword = styled.div`
+export const SaveChangesPassword = styled.button`
     display: flex;
     align-items: center;
     justify-content: center;
@@ -72,7 +72,7 @@ export const SaveChangesPassword = styled.div`
     }
 `;
 
-export const ModalContent = styled.div`
+export const ModalContent = styled.form`
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;

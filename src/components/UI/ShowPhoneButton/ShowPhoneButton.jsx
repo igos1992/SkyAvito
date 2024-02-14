@@ -11,6 +11,8 @@ import * as S from './ShowPhoneButton.styled';
 
 function ShowPhoneButton({ dataAds, isShowPhone, setIsShowPhone }) {
     const { id } = useParams();
+    const {userId} = useParams()
+    console.log(userId);
     const [deleteAdId] = useGetDeleteAdIdMutation(Number(id));
     const [modalEditAnAddIsOpen, setModalEditAnAddIsOpen] = useState(false);
     const { data: currentUser, isLoading } = useGetUserQuery();
@@ -21,6 +23,8 @@ function ShowPhoneButton({ dataAds, isShowPhone, setIsShowPhone }) {
         });
         window.location.pathname = '/';
     };
+
+    console.log(isShowPhone);
 
     return (
         <>
@@ -33,7 +37,7 @@ function ShowPhoneButton({ dataAds, isShowPhone, setIsShowPhone }) {
                         <>
                             <span>Показать&nbsp;телефон</span>
                             <S.ShowPhoneButtonSpan className="article-span">
-                                {dataAds?.user.phone?.slice(0, 7)} XXX XX XX
+                                {dataAds?.user?.phone?.slice(0, 7)} XXX XX XX
                             </S.ShowPhoneButtonSpan>
                         </>
                     ) : (
@@ -42,7 +46,7 @@ function ShowPhoneButton({ dataAds, isShowPhone, setIsShowPhone }) {
                                 <span>Номер телефона отсутствует</span>
                             ) : (
                                 <S.ShowPhoneButtonSpan className="article-span">
-                                    {dataAds?.user.phone}
+                                    {dataAds?.user?.phone}
                                 </S.ShowPhoneButtonSpan>
                             )}
                         </>
@@ -87,7 +91,7 @@ function ShowPhoneButton({ dataAds, isShowPhone, setIsShowPhone }) {
                                         <>
                                             <span>Показать&nbsp;телефон</span>
                                             <S.ShowPhoneButtonSpan className="article-span">
-                                                {dataAds?.user.phone?.slice(
+                                                {dataAds?.user?.phone?.slice(
                                                     0,
                                                     7,
                                                 )}{' '}
@@ -102,7 +106,7 @@ function ShowPhoneButton({ dataAds, isShowPhone, setIsShowPhone }) {
                                                 </span>
                                             ) : (
                                                 <S.ShowPhoneButtonSpan className="article-span">
-                                                    {dataAds?.user.phone}
+                                                    {dataAds?.user?.phone}
                                                 </S.ShowPhoneButtonSpan>
                                             )}
                                         </>

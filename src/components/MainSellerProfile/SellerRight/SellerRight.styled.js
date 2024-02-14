@@ -55,7 +55,6 @@ export const SellerInfo = styled.p`
 `;
 
 export const SellerImgMobBlock = styled.div`
-    display: none;
     @media ${device.mobile} {
         display: -webkit-box;
         display: -ms-flexbox;
@@ -106,5 +105,14 @@ export const SellerImgMob = styled.div`
         height: 132px;
         border-radius: 50%;
         background-color: #f0f0f0;
+    }
+`;
+
+export const ShowPhoneButtonSpan = styled.span`
+    display: block;
+    font-size: 14px;
+    font-weight: 400;
+    @media ${device.mobile} {
+        font-size: 12px;
     }
 `;

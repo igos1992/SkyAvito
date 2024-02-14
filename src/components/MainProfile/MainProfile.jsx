@@ -237,7 +237,6 @@ function MainProfile({ currentUser }) {
                                 setPassword_1={setPassword_1}
                                 password_2={password_2}
                                 setPassword_2={setPassword_2}
-                                register={register}
                             />
 
                             <S.SettingsBtn
