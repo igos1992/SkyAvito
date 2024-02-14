@@ -1,70 +1,46 @@
-# Getting Started with Create React App
+# Сайт для просмотра и размещения объявлений "Sky Avito"
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Данное приложение позволяет пользователям получить доступ к онлайн-сервису по размещению и просмотру объявлений любых товаров/услуг.
 
-## Available Scripts
+### Проект выполнен в рамках курса Онлайн-университета SkyPro
 
-In the project directory, you can run:
+## Описание работы проекта
 
-### `npm start`
+Главная страница содержит список всех доступных товаров и поиск объявлений. Получение объявлений осуществляется из базы данных.
+При клике на карточку объявления осуществляется переход на страницу с подробным описанием выбранного товара (если вы зарегистрированный пользователь и вы перешли на свою карточку товара, то у вас будет возможность редактировать/снять с публикации объявление. В других случаях будет возможность просмотреть номер продавца). При нажатии на кнопку "редактировать" появится модальное окно, где вы можете изменить у товара "название/описание/картинки/цену".
+На странимце карточки можно мосмотреть количество отзывов о товаре, перейти к ним и оставить отзыв. Оставить отзыв может только зарегистрированный пользователь. Также на странице можно перейти на профиль продавца.
+На странице профиля продавца можно ознакомиться с его товарами и узнать номер телефона.
+Личный кабинет - в личном кабинете можно изменить/внести свои данные (аватарку/имя/фамилию/город/номер телефона и обновить пароль). Также отображаются все ваши опубликованные, с данного профиля, товары.
+Размеситть объявление - при нажатии на кнопку "Разместить объявление" выпадает модальное окно. Необходимо Ввести "название/описание/сумму". Создать обявление можно с картинками товара и без них.
+Пользователь может авторизоваться/зарегистрироваться в приложении.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+# Доступ у не зарегистрированного пользователя
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Главная страница. Поиск товаров на главной странице. Просмотр карточки товара и номер телефона продавца. Просмотр отзывов. Просмотр профиля продавца. Страницы авторизоваться/зарегистрироваться в приложении.
 
-### `npm test`
+# Доступ у зарегистрированного пользователя
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Главная страница. Поиск товаров на главной странице. Просмотр карточки товара и номер телефона продавца. Просмотр/оставление отзывов. Просмотр профиля продавца. Личный кабинет. Редактирование/снятие с публицации свои товары. Страницы авторизоваться/зарегистрироваться в приложении.
 
-### `npm run build`
+## Технический стек:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+React
+Redux
+Docker
+REST API
+React Router
+Styled Components
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Установка и запуск проекта:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Необходимо кланировать репозиторий: git repo clone igos1992/SkyAvito;  
+Установить заисимости: npm install;  
+Запустить приложение: npm run start;  
+Откройте http://localhost:3000, чтобы просмотреть приложение.
 
-### `npm run eject`
+## Запуск бэкенд части приложения:
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Через терминал необходимо перейти в папку backend;  
+Запустить в терминале команду:docker-compose -f docker-compose-backend.yaml up -d;  
+После этого бэкенд и Swagger будут доступны по адресу http://localhost:8090/;  
+Чтобы остановить работу бэкенда выполните:docker-compose down.
