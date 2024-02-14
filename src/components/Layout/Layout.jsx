@@ -11,7 +11,6 @@ function Layout() {
 
     const changingUserInformation = () => {
         localStorage.removeItem('user');
-        console.log(localStorage.getItem('user'));
         window.location.pathname = '/login';
     };
 

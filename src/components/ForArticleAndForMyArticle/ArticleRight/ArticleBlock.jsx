@@ -16,7 +16,6 @@ import * as S from './ArticleBlock.styled';
 function ArticleBlock({ dataAds, isLoading }) {
     const { id } = useParams();
     const dispatch = useDispatch();
-    console.log(id);
     const [modalProductReviewsIsOpen, setModalProductReviewsIsOpen] =
         useState(false);
     const { data: dataComments, isLoading: isLoadingComments } =

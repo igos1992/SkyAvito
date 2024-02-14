@@ -31,7 +31,6 @@ function Addnewat({ isOpen, onClose }) {
     });
 
     const handleImages = (event) => {
-        console.log(event.target.files);
         const reader = new FileReader();
         if (!event.target.files[0]) {
             return;
@@ -51,7 +50,6 @@ function Addnewat({ isOpen, onClose }) {
             description: description,
             price: price,
         }).then((res) => {
-            console.log(res);
             if (selectedFile.length > 0) {
                 selectedFile.forEach(async (image) => {
                     await getUploadImagesAd({

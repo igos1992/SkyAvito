@@ -34,7 +34,6 @@ function Login() {
         })
             .unwrap()
             .then((token) => {
-                console.log(token);
                 dispatch(
                     setAuth({
                         access: token?.access_token,

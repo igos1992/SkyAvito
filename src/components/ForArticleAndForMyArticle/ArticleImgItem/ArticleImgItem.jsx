@@ -1,7 +1,6 @@
 import * as S from './ArticleImgItem.styled';
 
 function ArticleImgItem({ dataAds }) {
-    console.log(dataAds?.images[0]?.url);
     return (
         <S.ArticleImgItem className="article__img-item">
             {dataAds?.images[0]?.url ? (

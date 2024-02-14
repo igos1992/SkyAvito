@@ -40,7 +40,6 @@ function Atclsettings({ isOpen, onClose, dataAds }) {
     const imagesAvatarAtclsettingsOne = useSelector(
         selectAddingImagesAvatarAtclsettingsOne,
     );
-    console.log(imagesAvatarAtclsettingsOne);
 
     const imagesAvatarAtclsettingsTwo = useSelector(
         selectAddingImagesAvatarAtclsettingsTwo,
@@ -74,7 +73,6 @@ function Atclsettings({ isOpen, onClose, dataAds }) {
         reader.readAsDataURL(event.target.files[0]);
         reader.onloadend = () => {
             dispatch(setAddingImagesAvatarAtclsettingsOne(reader.result));
-            console.log(reader.result);
         };
         setSelectedFileOne([...selectedFileOne, event.target.files[0]]);
     };
@@ -139,7 +137,6 @@ function Atclsettings({ isOpen, onClose, dataAds }) {
 
             if (selectedFileOne.length > 0) {
                 selectedFileOne.forEach(async (image) => {
-                    console.log(image);
                     await getUploadImagesAd({
                         image,
                         id: res?.data?.id,

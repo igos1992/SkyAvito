@@ -54,7 +54,6 @@ function MainProfile({ currentUser }) {
     };
 
     const handleAvatar = (event) => {
-        console.log(event.target.files);
         const reader = new FileReader();
         if (!event.target.files[0]) {
             return;
